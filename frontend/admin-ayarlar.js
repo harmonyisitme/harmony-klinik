@@ -1,5 +1,5 @@
 // Güvenlik Kontrolü
-if (!localStorage.getItem('harmonyToken')) {
+if (!localStorage.getItem('ranaToken')) {
     window.location.href = 'login.html';
 }
 
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     if (btnCikisOnay) {
         btnCikisOnay.addEventListener('click', () => {
-            localStorage.removeItem('harmonyToken');
+            localStorage.removeItem('ranaToken');
             window.location.href = 'login.html';
         });
     }
@@ -236,7 +236,7 @@ document.getElementById('ayarlarFormu').addEventListener('submit', async (e) => 
         if (fileInput.files.length === 0) return currentUrl;
         const formData = new FormData();
         formData.append('dosya', fileInput.files[0]);
-        const response = await fetch('/api/upload', { method: 'POST', headers: { 'x-auth-token': localStorage.getItem('harmonyToken') }, body: formData });
+        const response = await fetch('/api/upload', { method: 'POST', headers: { 'x-auth-token': localStorage.getItem('ranaToken') }, body: formData });
         if (response.ok) return (await response.json()).url;
         return currentUrl;
     };
@@ -297,7 +297,7 @@ document.getElementById('ayarlarFormu').addEventListener('submit', async (e) => 
     try {
         const response = await fetch('/api/site-ayarlari', {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'x-auth-token': localStorage.getItem('harmonyToken') },
+            headers: { 'Content-Type': 'application/json', 'x-auth-token': localStorage.getItem('ranaToken') },
             body: JSON.stringify(veri)
         });
 

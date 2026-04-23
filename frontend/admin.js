@@ -1,5 +1,5 @@
 // Güvenlik Kontrolü
-if (!localStorage.getItem('harmonyToken')) {
+if (!localStorage.getItem('ranaToken')) {
     window.location.href = 'login.html';
 }
 
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (btnCikisOnay) {
         btnCikisOnay.addEventListener('click', () => {
-            localStorage.removeItem('harmonyToken');
+            localStorage.removeItem('ranaToken');
             window.location.href = 'login.html';
         });
     }
@@ -513,7 +513,7 @@ function excelDisaAktar() {
     const worksheet = XLSX.utils.json_to_sheet(excelVerisi);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Randevular");
-    XLSX.writeFile(workbook, 'Harmony_Randevular.xlsx');
+    XLSX.writeFile(workbook, 'Rana_Randevular.xlsx');
 }
 
 // PDF İNDİR
@@ -524,7 +524,7 @@ function pdfDisaAktar() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    doc.text("Harmony Klinik - Randevu Listesi", 14, 15);
+    doc.text("Rana Klinik - Randevu Listesi", 14, 15);
 
     const tabloBasliklari = [["Tarih", "Ad Soyad", "Telefon", "Hizmet", "Durum"]];
     const tabloVerileri = veri.map(r => [
@@ -541,7 +541,7 @@ function pdfDisaAktar() {
         startY: 20,
     });
 
-    doc.save("Harmony_Randevular.pdf");
+    doc.save("Rana_Randevular.pdf");
 }
 
 // İSTATİSTİKLERİ GÜNCELLE

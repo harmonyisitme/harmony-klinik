@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (btnCikisOnay) {
         btnCikisOnay.addEventListener('click', () => {
-            localStorage.removeItem('harmonyToken');
+            localStorage.removeItem('ranaToken');
             window.location.href = 'login.html';
         });
     }
@@ -106,7 +106,7 @@ async function mesajlariGetir() {
     try {
         // Cache sorununu önlemek için timestamp (?_t=...) ve filtre/sıralama parametreleri ekledik
         const response = await fetch(`${API_URL}/iletisim?durum=${filtre}&sirala=${siralama}&_t=${Date.now()}`, {
-            headers: { 'x-auth-token': localStorage.getItem('harmonyToken') }
+            headers: { 'x-auth-token': localStorage.getItem('ranaToken') }
         });
 
         if (!response.ok) {
@@ -187,7 +187,7 @@ window.mesajOku = (id) => {
 window.mesajSil = async (id) => {
     if (!confirm('Bu mesajı silmek istediğinize emin misiniz?')) return;
     try {
-        const res = await fetch(`${API_URL}/iletisim/${id}`, { method: 'DELETE', headers: { 'x-auth-token': localStorage.getItem('harmonyToken') } });
+        const res = await fetch(`${API_URL}/iletisim/${id}`, { method: 'DELETE', headers: { 'x-auth-token': localStorage.getItem('ranaToken') } });
         if (res.ok) { showToast('Mesaj silindi.', 'success'); mesajlariGetir(); }
         else showToast('Silinemedi.', 'error');
     } catch (err) { showToast('Hata oluştu.', 'error'); }
@@ -198,7 +198,7 @@ window.mesajDurumDegistir = async (id, yeniDurum) => {
     try {
         const response = await fetch(`${API_URL}/iletisim/${id}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'x-auth-token': localStorage.getItem('harmonyToken') },
+            headers: { 'Content-Type': 'application/json', 'x-auth-token': localStorage.getItem('ranaToken') },
             body: JSON.stringify({ okunduMu: yeniDurum })
         });
 

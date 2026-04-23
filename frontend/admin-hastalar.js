@@ -1,5 +1,5 @@
 // Güvenlik Kontrolü
-if (!localStorage.getItem('harmonyToken')) {
+if (!localStorage.getItem('ranaToken')) {
     window.location.href = 'login.html';
 }
 
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (btnCikisOnay) {
         btnCikisOnay.addEventListener('click', () => {
-            localStorage.removeItem('harmonyToken');
+            localStorage.removeItem('ranaToken');
             window.location.href = 'login.html';
         });
     }
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'x-auth-token': localStorage.getItem('harmonyToken')
+                    'x-auth-token': localStorage.getItem('ranaToken')
                 },
                 body: JSON.stringify(veri)
             });
@@ -183,8 +183,8 @@ async function hastalariGetir() {
     try {
         // Hem hastaları hem randevuları paralel olarak çekiyoruz
         const [hastalarRes, randevularRes] = await Promise.all([
-            fetch('/api/hastalar', { headers: { 'x-auth-token': localStorage.getItem('harmonyToken') } }),
-            fetch('/api/randevular', { headers: { 'x-auth-token': localStorage.getItem('harmonyToken') } })
+            fetch('/api/hastalar', { headers: { 'x-auth-token': localStorage.getItem('ranaToken') } }),
+            fetch('/api/randevular', { headers: { 'x-auth-token': localStorage.getItem('ranaToken') } })
         ]);
 
         const hastalar = await hastalarRes.json();
@@ -269,7 +269,7 @@ window.hastaGecmisiniGoster = async (hastaId, adSoyad) => {
 
     try {
         const response = await fetch(`/api/randevular?hastaId=${hastaId}`, {
-             headers: { 'x-auth-token': localStorage.getItem('harmonyToken') }
+             headers: { 'x-auth-token': localStorage.getItem('ranaToken') }
         });
         const randevular = await response.json();
         
@@ -303,7 +303,7 @@ window.hastaSil = async (id) => {
     try {
         const response = await fetch(`/api/hastalar/${id}`, {
             method: 'DELETE',
-            headers: { 'x-auth-token': localStorage.getItem('harmonyToken') }
+            headers: { 'x-auth-token': localStorage.getItem('ranaToken') }
         });
         if (response.ok) {
             alert('Hasta silindi.');
@@ -354,7 +354,7 @@ window.excelDisaAktar = () => {
     const worksheet = XLSX.utils.json_to_sheet(excelVerisi);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Hastalar");
-    XLSX.writeFile(workbook, 'Harmony_Hastalar.xlsx');
+    XLSX.writeFile(workbook, 'Rana_Hastalar.xlsx');
 };
 
 // ARAMA FİLTRELEME FONKSİYONU

@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (ayarlar.logo && ayarlar.logo.trim() !== '') {
                 const logoElements = document.querySelectorAll('.logo, .footer-logo');
                 logoElements.forEach(el => {
-                    el.innerHTML = `<img src="${ayarlar.logo}" alt="Harmony Klinik" style="height: 40px; vertical-align: middle;">`;
+                    el.innerHTML = `<img src="${ayarlar.logo}" alt="Rana Klinik" style="height: 40px; vertical-align: middle;">`;
                 });
             }
 
@@ -847,7 +847,7 @@ function initKVKK() {
             <span id="closeKvkk" class="close-kvkk">&times;</span>
             <h2>Kişisel Verilerin Korunması (KVKK)</h2>
             <br>
-            <p><strong>Harmony Klinik</strong> olarak kişisel verilerinizin güvenliği hususuna azami hassasiyet göstermekteyiz.</p>
+            <p><strong>Rana Klinik</strong> olarak kişisel verilerinizin güvenliği hususuna azami hassasiyet göstermekteyiz.</p>
             <p>6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) uyarınca, kişisel verileriniz; veri sorumlusu olarak kliniğimiz tarafından aşağıda açıklanan kapsamda işlenebilecektir.</p>
             <br>
             <h4>1. Kişisel Verilerin Toplanması</h4>

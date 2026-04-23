@@ -1,5 +1,5 @@
 // Güvenlik Kontrolü
-if (!localStorage.getItem('harmonyToken')) {
+if (!localStorage.getItem('ranaToken')) {
     window.location.href = 'login.html';
 }
 
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (btnCikisOnay) {
         btnCikisOnay.addEventListener('click', () => {
-            localStorage.removeItem('harmonyToken');
+            localStorage.removeItem('ranaToken');
             window.location.href = 'login.html';
         });
     }
@@ -103,7 +103,7 @@ async function medyaGetir() {
 
     try {
         const response = await fetch('/api/medya', {
-            headers: { 'x-auth-token': localStorage.getItem('harmonyToken') }
+            headers: { 'x-auth-token': localStorage.getItem('ranaToken') }
         });
         const dosyalar = await response.json();
 
@@ -146,7 +146,7 @@ window.dosyaSil = async (dosyaAdi) => {
     if (!confirm('Bu görseli silmek istediğinize emin misiniz?')) return;
 
     try {
-        const response = await fetch(`/api/medya/${dosyaAdi}`, { method: 'DELETE', headers: { 'x-auth-token': localStorage.getItem('harmonyToken') } });
+        const response = await fetch(`/api/medya/${dosyaAdi}`, { method: 'DELETE', headers: { 'x-auth-token': localStorage.getItem('ranaToken') } });
         if (response.ok) medyaGetir();
         else alert('Silinemedi.');
     } catch (error) { alert('Hata oluştu.'); }

@@ -1,5 +1,5 @@
 // Güvenlik Kontrolü
-if (!localStorage.getItem('harmonyToken')) {
+if (!localStorage.getItem('ranaToken')) {
     window.location.href = 'login.html';
 }
 
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     if (btnCikisOnay) {
         btnCikisOnay.addEventListener('click', () => {
-            localStorage.removeItem('harmonyToken');
+            localStorage.removeItem('ranaToken');
             window.location.href = 'login.html';
         });
     }

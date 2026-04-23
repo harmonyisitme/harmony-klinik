@@ -1,5 +1,5 @@
 // Güvenlik: Giriş yapılmamışsa login sayfasına at
-if (!localStorage.getItem('harmonyToken')) {
+if (!localStorage.getItem('ranaToken')) {
     window.location.href = 'login.html';
 }
 
@@ -139,7 +139,7 @@ document.getElementById('blogFormu').addEventListener('submit', async (e) => {
         formData.append('dosya', dosyaInput.files[0]);
 
         try {
-            const uploadResponse = await fetch('/api/upload', { method: 'POST', headers: { 'x-auth-token': localStorage.getItem('harmonyToken') }, body: formData });
+            const uploadResponse = await fetch('/api/upload', { method: 'POST', headers: { 'x-auth-token': localStorage.getItem('ranaToken') }, body: formData });
             const uploadResult = await uploadResponse.json();
             if (uploadResponse.ok) gorselUrl = uploadResult.url;
         } catch (err) {
@@ -171,7 +171,7 @@ document.getElementById('blogFormu').addEventListener('submit', async (e) => {
 
         const response = await fetch(url, {
             method: method,
-            headers: { 'Content-Type': 'application/json', 'x-auth-token': localStorage.getItem('harmonyToken') },
+            headers: { 'Content-Type': 'application/json', 'x-auth-token': localStorage.getItem('ranaToken') },
             body: JSON.stringify(blogVerisi)
         });
 
@@ -218,7 +218,7 @@ if (btnLogout) {
 if (btnCikisOnay) {
     btnCikisOnay.addEventListener('click', () => {
         formDegisti = false;
-        localStorage.removeItem('harmonyToken');
+        localStorage.removeItem('ranaToken');
         window.location.href = 'login.html';
     });
 }
@@ -311,7 +311,7 @@ window.blogSil = async (id) => {
     if (!confirm('Bu blog yazısını silmek istediğinize emin misiniz?')) return;
 
     try {
-        const response = await fetch(`/api/blog/${id}`, { method: 'DELETE', headers: { 'x-auth-token': localStorage.getItem('harmonyToken') } });
+        const response = await fetch(`/api/blog/${id}`, { method: 'DELETE', headers: { 'x-auth-token': localStorage.getItem('ranaToken') } });
         
         if (response.ok) {
             bloglariListele(); // Listeyi yenile

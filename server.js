@@ -87,7 +87,7 @@ app.use('/api/iletisim', require('./routes/iletisimRoutes'));
 
 // Test Rotası (Ana sayfa artık frontend olacağı için bu rotayı değiştirdik)
 app.get('/api-durum', (req, res) => {
-    res.send('Harmony Klinik Backend Sunucusu Çalışıyor! 🚀');
+    res.send('Rana Klinik Backend Sunucusu Çalışıyor! 🚀');
 });
 
 // Global Hata Yakalayıcı (En sonda olmalı)

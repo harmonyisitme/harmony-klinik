@@ -21,7 +21,7 @@ const ayarlariGetir = async (req, res) => {
                 },
                 hakkimizda: {
                     baslik: 'Hakkımızda',
-                    icerik: 'Harmony Klinik olarak işitme sağlığınız için buradayız.',
+                    icerik: 'Rana Klinik olarak işitme sağlığınız için buradayız.',
                     gorsel: ''
                 },
                 yasalMetinler: {

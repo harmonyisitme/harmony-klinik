@@ -5,7 +5,7 @@ export const API_URL = isLocal ? 'http://localhost:5501/api' : '/api';
 
 // Güvenlik Kontrolü
 export const checkAuth = () => {
-    if (!localStorage.getItem('harmonyToken')) {
+    if (!localStorage.getItem('ranaToken')) {
         window.location.href = 'login.html';
     }
 };

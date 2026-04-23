@@ -19,7 +19,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
         if (response.ok) {
             // Şifre doğruysa, size verilen anahtarı (token) tarayıcının hafızasına kaydet
-            localStorage.setItem('harmonyToken', veri.token);
+            localStorage.setItem('ranaToken', veri.token);
             // Yönetim paneline yönlendir
             window.location.href = 'admin.html';
         } else {
