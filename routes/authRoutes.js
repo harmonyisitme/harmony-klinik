@@ -6,9 +6,9 @@ router.post('/login', (req, res) => {
     const { kullaniciAdi, sifre } = req.body;
 
     // Gelen bilgileri .env dosyasındaki bilgilerle karşılaştır
-    if (kullaniciAdi === process.env.ADMIN_KULLANICI && sifre === process.env.ADMIN_SIFRE) {
+    if (kullaniciAdi === process.env.ADMIN_KULLANICI && sifre === process.env.ADMIN_SIFRE) { // Bu satırda bir değişiklik yok, sadece bağlam için gösterildi.
         // Doğruysa token gönder (Middleware ile aynı mantıkta)
-        const token = process.env.ADMIN_TOKEN || 'harmony-admin-gizli-anahtar';
+        const token = process.env.ADMIN_TOKEN || 'rana-admin-gizli-anahtar';
         res.status(200).json({ mesaj: 'Giriş başarılı!', token: token });
     } else {
         // Yanlışsa hata fırlat

@@ -20,7 +20,7 @@ if (process.env.DATABASE_URL) {
   // Geliştirme ortamı için SQLite kullan
   sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: path.join(__dirname, '../harmony_klinik.sqlite'),
+    storage: path.join(__dirname, '../rana_klinik.sqlite'),
     logging: false
   });
 }
