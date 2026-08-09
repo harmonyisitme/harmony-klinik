@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürünlerimiz | Rana Klinik</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Ürün Modal Stilleri */
+        .product-modal { display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
+        .product-modal-content { background-color: #fefefe; margin: auto; padding: 30px; border: 1px solid #888; width: 90%; max-width: 800px; border-radius: 10px; position: relative; display: flex; gap: 30px; }
+        .product-modal-image { flex: 1; }
+        .product-modal-image img { width: 100%; max-height: 400px; object-fit: cover; border-radius: 8px; }
+        .product-modal-details { flex: 1; }
+        .product-modal-details h2 { margin-top: 0; color: var(--primary-color); }
+        .product-modal-details .category { font-size: 16px; color: var(--accent-color); margin-bottom: 15px; font-weight: 600; }
+        .product-modal-details .description { font-size: 16px; line-height: 1.7; color: #555; max-height: 200px; overflow-y: auto; }
+        .close-product-modal { color: #aaa; position: absolute; top: 15px; right: 25px; font-size: 35px; font-weight: bold; cursor: pointer; }
+        .close-product-modal:hover, .close-product-modal:focus { color: black; text-decoration: none; }
+        @media (max-width: 768px) {
+            .product-modal-content { flex-direction: column; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="contact-info">
+                <span id="headerTelefon"><i class="fas fa-phone-alt"></i> 0212 123 45 67</span>
+                <span id="headerEmail"><i class="fas fa-envelope"></i> info@ranaklinik.com</span>
+                <span id="headerAdres" class="hide-mobile"><i class="fas fa-map-marker-alt"></i> Kadıköy, İstanbul</span>
+            </div>
+            <div class="social-icons-top" id="headerSocials">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="navbar">
+        <a href="index.html" class="logo" style="text-decoration: none;">Rana<span>.</span></a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Ana Sayfa</a></li>
+                <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                <li><a href="urunler.html" style="color: var(--primary-color);">Ürünlerimiz</a></li>
+                <li><a href="index.html#services">Hizmetler</a></li>
+                <li><a href="index.html#blog">Blog</a></li>
+                <li><a href="iletisim.html">İletişim</a></li>
+                <li><a href="index.html#randevu">Randevu Al</a></li>
+            </ul>
+        </nav>
+        <div class="hamburger">
+            <div class="line1"></div><div class="line2"></div><div class="line3"></div>
+        </div>
+        <a href="index.html#randevu" class="btn-primary">Randevu Al</a>
+    </header>
+
+    <section class="product-hero">
+        <div class="container hero-inner">
+            <div class="hero-copy">
+                <span class="eyebrow">İŞİTME CİHAZLARI</span>
+                <h1>İşitme Cihazları Çeşitleri ve Aksesuarları</h1>
+                <p>En yeni markalar, profesyonel destekli çözümler ve kişiye özel işitme cihazları ile yaşam kalitenizi artırın.</p>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <strong>100+</strong>
+                    <p>Modeller ve aksesuarlar</p>
+                </div>
+                <div class="stat-card">
+                    <strong>7/24</strong>
+                    <p>Uzman desteği</p>
+                </div>
+                <div class="stat-card">
+                    <strong>Yerli &amp; Global</strong>
+                    <p>Güvenilir marka seçenekleri</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-catalog">
+        <div class="container">
+            <div class="product-layout">
+                <aside class="product-sidebar">
+                    <div class="sidebar-card">
+                        <h3>Kategoriler</h3>
+                        <ul class="category-list" id="categoryList"></ul>
+                    </div>
+                    <div class="sidebar-card">
+                        <h3>Markalar</h3>
+                        <ul class="brand-list" id="brandList"></ul>
+                    </div>
+                    <div class="sidebar-card">
+                        <h3>Etiketler</h3>
+                        <div class="tag-list" id="tagList"></div>
+                    </div>
+                    <div class="sidebar-card sidebar-info">
+                        <h3>Ürün Seçimi</h3>
+                        <p>Yaşam tarzınıza uygun işitme cihazını seçmek için ürün açıklamalarına göz atın ve keşfedin.</p>
+                    </div>
+                </aside>
+
+                <main class="product-grid-section">
+                    <div class="product-grid-header">
+                        <div>
+                            <span class="section-label">Ürünlerimiz</span>
+                            <h2>İşitme cihazları kategorilere göre sıralanmıştır.</h2>
+                        </div>
+                        <div class="product-grid-meta">
+                            <span>Güncel ürün listesi</span>
+                        </div>
+                    </div>
+
+                    <div id="urunler-listesi" class="products-grid">
+                        <!-- Ürünler buraya dinamik olarak eklenecek -->
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-detail-section">
+        <div class="container">
+            <div class="article-card">
+                <h2>İşitme cihazları nedir?</h2>
+                <p>İşitme cihazları, işitme kaybı yaşayan bireylerin sesleri daha net algılamasına yardımcı olmak için tasarlanmış teknolojik cihazlardır. Çevreden gelen sesleri alır, işler ve kulak kanalına iletir.</p>
+                <p>Bu cihazlar, farklı işitme kaybı tipleri ve yaşam tarzlarına uygun olarak birçok model ve özelliklerle sunulur. Kulak içi, kulak arkası, bluetooth destekli ve şarj edilebilir modellerle günlük kullanım kolaylığı sağlar.</p>
+                <p>Doğru ürün seçimi, profesyonel bir işitme uzmanı tarafından yapılan ölçüm ve testlerle desteklenmelidir. Bu sayfa üzerinden modelleri keşfedebilir, ürün detaylarını inceleyebilir ve ihtiyaçlarınıza uygun seçimi yapabilirsiniz.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo">Rana<span>.</span></a>
+                <p>İşitme sağlığınız için en doğru adres. Uzman kadromuz ve son teknoloji cihazlarımızla hizmetinizdeyiz.</p>
+                <div class="social-links" id="footerSocials">
+                    <!-- Sosyal medya ikonları app.js tarafından eklenecek -->
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Hızlı Menü</h4>
+                <ul>
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                    <li><a href="urunler.html">Ürünlerimiz</a></li>
+                    <li><a href="index.html#services">Hizmetler</a></li>
+                    <li><a href="index.html#blog">Blog</a></li>
+                    <li><a href="iletisim.html">İletişim</a></li>
+                    <li><a href="index.html#randevu">Randevu Al</a></li>
+                </ul>
+            </div>
+            <div class="footer-col" id="footerSaatler">
+                <h4>Çalışma Saatleri</h4>
+                <!-- Çalışma saatleri app.js tarafından eklenecek -->
+            </div>
+            <div class="footer-col">
+                <h4>İletişim</h4>
+                <ul id="footerIletisim">
+                    <!-- İletişim bilgileri app.js tarafından eklenecek -->
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2024 Rana Klinik. Tüm Hakları Saklıdır.</p>
+                <div class="footer-links">
+                    <a href="javascript:void(0)" onclick="yasalMetinGoster('gizlilik')">Gizlilik Politikası</a>
+                    <a href="javascript:void(0)" onclick="yasalMetinGoster('sartlar')">Kullanım Şartları</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Ürün Detay Modalı -->
+    <div id="productModal" class="product-modal">
+        <div class="product-modal-content">
+            <span id="closeProductModal" class="close-product-modal">&times;</span>
+            <div class="product-modal-image">
+                <img id="productModalImage" src="" alt="Ürün Görseli">
+            </div>
+            <div class="product-modal-details">
+                <h2 id="productModalName"></h2>
+                <div id="productModalCategory" class="category"></div>
+                <div id="productModalStock" class="product-stock"></div>
+                <p id="productModalDescription" class="description"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Butonu -->
+    <button id="scrollTopBtn" class="scroll-top-btn" title="Yukarı Çık"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+
+    <script src="app.js"></script>
+    <script src="urunler.js"></script>
+</body>
+</html>
