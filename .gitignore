@@ -1,5 +1,8 @@
 # Node.js bağımlılıkları
 node_modules/
+rana_klinik.sqlite
+.sqlite3
+frontend/uploads/
 
 # Ortam değişkenleri
 .env
