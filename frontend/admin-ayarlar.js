@@ -185,7 +185,7 @@ document.getElementById('ayarlarFormu').addEventListener('submit', async (e) => 
         if (fileInput.files.length === 0) return currentUrl;
         const formData = new FormData();
         formData.append('dosya', fileInput.files[0]);
-        const response = await fetch(`${API_URL}/upload`, { method: 'POST', headers: { 'x-auth-token': localStorage.getItem('ranaToken') }, body: formData });
+        const response = await fetch(${API_URL}/api/upload, { method: 'POST', headers: { 'x-auth-token': localStorage.getItem('ranaToken') }, body: formData });
         if (response.ok) return (await response.json()).url;
         return currentUrl;
     };
