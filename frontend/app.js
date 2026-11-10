@@ -136,7 +136,21 @@ document.addEventListener('DOMContentLoaded', () => {
             whatsappRandevu();
         }, true);
     }
+// Eski randevu formunu ziyaretçilerden gizle
+document.addEventListener('DOMContentLoaded', function () {
+    const eskiForm = document.getElementById('randevuFormu');
 
+    if (eskiForm) {
+        const modal = eskiForm.closest('.modal, .randevu-modal, #randevuModal');
+
+        if (modal) {
+            modal.style.display = 'none';
+            modal.remove();
+        } else {
+            eskiForm.style.display = 'none';
+        }
+    }
+});
     // DİNAMİK SİTE AYARLARI
     let dynamicServiceDetails = {};
     let yasalMetinlerData = {};
