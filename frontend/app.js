@@ -94,16 +94,20 @@ document.addEventListener('DOMContentLoaded', () => {
             yasalMetinlerData = ayarlar.yasalMetinler || {};
 
             if (ayarlar.logo) {
-                document.querySelectorAll('.logo, .footer-logo').forEach(el => {
-                    const img = document.createElement('img');
-                    img.src = ayarlar.logo;
-                    img.alt = 'Rana İşitme Merkezi';
-                    img.style.height = '40px';
-                    img.style.verticalAlign = 'middle';
-                    el.replaceChildren(img);
-                });
-            }
-
+    document.querySelectorAll('.logo, .footer-logo').forEach(el => {
+        const img = document.createElement('img');
+        img.src = ayarlar.logo;
+        img.alt = 'Rana İşitme Merkezi';
+        img.style.height = el.classList.contains('logo') ? '55px' : '40px';
+        img.style.width = 'auto';
+        img.style.maxWidth = '180px';
+        img.style.objectFit = 'contain';
+        img.onerror = () => {
+            img.remove();
+        };
+        el.replaceChildren(img);
+    });
+}
             if (ayarlar.favicon) {
                 let favicon = document.querySelector("link[rel~='icon']");
                 if (!favicon) {
