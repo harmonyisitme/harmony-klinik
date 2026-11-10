@@ -250,10 +250,13 @@ document.getElementById('ayarlarFormu').addEventListener('submit', async (e) => 
             body: JSON.stringify(veri)
         });
 
-        if (response.ok) alert('Ayarlar başarıyla güncellendi!');
-        else alert('Hata oluştu.');
-    } catch (error) {
-        alert('Sunucu hatası.');
+       const sonuc = await response.json();
+
+if (response.ok) {
+    alert('Ayarlar başarıyla güncellendi!');
+} else {
+    alert('Hata: ' + (sonuc.hata || sonuc.mesaj || 'Bilinmeyen hata'));
+}
     } finally { btn.disabled = false; btn.innerText = 'Ayarları Kaydet'; }
 });
 
