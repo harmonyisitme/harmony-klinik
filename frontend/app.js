@@ -1306,3 +1306,30 @@ function initKVKK() {
         }
     });
 }
+
+/* MOBİL MENÜ - ÜRÜNLER VE DİĞER BAĞLANTILAR */
+document.addEventListener('DOMContentLoaded', function () {
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (!hamburger || !navLinks) return;
+
+    hamburger.addEventListener('click', function () {
+        navLinks.classList.toggle('nav-active');
+        hamburger.classList.toggle('toggle');
+    });
+
+    navLinks.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+            navLinks.classList.remove('nav-active');
+            hamburger.classList.remove('toggle');
+        });
+    });
+
+    hamburger.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            hamburger.click();
+        }
+    });
+});
