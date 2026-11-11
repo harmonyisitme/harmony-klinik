@@ -1,7 +1,12 @@
-/* Rana İşitme Merkezi - Ürünler Sayfası */
+
+/* RANA İŞİTME MERKEZİ - ÜRÜNLER SAYFASI */
 
 document.addEventListener("DOMContentLoaded", () => {
     "use strict";
+
+    const WHATSAPP_NUMBER = "905519849333";
+    const DEFAULT_MESSAGE =
+        "Merhaba, Rana İşitme Merkezi üzerinden bilgi almak istiyorum. Yardımcı olabilir misiniz?";
 
     const productList = document.getElementById("urunler-listesi");
     const categoryList = document.getElementById("categoryList");
@@ -28,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
         tag: []
     };
 
-    // Ürün adından tanınabilecek özellik etiketleri
     const knownTags = [
         "Bluetooth",
         "Şarjlı",
@@ -51,6 +55,31 @@ document.addEventListener("DOMContentLoaded", () => {
         return String(value).trim();
     }
 
+    function whatsappUrl(message) {
+        return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    }
+
+    // Sayfadaki WhatsApp bağlantılarına hazır mesaj ekle.
+    document.querySelectorAll('a[href*="wa.me/"]').forEach(link => {
+        const originalUrl = link.getAttribute("href") || "";
+        let message = DEFAULT_MESSAGE;
+
+        try {
+            const url = new URL(originalUrl, window.location.href);
+            const existingMessage = url.searchParams.get("text");
+
+            if (existingMessage) {
+                message = existingMessage;
+            }
+        } catch (error) {
+            console.warn("WhatsApp bağlantısı kontrol edilemedi:", error);
+        }
+
+        link.href = whatsappUrl(message);
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+    });
+
     function getProductTags(product) {
         const name = cleanValue(product.ad).toLocaleLowerCase("tr-TR");
         const category = cleanValue(product.kategori).toLocaleLowerCase("tr-TR");
@@ -61,38 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return knownTags.filter(tag =>
             searchableText.includes(tag.toLocaleLowerCase("tr-TR"))
         );
-    }
-
-    function getStockText(product) {
-        const stock = product.stokDurumu;
-
-        if (stock === false || stock === 0) {
-            return "Bilgi Alınız";
-        }
-
-        const value = cleanValue(stock).toLocaleLowerCase("tr-TR");
-
-        if (
-            value.includes("yok") ||
-            value.includes("tükendi") ||
-            value.includes("stokta değil") ||
-            value === "false" ||
-            value === "0"
-        ) {
-            return "Bilgi Alınız";
-        }
-
-        if (
-            value.includes("var") ||
-            value.includes("mevcut") ||
-            value.includes("stokta") ||
-            value === "true" ||
-            value === "1"
-        ) {
-            return "Bilgi Alınız";
-        }
-
-        return value ? cleanValue(stock) : "Bilgi Alınız";
     }
 
     function isAvailable(product) {
@@ -109,6 +106,10 @@ document.addEventListener("DOMContentLoaded", () => {
             value === "false" ||
             value === "0"
         );
+    }
+
+    function getStockText(product) {
+        return isAvailable(product) ? "Bilgi Alınız" : "Bilgi Alınız";
     }
 
     function createFilterOption(container, value, type) {
@@ -175,7 +176,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         const allTags = allProducts.flatMap(product => getProductTags(product));
-
         renderFilterList(tagList, allTags, "tag");
     }
 
@@ -199,38 +199,37 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function createProductCard(product, index) {
+    function createProductCard(product) {
         const card = document.createElement("article");
         card.className = "product-card";
 
         const imageArea = document.createElement("div");
         imageArea.className = "product-card-image";
 
-        const image = document.createElement("img");
-        image.alt = cleanValue(product.ad) || "İşitme cihazı";
-        image.loading = "lazy";
-
         const imageUrl = cleanValue(product.gorselUrl);
 
         if (imageUrl) {
+            const image = document.createElement("img");
             image.src = imageUrl;
+            image.alt = cleanValue(product.ad) || "İşitme cihazı";
+            image.loading = "lazy";
+
             image.addEventListener("error", () => {
-                imageArea.innerHTML = "";
+                image.remove();
+
                 const placeholder = document.createElement("div");
-                placeholder.style.color = "#c92335";
-                placeholder.style.fontSize = "42px";
+                placeholder.className = "product-image-placeholder";
                 placeholder.innerHTML = '<i class="fas fa-ear-listen"></i>';
                 imageArea.appendChild(placeholder);
             }, { once: true });
+
+            imageArea.appendChild(image);
         } else {
             const placeholder = document.createElement("div");
-            placeholder.style.color = "#c92335";
-            placeholder.style.fontSize = "42px";
+            placeholder.className = "product-image-placeholder";
             placeholder.innerHTML = '<i class="fas fa-ear-listen"></i>';
             imageArea.appendChild(placeholder);
         }
-
-        if (imageUrl) imageArea.appendChild(image);
 
         const content = document.createElement("div");
         content.className = "product-card-content";
@@ -245,7 +244,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const description = document.createElement("p");
         description.className = "product-card-description";
         description.textContent =
-            cleanValue(product.aciklama) || "Ürün hakkında detaylı bilgi almak için bizimle iletişime geçebilirsiniz.";
+            cleanValue(product.aciklama) ||
+            "Ürün hakkında detaylı bilgi almak için bizimle iletişime geçebilirsiniz.";
 
         const footer = document.createElement("div");
         footer.className = "product-card-footer";
@@ -257,14 +257,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const stock = document.createElement("span");
         stock.className = "product-stock";
 
-        const available = isAvailable(product);
-
-        if (!available) {
+        if (!isAvailable(product)) {
             stock.classList.add("unavailable");
         }
 
         const stockIcon = document.createElement("i");
-        stockIcon.className = available
+        stockIcon.className = isAvailable(product)
             ? "fas fa-check-circle"
             : "fas fa-info-circle";
 
@@ -280,7 +278,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const detailButton = document.createElement("button");
         detailButton.type = "button";
         detailButton.className = "product-detail-button";
-        detailButton.innerHTML = '<i class="fas fa-eye"></i> Ürün Detaylarını İncele';
+        detailButton.innerHTML =
+            '<i class="fas fa-eye"></i> Ürün Detaylarını İncele';
 
         detailButton.addEventListener("click", () => {
             openProductModal(product);
@@ -318,7 +317,8 @@ document.addEventListener("DOMContentLoaded", () => {
             icon.className = "fas fa-search";
 
             const text = document.createElement("p");
-            text.textContent = "Seçtiğiniz filtrelere uygun ürün bulunamadı. Filtreleri temizleyerek tekrar deneyebilirsiniz.";
+            text.textContent =
+                "Seçtiğiniz filtrelere uygun ürün bulunamadı. Filtreleri temizleyerek tekrar deneyebilirsiniz.";
 
             message.appendChild(icon);
             message.appendChild(text);
@@ -326,19 +326,32 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        filteredProducts.forEach((product, index) => {
-            productList.appendChild(createProductCard(product, index));
+        filteredProducts.forEach(product => {
+            productList.appendChild(createProductCard(product));
         });
     }
 
     function openProductModal(product) {
         if (!productModal) return;
 
-        modalName.textContent = cleanValue(product.ad) || "Ürün Detayı";
-        modalCategory.textContent = cleanValue(product.kategori) || "İşitme Cihazı";
-        modalStock.textContent = getStockText(product);
-        modalDescription.textContent =
-            cleanValue(product.aciklama) || "Bu ürün hakkında detaylı bilgi almak için bizimle iletişime geçebilirsiniz.";
+        if (modalName) {
+            modalName.textContent = cleanValue(product.ad) || "Ürün Detayı";
+        }
+
+        if (modalCategory) {
+            modalCategory.textContent =
+                cleanValue(product.kategori) || "İşitme Cihazı";
+        }
+
+        if (modalStock) {
+            modalStock.textContent = getStockText(product);
+        }
+
+        if (modalDescription) {
+            modalDescription.textContent =
+                cleanValue(product.aciklama) ||
+                "Bu ürün hakkında detaylı bilgi almak için bizimle iletişime geçebilirsiniz.";
+        }
 
         const imageUrl = cleanValue(product.gorselUrl);
 
@@ -346,6 +359,20 @@ document.addEventListener("DOMContentLoaded", () => {
             modalImage.src = imageUrl;
             modalImage.alt = cleanValue(product.ad) || "İşitme cihazı";
             modalImage.style.display = imageUrl ? "block" : "none";
+        }
+
+        const modalWhatsApp = productModal.querySelector(
+            'a[href*="wa.me/"]'
+        );
+
+        if (modalWhatsApp) {
+            const productName = cleanValue(product.ad) || "ürün";
+            const message =
+                `Merhaba, ${productName} hakkında bilgi almak istiyorum. Yardımcı olabilir misiniz?`;
+
+            modalWhatsApp.href = whatsappUrl(message);
+            modalWhatsApp.target = "_blank";
+            modalWhatsApp.rel = "noopener noreferrer";
         }
 
         productModal.classList.add("active");
@@ -407,11 +434,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const result = await response.json();
 
-            if (!result || !Array.isArray(result.veri)) {
+            const products = Array.isArray(result)
+                ? result
+                : result && Array.isArray(result.veri)
+                    ? result.veri
+                    : null;
+
+            if (!products) {
                 throw new Error("Ürün verileri beklenen formatta gelmedi.");
             }
 
-            allProducts = result.veri;
+            allProducts = products;
 
             renderFilters();
             renderProducts();
@@ -428,7 +461,8 @@ document.addEventListener("DOMContentLoaded", () => {
             icon.className = "fas fa-exclamation-circle";
 
             const text = document.createElement("p");
-            text.textContent = "Ürünler şu anda yüklenemiyor. Lütfen sayfayı yenileyin veya bizimle iletişime geçin.";
+            text.textContent =
+                "Ürünler şu anda yüklenemiyor. Lütfen sayfayı yenileyin veya bizimle iletişime geçin.";
 
             message.appendChild(icon);
             message.appendChild(text);
