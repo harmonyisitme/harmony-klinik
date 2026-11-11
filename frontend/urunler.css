@@ -1,4 +1,8 @@
-/* RANA İŞİTME MERKEZİ - ÜRÜNLER SAYFASI */
+
+/* =====================================================
+   RANA İŞİTME MERKEZİ
+   ÜRÜNLER SAYFASI - RESPONSIVE CSS
+   ===================================================== */
 
 :root {
     --rana-red: #c92335;
@@ -10,17 +14,44 @@
     --rana-white: #ffffff;
 }
 
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
+html {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+    scroll-behavior: smooth;
+}
+
 body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    overflow-x: clip;
     color: var(--rana-text);
     background: #fff;
+    font-family: 'Poppins', sans-serif;
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+img {
+    max-width: 100%;
 }
 
 a {
     text-decoration: none;
+}
+
+button,
+input {
+    font: inherit;
 }
 
 .container {
@@ -28,7 +59,7 @@ a {
     margin: 0 auto;
 }
 
-/* ÜST BİLGİ ALANI */
+/* ÜST BİLGİ */
 
 .top-bar {
     background: #f7f7f7;
@@ -45,13 +76,13 @@ a {
     gap: 15px;
 }
 
-/* NAVİGASYON */
+/* MENÜ */
 
-header,
 .site-header {
-    background: #fff;
     position: relative;
-    z-index: 20;
+    z-index: 1000;
+    width: 100%;
+    background: #fff;
 }
 
 .navbar {
@@ -64,6 +95,7 @@ header,
 
 .logo,
 .navbar .logo {
+    flex-shrink: 0;
     color: var(--rana-red);
     font-size: 30px;
     font-weight: 800;
@@ -73,15 +105,19 @@ header,
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 27px;
+    gap: 22px;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
+.nav-links li {
+    list-style: none;
+}
+
 .nav-links a {
     color: #333;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     transition: color .2s ease;
 }
@@ -93,25 +129,37 @@ header,
 
 .nav-links a.nav-appointment,
 .nav-links .appointment-link {
+    display: inline-block;
     background: var(--rana-red);
     color: #fff;
     padding: 12px 19px;
     border-radius: 6px;
 }
 
+.nav-links a.nav-appointment:hover {
+    background: var(--rana-red-dark);
+    color: #fff;
+}
+
 .hamburger {
     display: none;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
     border: 0;
-    background: transparent;
-    color: var(--rana-text);
-    font-size: 25px;
+    border-radius: 7px;
+    background: #fff5f6;
+    color: var(--rana-red);
+    font-size: 23px;
     cursor: pointer;
 }
 
-/* ÜRÜN SAYFASI ÜST ALANI */
+/* HERO */
 
 .product-hero {
     position: relative;
+    isolation: isolate;
     overflow: hidden;
     background: linear-gradient(115deg, #fff 0%, #fff7f7 100%);
     padding: 76px 0 68px;
@@ -121,6 +169,7 @@ header,
 .product-hero::after {
     content: "";
     position: absolute;
+    z-index: -1;
     width: 390px;
     height: 390px;
     border: 65px solid rgba(201, 35, 53, .045);
@@ -132,7 +181,6 @@ header,
 
 .hero-inner {
     position: relative;
-    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -140,6 +188,8 @@ header,
 }
 
 .hero-copy {
+    flex: 1;
+    min-width: 0;
     max-width: 680px;
 }
 
@@ -185,12 +235,14 @@ header,
 
 .hero-stats {
     display: grid;
-    grid-template-columns: repeat(2, minmax(130px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 13px;
-    min-width: 285px;
+    width: 310px;
+    flex-shrink: 0;
 }
 
 .hero-stat {
+    min-width: 0;
     padding: 23px 18px;
     background: #fff;
     border: 1px solid #f0e4e5;
@@ -207,6 +259,7 @@ header,
 }
 
 .hero-stat span {
+    display: block;
     color: #777;
     font-size: 12px;
     line-height: 1.5;
@@ -234,11 +287,13 @@ header,
 .catalog-heading h2 {
     margin: 9px 0 10px;
     font-size: clamp(27px, 3vw, 36px);
+    line-height: 1.3;
     letter-spacing: -.8px;
     color: #262626;
 }
 
 .catalog-heading p {
+    max-width: 750px;
     margin: 0;
     color: #777;
     font-size: 15px;
@@ -255,9 +310,11 @@ header,
 .product-sidebar {
     position: sticky;
     top: 20px;
+    min-width: 0;
 }
 
 .sidebar-card {
+    min-width: 0;
     padding: 24px 21px;
     background: #fff;
     border: 1px solid var(--rana-border);
@@ -284,6 +341,7 @@ header,
     display: flex;
     flex-direction: column;
     gap: 12px;
+    min-width: 0;
 }
 
 .filter-option {
@@ -299,6 +357,7 @@ header,
 .filter-option input {
     width: 16px;
     height: 16px;
+    flex-shrink: 0;
     accent-color: var(--rana-red);
     cursor: pointer;
 }
@@ -330,17 +389,19 @@ header,
     border-color: var(--rana-red);
 }
 
-/* ÜRÜN LİSTESİ */
+/* ÜRÜN SONUÇLARI */
 
 .product-results {
     min-width: 0;
+    width: 100%;
 }
 
 .product-results-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
+    flex-wrap: wrap;
+    gap: 12px;
     margin-bottom: 20px;
 }
 
@@ -356,8 +417,16 @@ header,
 
 #urunler-listesi {
     display: grid;
+    width: 100%;
+    min-width: 0;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
     gap: 22px;
+}
+
+#urunler-listesi > * {
+    min-width: 0;
+    max-width: 100%;
 }
 
 .product-card {
@@ -365,6 +434,7 @@ header,
     display: flex;
     flex-direction: column;
     min-width: 0;
+    width: 100%;
     background: #fff;
     border: 1px solid #ededed;
     border-radius: 12px;
@@ -378,6 +448,7 @@ header,
 }
 
 .product-card-image {
+    width: 100%;
     height: 220px;
     padding: 20px;
     display: flex;
@@ -389,6 +460,7 @@ header,
 
 .product-card-image img {
     display: block;
+    max-width: 100%;
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -403,6 +475,7 @@ header,
     display: flex;
     flex: 1;
     flex-direction: column;
+    min-width: 0;
     padding: 20px;
 }
 
@@ -416,6 +489,7 @@ header,
 }
 
 .product-card h3 {
+    overflow-wrap: anywhere;
     margin: 0 0 10px;
     color: #292929;
     font-size: 17px;
@@ -428,12 +502,14 @@ header,
     font-size: 13px;
     line-height: 1.7;
     margin: 0 0 16px;
+    overflow-wrap: anywhere;
 }
 
 .product-card-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 10px;
     margin-top: auto;
     padding-top: 14px;
@@ -460,6 +536,7 @@ header,
 }
 
 .product-detail-button {
+    display: block;
     width: 100%;
     margin-top: 15px;
     padding: 12px 15px;
@@ -469,12 +546,14 @@ header,
     color: #fff;
     font-size: 13px;
     font-weight: 700;
+    text-align: center;
     cursor: pointer;
     transition: background .2s ease;
 }
 
 .product-detail-button:hover {
     background: var(--rana-red-dark);
+    color: #fff;
 }
 
 .products-message {
@@ -495,7 +574,7 @@ header,
     font-size: 28px;
 }
 
-/* BİLGİLENDİRME ALANI */
+/* BİLGİLENDİRME */
 
 .product-detail-section {
     padding: 75px 0;
@@ -503,6 +582,7 @@ header,
 }
 
 .article-card {
+    width: 100%;
     max-width: 920px;
     margin: 0 auto;
     padding: 42px;
@@ -535,7 +615,7 @@ header,
     margin: 0 0 15px;
 }
 
-/* ÜRÜN DETAY PENCERESİ */
+/* ÜRÜN MODALI */
 
 .product-modal {
     display: none;
@@ -558,7 +638,7 @@ header,
     max-height: 90vh;
     overflow-y: auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     background: #fff;
     border-radius: 14px;
     box-shadow: 0 20px 70px rgba(0, 0, 0, .2);
@@ -580,6 +660,7 @@ header,
 }
 
 .product-modal-image-wrap {
+    min-width: 0;
     min-height: 350px;
     padding: 35px;
     display: flex;
@@ -595,6 +676,7 @@ header,
 }
 
 .product-modal-info {
+    min-width: 0;
     padding: 55px 35px 35px;
 }
 
@@ -607,6 +689,7 @@ header,
 }
 
 .product-modal-info h2 {
+    overflow-wrap: anywhere;
     margin: 12px 0;
     font-size: 27px;
     line-height: 1.3;
@@ -632,6 +715,7 @@ header,
 /* FOOTER */
 
 .footer {
+    width: 100%;
     background: #242424;
     color: #fff;
     padding: 55px 0 25px;
@@ -686,7 +770,7 @@ header,
     box-shadow: 0 5px 18px rgba(201, 35, 53, .25);
 }
 
-/* YÜKLENİYOR */
+/* ÖN YÜKLEYİCİ */
 
 #preloader {
     background: #fff;
@@ -695,17 +779,29 @@ header,
 /* TABLET */
 
 @media (max-width: 1050px) {
+    .nav-links {
+        gap: 14px;
+    }
+
+    .nav-links a {
+        font-size: 12px;
+    }
+
+    .product-layout {
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 20px;
+    }
+
     #urunler-listesi {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .product-layout {
-        grid-template-columns: 225px minmax(0, 1fr);
-        gap: 20px;
+    .hero-inner {
+        gap: 30px;
     }
 
-    .nav-links {
-        gap: 17px;
+    .hero-stats {
+        width: 285px;
     }
 }
 
@@ -713,7 +809,7 @@ header,
 
 @media (max-width: 760px) {
     .container {
-        width: min(100% - 30px, 600px);
+        width: calc(100% - 30px);
     }
 
     .top-bar {
@@ -725,31 +821,48 @@ header,
     }
 
     .hamburger {
-        display: block;
+        display: flex;
+        flex-shrink: 0;
     }
 
     .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
+        display: flex;
+        position: fixed;
+        top: 70px;
         left: 0;
         right: 0;
-        padding: 18px 22px 24px;
+        width: 100%;
+        max-height: calc(100dvh - 70px);
+        overflow-y: auto;
+        padding: 15px 22px 25px;
         background: #fff;
         border-top: 1px solid #eee;
         box-shadow: 0 12px 20px rgba(0,0,0,.08);
         flex-direction: column;
         align-items: stretch;
         gap: 0;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-8px);
+        transition: opacity .2s ease, transform .2s ease, visibility .2s ease;
     }
 
-    .nav-links.active {
-        display: flex;
+    .nav-links.nav-active {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .nav-links li {
+        width: 100%;
     }
 
     .nav-links li a {
         display: block;
         padding: 13px 5px;
+        font-size: 14px;
     }
 
     .nav-links a.nav-appointment,
@@ -768,8 +881,13 @@ header,
         gap: 30px;
     }
 
+    .hero-copy {
+        max-width: 100%;
+    }
+
     .hero-copy h1 {
-        font-size: 38px;
+        font-size: clamp(32px, 8vw, 40px);
+        letter-spacing: -1px;
     }
 
     .hero-copy p {
@@ -777,6 +895,7 @@ header,
     }
 
     .hero-stats {
+        width: 100%;
         min-width: 0;
     }
 
@@ -785,13 +904,14 @@ header,
     }
 
     .product-layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 22px;
     }
 
     .product-sidebar {
         position: static;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 12px;
     }
 
@@ -801,6 +921,10 @@ header,
     }
 
     .sidebar-card:last-of-type {
+        grid-column: 1 / -1;
+    }
+
+    .clear-filters {
         grid-column: 1 / -1;
     }
 
@@ -843,9 +967,13 @@ header,
         font-size: 24px;
     }
 
+    .article-card p {
+        font-size: 14px;
+    }
+
     .product-modal-content {
-        grid-template-columns: 1fr;
-        max-width: 480px;
+        grid-template-columns: minmax(0, 1fr);
+        width: min(480px, 100%);
     }
 
     .product-modal-image-wrap {
@@ -867,114 +995,80 @@ header,
     }
 }
 
+/* KÜÇÜK TELEFONLAR */
+
 @media (max-width: 420px) {
+    .container {
+        width: calc(100% - 24px);
+    }
+
+    .hero-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero-stat {
+        padding: 17px 13px;
+    }
+
+    .hero-stat strong {
+        font-size: 22px;
+    }
+
+    .product-sidebar {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .sidebar-card:last-of-type,
+    .clear-filters {
+        grid-column: auto;
+    }
+
     #urunler-listesi {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .product-card-image {
         height: 210px;
     }
 
-    .product-sidebar {
-        grid-template-columns: 1fr;
+    .product-card-content {
+        padding: 17px;
     }
 
-    .sidebar-card:last-of-type {
-        grid-column: auto;
+    .product-card h3 {
+        font-size: 16px;
     }
 
-    .hero-stats {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-/* ÜRÜNLER SAYFASI - ESKİ CSS ÇAKIŞMALARINI DÜZELT */
-
-.product-hero .hero-inner {
-    display: flex !important;
-    grid-template-columns: none !important;
-    text-align: left !important;
-    padding: 0 !important;
-}
-
-.product-hero .hero-stats {
-    display: grid !important;
-}
-
-.product-layout {
-    display: grid !important;
-    grid-template-columns: 255px minmax(0, 1fr) !important;
-    gap: 30px !important;
-    align-items: start !important;
-}
-
-.product-sidebar {
-    order: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    min-width: 0 !important;
-}
-
-.product-results {
-    order: 1 !important;
-    display: block !important;
-    width: 100% !important;
-    min-width: 0 !important;
-}
-
-#urunler-listesi {
-    display: grid !important;
-    width: 100% !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 22px !important;
-}
-
-#urunler-listesi .product-card {
-    width: 100% !important;
-    min-width: 0 !important;
-}
-
-@media (max-width: 1050px) {
-    .product-layout {
-        grid-template-columns: 220px minmax(0, 1fr) !important;
+    .product-card-description {
+        font-size: 13px;
     }
 
-    #urunler-listesi {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    .product-results-top {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .article-card {
+        padding: 22px 17px;
+    }
+
+    .product-modal {
+        padding: 10px;
+    }
+
+    .product-modal-content {
+        max-height: 95vh;
     }
 }
 
-@media (max-width: 760px) {
-    .product-hero .hero-inner {
-        flex-direction: column !important;
-        text-align: left !important;
-    }
+/* HAREKET AZALTMA TERCİHİ */
 
-    .product-layout {
-        grid-template-columns: minmax(0, 1fr) !important;
-    }
-
-    .product-sidebar {
-        order: 0 !important;
-        display: grid !important;
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
-
-    .product-results {
-        order: 1 !important;
-    }
-
-    #urunler-listesi {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
-}
-
-@media (max-width: 420px) {
-    #urunler-listesi {
-        grid-template-columns: 1fr !important;
-    }
-
-    .product-sidebar {
-        grid-template-columns: 1fr !important;
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
     }
 }
