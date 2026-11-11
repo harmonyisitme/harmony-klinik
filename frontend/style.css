@@ -1274,3 +1274,211 @@ input:focus, select:focus, textarea:focus {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+/* ==========================================
+   RANA İŞİTME MERKEZİ
+   MOBİL UYUMLULUK DÜZENLEMELERİ
+   Mevcut tasarımı korur.
+========================================== */
+
+@media screen and (max-width: 768px) {
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    img,
+    video,
+    iframe,
+    svg {
+        max-width: 100%;
+    }
+
+    /* Üst menü */
+    .top-bar {
+        display: none !important;
+    }
+
+    .navbar {
+        width: 100%;
+        padding: 12px 18px;
+        min-height: 65px;
+        z-index: 9999;
+    }
+
+    .hamburger {
+        display: flex !important;
+        flex-direction: column;
+        cursor: pointer;
+        z-index: 10002;
+    }
+
+    .nav-links {
+        position: fixed !important;
+        top: 65px !important;
+        right: 0 !important;
+        left: auto !important;
+        width: min(82vw, 330px) !important;
+        height: calc(100vh - 65px) !important;
+        height: calc(100dvh - 65px) !important;
+        padding: 25px 20px;
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 22px;
+        background: #ffffff;
+        overflow-y: auto;
+        z-index: 10001;
+        transform: translateX(110%);
+        transition: transform 0.3s ease;
+        visibility: hidden;
+    }
+
+    .nav-links.nav-active {
+        transform: translateX(0);
+        visibility: visible;
+    }
+
+    .nav-links li {
+        opacity: 1 !important;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 10px;
+    }
+
+    /* Ana sayfa giriş alanı */
+    .hero {
+        width: 100%;
+        min-height: 70vh;
+        height: auto;
+        padding: 90px 20px 60px;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: clamp(28px, 7vw, 38px);
+        line-height: 1.2;
+    }
+
+    .hero p {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .hero img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Bölümler */
+    section {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .services,
+    .about,
+    .contact,
+    .blog {
+        padding-top: 55px;
+        padding-bottom: 55px;
+    }
+
+    /* Hizmet kartları */
+    .services-animation-container {
+        width: 100%;
+        display: grid !important;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .service-card {
+        width: 100% !important;
+        max-width: 100%;
+        min-width: 0;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+    }
+
+    .ear-symbol {
+        display: none !important;
+    }
+
+    /* Form alanları */
+    form {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    form input,
+    form select,
+    form textarea,
+    form button {
+        max-width: 100%;
+    }
+
+    /* Alt bilgi */
+    footer {
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    /* Sabit WhatsApp butonu */
+    .whatsapp-button,
+    .whatsapp-float {
+        max-width: 58px;
+        max-height: 58px;
+        right: 15px !important;
+        bottom: 15px !important;
+    }
+}
+
+/* Küçük telefonlar */
+@media screen and (max-width: 480px) {
+
+    .navbar {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .hero {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    section {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .services,
+    .about,
+    .contact,
+    .blog {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+}
