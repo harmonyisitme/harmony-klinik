@@ -1,519 +1,310 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>İşitme Cihazları ve Aksesuarları | Rana İşitme Merkezi</title>
-
-    <meta name="description" content="Rana İşitme Merkezi işitme cihazları, kulak içi ve kulak arkası modelleri, işitme cihazı aksesuarları ve güvenilir markaları keşfedin.">
-
-    <meta name="theme-color" content="#c92335">
+    <meta name="description" content="Rana İşitme Merkezi işitme cihazları. Oticon, Phonak ve AudioService ürünlerini keşfedin.">
+    <title>İşitme Cihazlarımız | Rana İşitme Merkezi</title>
 
     <!-- Google Tag Manager -->
     <script>
-        window.dataLayer = window.dataLayer || [];
-        (function(w,d,s,l,i){
-            w[l]=w[l]||[];
-            w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-            var f=d.getElementsByTagName(s)[0],
-                j=d.createElement(s),
-                dl=l!='dataLayer'?'&l='+l:'';
-            j.async=true;
-            j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-            f.parentNode.insertBefore(j,f);
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','GTM-NG5WXPCD');
     </script>
+    <!-- End Google Tag Manager -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Genel site tasarımı -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- Sadece ürünler sayfasına özel tasarım -->
     <link rel="stylesheet" href="urunler.css">
 </head>
 
 <body>
-
-    <!-- Google Tag Manager noscript -->
+    <!-- Google Tag Manager (noscript) -->
     <noscript>
-        <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-NG5WXPCD"
-            height="0"
-            width="0"
-            style="display:none;visibility:hidden">
-        </iframe>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NG5WXPCD"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
-    <!-- ÜST İLETİŞİM ALANI -->
+    <div id="preloader"></div>
+
+    <!-- ÜST BİLGİ -->
     <div class="top-bar">
         <div class="container">
-
-            <div class="contact-info">
+            <div>
                 <span id="headerTelefon">
-                    <i class="fas fa-phone-alt"></i>
-                    0212 123 45 67
+                    <i class="fas fa-phone"></i> 0551 984 93 33
                 </span>
-
-                <span id="headerEmail">
-                    <i class="fas fa-envelope"></i>
-                    info@ranaklinik.com
-                </span>
-
-                <span id="headerAdres" class="hide-mobile">
-                    <i class="fas fa-map-marker-alt"></i>
-                    Ankara
-                </span>
+                <span id="headerEmail"></span>
+                <span id="headerAdres"></span>
             </div>
-
-            <div class="social-icons-top" id="headerSocials">
-                <a href="#" aria-label="Facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-
-                <a href="#" aria-label="Twitter">
-                    <i class="fab fa-twitter"></i>
-                </a>
-
-                <a href="#" aria-label="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-            </div>
-
+            <div id="headerSocials"></div>
         </div>
     </div>
 
-    <!-- NAVİGASYON -->
-    <header class="navbar">
+    <!-- MENÜ -->
+    <header class="site-header">
+        <nav class="navbar container">
+            <a href="index.html" class="logo">Rana.</a>
 
-        <a href="index.html" class="logo" aria-label="Rana İşitme Merkezi Ana Sayfa">
-            Rana<span>.</span>
-        </a>
+            <button class="hamburger" type="button" aria-label="Menüyü aç">
+                <i class="fas fa-bars"></i>
+            </button>
 
-        <nav>
             <ul class="nav-links">
-
+                <li><a href="index.html">Ana Sayfa</a></li>
+                <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                <li><a href="urunler.html" class="active">Ürünler</a></li>
+                <li><a href="hizmetler.html">Hizmetler</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="iletisim.html">İletişim</a></li>
                 <li>
-                    <a href="index.html">Ana Sayfa</a>
+                    <a href="https://wa.me/905519849333" target="_blank"
+                       rel="noopener" class="nav-appointment">
+                        Randevu Al
+                    </a>
                 </li>
-
-                <li>
-                    <a href="hakkimizda.html">Hakkımızda</a>
-                </li>
-
-                <li>
-                    <a href="urunler.html" class="active">Ürünlerimiz</a>
-                </li>
-
-                <li>
-                    <a href="index.html#services">Hizmetler</a>
-                </li>
-
-                <li>
-                    <a href="index.html#blog">Blog</a>
-                </li>
-
-                <li>
-                    <a href="iletisim.html">İletişim</a>
-                </li>
-
-                <li>
-                    <a href="index.html#randevu">Randevu Al</a>
-                </li>
-
             </ul>
         </nav>
-
-        <div class="hamburger" aria-label="Menüyü aç" role="button" tabindex="0">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-        </div>
-
-        <a href="index.html#randevu" class="btn-primary">
-            Randevu Al
-        </a>
-
     </header>
 
     <main>
-
-        <!-- SAYFA BAŞLIĞI -->
-        <section class="premium-product-hero">
-
-            <div class="container">
-
-                <div class="product-breadcrumb">
-                    <a href="index.html">Ana Sayfa</a>
-                    <i class="fas fa-chevron-right"></i>
-                    <span>Ürünlerimiz</span>
+        <!-- SAYFA GİRİŞİ -->
+        <section class="product-hero">
+            <div class="container hero-inner">
+                <div class="hero-copy">
+                    <div class="hero-eyebrow">Rana İşitme Merkezi</div>
+                    <h1>Hayata daha net <span>kulak verin.</span></h1>
+                    <p>
+                        İşitme ihtiyaçlarınıza ve yaşam tarzınıza uygun cihaz
+                        seçeneklerini keşfedin. Uzman desteğiyle size en uygun
+                        işitme çözümünü birlikte değerlendirelim.
+                    </p>
                 </div>
 
-                <div class="product-hero-content">
-
-                    <div class="product-hero-text">
-
-                        <span class="product-eyebrow">
-                            RANA İŞİTME MERKEZİ
-                        </span>
-
-                        <h1>
-                            İşitme Teknolojilerinde
-                            <span>Doğru Çözüm</span>
-                        </h1>
-
-                        <p>
-                            İhtiyaçlarınıza, yaşam tarzınıza ve işitme profilinize
-                            uygun işitme cihazlarını ve aksesuarlarını keşfedin.
-                            Size en uygun çözüm için profesyonel destek alın.
-                        </p>
-
-                        <a href="index.html#randevu" class="product-hero-button">
-                            Uzmanımıza Danışın
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <strong>01</strong>
+                        <span>Kişiye özel değerlendirme</span>
                     </div>
-
-                    <div class="product-hero-decoration">
-                        <div class="hero-decoration-circle"></div>
-                        <div class="hero-decoration-icon">
-                            <i class="fas fa-ear-listen"></i>
-                        </div>
-                        <span>Size özel işitme çözümleri</span>
+                    <div class="hero-stat">
+                        <strong>02</strong>
+                        <span>Uzman cihaz desteği</span>
                     </div>
-
+                    <div class="hero-stat">
+                        <strong>03</strong>
+                        <span>Profesyonel uygulama</span>
+                    </div>
+                    <div class="hero-stat">
+                        <strong>04</strong>
+                        <span>Satış sonrası takip</span>
+                    </div>
                 </div>
-
             </div>
-
         </section>
 
         <!-- ÜRÜN KATALOĞU -->
-        <section class="premium-product-catalog">
-
+        <section class="product-catalog">
             <div class="container">
-
                 <div class="catalog-heading">
-
-                    <div>
-                        <span class="catalog-eyebrow">
-                            ÜRÜN KOLEKSİYONU
-                        </span>
-
-                        <h2>İşitme Cihazlarımız</h2>
-
-                        <p>
-                            Farklı ihtiyaçlara ve kullanım alışkanlıklarına
-                            yönelik ürün seçeneklerini inceleyin.
-                        </p>
-                    </div>
-
-                    <div class="catalog-count" id="productCount">
-                        Ürünler yükleniyor...
-                    </div>
-
+                    <span class="eyebrow">Ürün koleksiyonumuz</span>
+                    <h2>Size uygun işitme cihazını keşfedin</h2>
+                    <p>
+                        Farklı ihtiyaçlara yönelik ürünlerimizi inceleyebilir,
+                        kategori ve marka filtrelerini kullanarak seçenekleri
+                        daraltabilirsiniz.
+                    </p>
                 </div>
 
-                <div class="premium-product-layout">
-
-                    <!-- SOL FİLTRE MENÜSÜ -->
-                    <aside class="premium-sidebar">
-
-                        <div class="filter-heading">
-                            <h3>
-                                <i class="fas fa-sliders"></i>
-                                Ürün Filtreleri
-                            </h3>
-                        </div>
-
-                        <div class="filter-group">
-
-                            <h4>Kategoriler</h4>
-
-                            <ul id="categoryList" class="category-list">
-                                <li class="filter-loading">Yükleniyor...</li>
-                            </ul>
-
-                        </div>
-
-                        <div class="filter-group">
-
-                            <h4>Markalar</h4>
-
-                            <ul id="brandList" class="brand-list">
-                                <li class="filter-loading">Yükleniyor...</li>
-                            </ul>
-
-                        </div>
-
-                        <div class="filter-group">
-
-                            <h4>Ürün Etiketleri</h4>
-
-                            <div id="tagList" class="tag-list">
+                <div class="product-layout">
+                    <!-- FİLTRELER -->
+                    <aside class="product-sidebar">
+                        <div class="sidebar-card">
+                            <h3><i class="fas fa-layer-group"></i> Kategoriler</h3>
+                            <div class="filter-list" id="categoryList">
+                                <span class="filter-empty">Kategoriler yükleniyor...</span>
                             </div>
-
                         </div>
 
-                        <div class="filter-help">
-
-                            <div class="filter-help-icon">
-                                <i class="fas fa-headset"></i>
+                        <div class="sidebar-card">
+                            <h3><i class="fas fa-award"></i> Markalar</h3>
+                            <div class="filter-list" id="brandList">
+                                <span class="filter-empty">Markalar yükleniyor...</span>
                             </div>
-
-                            <h4>Karar vermekte zorlanıyor musunuz?</h4>
-
-                            <p>
-                                İhtiyaçlarınıza uygun işitme cihazını
-                                belirlemek için uzmanlarımızdan destek alın.
-                            </p>
-
-                            <a href="index.html#randevu">
-                                Bize danışın
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-
                         </div>
 
+                        <div class="sidebar-card">
+                            <h3><i class="fas fa-tags"></i> Özellikler</h3>
+                            <div class="filter-list" id="tagList">
+                                <span class="filter-empty">Özellikler yükleniyor...</span>
+                            </div>
+                        </div>
+
+                        <button type="button" class="clear-filters" id="clearProductFilters">
+                            <i class="fas fa-rotate-left"></i> Filtreleri Temizle
+                        </button>
                     </aside>
 
-                    <!-- SAĞ ÜRÜN ALANI -->
-                    <div class="premium-products-area">
-
-                        <div class="products-toolbar">
-
-                            <div class="products-toolbar-title">
-                                <span class="red-line"></span>
-                                <span>Ürün kataloğu</span>
-                            </div>
-
-                            <button type="button" id="clearFilters" class="clear-filters">
-                                <i class="fas fa-rotate-left"></i>
-                                Filtreleri temizle
-                            </button>
-
+                    <!-- ÜRÜNLER -->
+                    <div class="product-results">
+                        <div class="product-results-top">
+                            <p id="productCount">Ürünler yükleniyor...</p>
+                            <p><i class="fas fa-sliders"></i> Ürünleri filtreleyin</p>
                         </div>
 
-                        <div id="urunler-listesi" class="premium-products-grid">
-
-                            <div class="product-loading">
+                        <div id="urunler-listesi">
+                            <div class="products-message">
                                 <i class="fas fa-spinner fa-spin"></i>
-                                <p>Ürünler yükleniyor...</p>
+                                Ürünler yükleniyor...
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </section>
 
         <!-- BİLGİLENDİRME -->
-        <section class="premium-product-info">
-
+        <section class="product-detail-section">
             <div class="container">
-
-                <div class="product-info-content">
-
-                    <div class="product-info-label">
-                        İŞİTME SAĞLIĞI
-                    </div>
-
-                    <h2>Doğru İşitme Cihazı, Kişiye Özel Seçimle Başlar</h2>
+                <article class="article-card">
+                    <h2>İşitme cihazları nedir?</h2>
 
                     <p>
-                        İşitme cihazları, işitme kaybı yaşayan bireylerin
-                        sesleri daha iyi algılamasına yardımcı olmak amacıyla
-                        geliştirilen teknolojik cihazlardır. Farklı işitme
-                        kayıplarına ve yaşam tarzlarına uygun birçok model
-                        ve özellik sunarlar.
+                        İşitme cihazları, işitme kaybı yaşayan kişilerin çevresel
+                        sesleri ve konuşmaları daha iyi algılamasına yardımcı olmak
+                        amacıyla tasarlanmış elektronik cihazlardır. Sesleri
+                        mikrofonları aracılığıyla alır, dijital olarak işler ve
+                        kullanıcının işitme ihtiyacına göre kulağa iletir.
                     </p>
 
                     <p>
-                        Kulak içi, kulak arkası, şarj edilebilir ve Bluetooth
-                        bağlantılı modeller arasından doğru seçimin yapılması
-                        için işitme değerlendirmesi ve kişiye özel uygulama
-                        büyük önem taşır.
+                        Her bireyin işitme kaybı, kulak yapısı ve günlük yaşam
+                        alışkanlıkları farklıdır. Bu nedenle işitme cihazı seçimi,
+                        yalnızca cihaz modeline göre değil; işitme değerlendirmesi,
+                        kişisel ihtiyaçlar ve uzman görüşü doğrultusunda yapılmalıdır.
                     </p>
 
                     <p>
-                        Rana İşitme Merkezi olarak cihaz seçimi, uygulama,
-                        ayarlama ve satış sonrası destek süreçlerinde
-                        yanınızdayız.
+                        Kulak arkası, kulak içi ve kanal içi gibi farklı tasarımlara
+                        sahip cihazlar; kullanım kolaylığı, görünüm, teknoloji ve
+                        bağlantı özellikleri bakımından çeşitli seçenekler sunar.
+                        Doğru cihazın belirlenmesi ve kişiye uygun şekilde
+                        ayarlanması, işitme deneyiminin önemli bir parçasıdır.
                     </p>
 
-                </div>
-
+                    <p>
+                        Rana İşitme Merkezi olarak cihaz seçimi, uygulama, ayarlama
+                        ve satış sonrası takip süreçlerinde ihtiyaçlarınıza uygun
+                        çözümler sunmayı hedefliyoruz.
+                    </p>
+                </article>
             </div>
-
         </section>
-
     </main>
 
     <!-- FOOTER -->
     <footer class="footer">
-
-        <div class="footer-container">
-
-            <div class="footer-col">
-
-                <a href="index.html" class="footer-logo">
-                    Rana<span>.</span>
-                </a>
-
-                <p>
-                    İşitme sağlığınız için kişiye özel çözümler,
-                    profesyonel destek ve güvenilir teknoloji.
-                </p>
-
-                <div class="social-links" id="footerSocials">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3>Rana İşitme Merkezi</h3>
+                    <p>
+                        Daha iyi bir işitme deneyimi için kişiye özel çözümler,
+                        profesyonel destek ve güvenilir hizmet.
+                    </p>
+                    <div id="footerSocials"></div>
                 </div>
 
+                <div>
+                    <h4>Hızlı Bağlantılar</h4>
+                    <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
+                        <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                        <li><a href="urunler.html">Ürünler</a></li>
+                        <li><a href="hizmetler.html">Hizmetler</a></li>
+                        <li><a href="iletisim.html">İletişim</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Çalışma Saatleri</h4>
+                    <div id="footerSaatler"></div>
+                </div>
+
+                <div>
+                    <h4>İletişim</h4>
+                    <div id="footerIletisim"></div>
+                    <p>
+                        <a href="https://wa.me/905519849333" target="_blank" rel="noopener">
+                            <i class="fab fa-whatsapp"></i> WhatsApp ile ulaşın
+                        </a>
+                    </p>
+                </div>
             </div>
 
-            <div class="footer-col">
-
-                <h4>Hızlı Menü</h4>
-
-                <ul>
-                    <li><a href="index.html">Ana Sayfa</a></li>
-                    <li><a href="hakkimizda.html">Hakkımızda</a></li>
-                    <li><a href="urunler.html">Ürünlerimiz</a></li>
-                    <li><a href="index.html#services">Hizmetler</a></li>
-                    <li><a href="index.html#blog">Blog</a></li>
-                    <li><a href="iletisim.html">İletişim</a></li>
-                </ul>
-
-            </div>
-
-            <div class="footer-col" id="footerSaatler">
-
-                <h4>Çalışma Saatleri</h4>
-
-            </div>
-
-            <div class="footer-col">
-
-                <h4>İletişim</h4>
-
-                <ul id="footerIletisim">
-                </ul>
-
-            </div>
-
-        </div>
-
-        <div class="footer-bottom">
-
-            <div class="footer-bottom-content">
-
-                <p>
-                    &copy; <span id="currentYear"></span>
-                    Rana İşitme Merkezi. Tüm Hakları Saklıdır.
+            <div class="footer-bottom">
+                <p id="yasalMetin">
+                    © <span id="currentYear"></span> Rana İşitme Merkezi. Tüm hakları saklıdır.
                 </p>
-
-                <div class="footer-links">
-
+                <div>
                     <a href="javascript:void(0)" onclick="yasalMetinGoster('gizlilik')">
                         Gizlilik Politikası
                     </a>
-
+                    &nbsp; | &nbsp;
                     <a href="javascript:void(0)" onclick="yasalMetinGoster('sartlar')">
                         Kullanım Şartları
                     </a>
-
                 </div>
-
             </div>
-
         </div>
-
     </footer>
 
-    <!-- ÜRÜN DETAY MODALI -->
-    <div
-        id="productModal"
-        class="premium-product-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="productModalName"
-        aria-hidden="true">
+    <!-- ÜRÜN DETAY PENCERESİ -->
+    <div class="product-modal" id="productModal" aria-hidden="true">
+        <div class="product-modal-content" role="dialog" aria-modal="true"
+             aria-labelledby="productModalName">
 
-        <div class="premium-modal-content">
-
-            <button
-                type="button"
-                id="closeProductModal"
-                class="close-product-modal"
-                aria-label="Pencereyi kapat">
-
-                <i class="fas fa-times"></i>
-
+            <button class="close-product-modal" id="closeProductModal"
+                    type="button" aria-label="Pencereyi kapat">
+                &times;
             </button>
 
-            <div class="premium-modal-image">
-
-                <img
-                    id="productModalImage"
-                    src="logo.png"
-                    alt="İşitme cihazı">
-
+            <div class="product-modal-image-wrap">
+                <img id="productModalImage" src="" alt="Ürün görseli">
             </div>
 
-            <div class="premium-modal-details">
-
-                <span class="modal-eyebrow">
-                    RANA İŞİTME MERKEZİ
-                </span>
-
+            <div class="product-modal-info">
+                <span class="modal-category" id="productModalCategory"></span>
                 <h2 id="productModalName"></h2>
+                <span class="modal-stock" id="productModalStock"></span>
+                <p id="productModalDescription"></p>
 
-                <div id="productModalCategory" class="modal-category"></div>
-
-                <div id="productModalStock" class="product-stock"></div>
-
-                <p id="productModalDescription" class="modal-description"></p>
-
-                <a href="index.html#randevu" class="modal-contact-button">
-                    Ürün hakkında bilgi alın
-                    <i class="fas fa-arrow-right"></i>
+                <a href="https://wa.me/905519849333?text=Merhaba%2C%20ürün%20hakkında%20bilgi%20almak%20istiyorum."
+                   target="_blank" rel="noopener" class="product-detail-button"
+                   style="display:block;text-align:center;text-decoration:none;">
+                    <i class="fab fa-whatsapp"></i> Ürün hakkında bilgi alın
                 </a>
-
             </div>
-
         </div>
-
     </div>
 
-    <!-- YUKARI ÇIK -->
-    <button id="scrollTopBtn" class="scroll-top-btn" title="Yukarı Çık">
+    <button id="scrollTopBtn" type="button" aria-label="Yukarı çık">
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- PRELOADER -->
-    <div id="preloader">
-        <div class="spinner"></div>
-    </div>
-
-    <!-- Önce genel JS, sonra ürün JS -->
     <script src="app.js"></script>
     <script src="urunler.js"></script>
 
     <script>
-        document.getElementById('currentYear').textContent =
-            new Date().getFullYear();
+        const yearElement = document.getElementById("currentYear");
+        if (yearElement) yearElement.textContent = new Date().getFullYear();
     </script>
-
 </body>
 </html>
