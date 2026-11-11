@@ -1721,3 +1721,40 @@ textarea:focus-visible {
         transition-duration: .01ms !important;
     }
 }
+/* MOBİL MENÜ SINIF ÇAKIŞMASI DÜZELTMESİ */
+@media (max-width: 768px) {
+    .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 9999;
+    }
+
+    .navbar {
+        position: relative;
+    }
+
+    .nav-links.nav-active,
+    .nav-links.active {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        right: 0 !important;
+    }
+
+    .nav-links {
+        z-index: 10000;
+    }
+
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    img,
+    video,
+    iframe {
+        max-width: 100%;
+    }
+}
