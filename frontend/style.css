@@ -2830,3 +2830,101 @@ select:focus-visible {
         transition-duration: .01ms !important;
     }
 }
+/* =====================================================
+   RANA İŞİTME MERKEZİ - ÜST ALAN RENK DÜZENLEMESİ
+   Mevcut yerleşim ve mobil ölçüler korunur.
+===================================================== */
+
+/* Üst iletişim çubuğu */
+.top-bar {
+    background: #c92335 !important;
+    border-bottom: 0 !important;
+    color: #ffffff !important;
+}
+
+.top-bar,
+.top-bar a,
+.top-bar .contact-info,
+.top-bar .contact-info a,
+.top-bar #headerSocials a {
+    color: #ffffff !important;
+}
+
+.top-bar i,
+.top-bar .contact-info i {
+    color: #ffffff !important;
+}
+
+.top-bar a:hover {
+    color: #ffe2e5 !important;
+}
+
+/* Ana menü */
+header.navbar,
+.navbar {
+    background: #ffffff !important;
+    border-bottom: 1px solid #eeeeee !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.045);
+}
+
+/* Logo */
+.logo,
+.logo-fallback {
+    color: #c92335 !important;
+}
+
+/* Menü bağlantıları */
+.nav-links a {
+    color: #303030 !important;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #c92335 !important;
+}
+
+.nav-links a::after {
+    background: #c92335 !important;
+}
+
+/* Randevu butonu */
+.nav-appointment {
+    background: #c92335 !important;
+    border-color: #c92335 !important;
+    color: #ffffff !important;
+}
+
+.nav-appointment:hover {
+    background: #a91d2c !important;
+    border-color: #a91d2c !important;
+}
+
+/* Hamburger */
+.hamburger {
+    background: #fff !important;
+}
+
+.hamburger span,
+.hamburger div,
+.hamburger .line1,
+.hamburger .line2,
+.hamburger .line3 {
+    background: #c92335 !important;
+}
+
+/* Mobil açılır menü */
+@media (max-width: 768px) {
+    .nav-links {
+        background: #ffffff !important;
+        border-top: 1px solid #eeeeee;
+    }
+
+    .nav-links a {
+        color: #303030 !important;
+    }
+
+    .mobile-nav-cta a {
+        background: #c92335 !important;
+        color: #ffffff !important;
+    }
+}
