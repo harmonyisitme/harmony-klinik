@@ -1306,3 +1306,35 @@ function initKVKK() {
         }
     });
 }
+
+/* MOBİL MENÜ AÇMA KAPAMA */
+(function () {
+    function mobilMenuBaslat() {
+        const hamburger = document.querySelector('.hamburger');
+        const menu = document.querySelector('.nav-links');
+
+        if (!hamburger || !menu || hamburger.dataset.menuReady === '1') return;
+
+        hamburger.dataset.menuReady = '1';
+
+        hamburger.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            menu.classList.toggle('nav-active');
+            hamburger.classList.toggle('toggle');
+        });
+
+        menu.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                menu.classList.remove('nav-active');
+                hamburger.classList.remove('toggle');
+            });
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', mobilMenuBaslat);
+    } else {
+        mobilMenuBaslat();
+    }
+})();
