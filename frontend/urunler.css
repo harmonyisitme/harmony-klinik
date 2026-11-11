@@ -888,3 +888,93 @@ header,
         grid-template-columns: 1fr 1fr;
     }
 }
+/* ÜRÜNLER SAYFASI - ESKİ CSS ÇAKIŞMALARINI DÜZELT */
+
+.product-hero .hero-inner {
+    display: flex !important;
+    grid-template-columns: none !important;
+    text-align: left !important;
+    padding: 0 !important;
+}
+
+.product-hero .hero-stats {
+    display: grid !important;
+}
+
+.product-layout {
+    display: grid !important;
+    grid-template-columns: 255px minmax(0, 1fr) !important;
+    gap: 30px !important;
+    align-items: start !important;
+}
+
+.product-sidebar {
+    order: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+}
+
+.product-results {
+    order: 1 !important;
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+#urunler-listesi {
+    display: grid !important;
+    width: 100% !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+}
+
+#urunler-listesi .product-card {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+@media (max-width: 1050px) {
+    .product-layout {
+        grid-template-columns: 220px minmax(0, 1fr) !important;
+    }
+
+    #urunler-listesi {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 760px) {
+    .product-hero .hero-inner {
+        flex-direction: column !important;
+        text-align: left !important;
+    }
+
+    .product-layout {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .product-sidebar {
+        order: 0 !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .product-results {
+        order: 1 !important;
+    }
+
+    #urunler-listesi {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 420px) {
+    #urunler-listesi {
+        grid-template-columns: 1fr !important;
+    }
+
+    .product-sidebar {
+        grid-template-columns: 1fr !important;
+    }
+}
