@@ -6,23 +6,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rana İşitme Merkezi | İşitme Sağlığınız İçin Yanınızdayız</title>
   <meta name="description" content="Rana İşitme Merkezi ile kişiye özel işitme çözümlerini keşfedin.">
+  <meta name="theme-color" content="#c92335">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
-  <div id="preloader"><div class="spinner"></div></div>
+  <div id="preloader">
+    <div class="spinner"></div>
+  </div>
+
   <div id="toast-container" class="toast-container"></div>
-  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Yukarı çık">
+
+  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Yukarı çık" type="button">
     <i class="fas fa-arrow-up"></i>
   </button>
 
+  <!-- ÜST İLETİŞİM ALANI -->
   <div class="top-bar">
     <div class="container">
       <div class="contact-info">
-        <span id="headerTelefon"><i class="fas fa-phone-alt"></i> 0551 984 93 33</span>
+        <span id="headerTelefon">
+          <i class="fas fa-phone-alt"></i> 0551 984 93 33
+        </span>
         <span id="headerEmail"></span>
         <span id="headerAdres" class="hide-mobile"></span>
       </div>
@@ -30,6 +41,7 @@
     </div>
   </div>
 
+  <!-- ANA MENÜ -->
   <header class="navbar">
     <a href="#home" class="logo" aria-label="Rana İşitme Merkezi ana sayfa">
       <img src="logo.png" alt="Rana İşitme Merkezi" onerror="this.style.display='none'">
@@ -45,59 +57,101 @@
         <li><a href="#services">Hizmetler</a></li>
         <li><a href="#blog">Bilgi Merkezi</a></li>
         <li><a href="iletisim.html">İletişim</a></li>
+
         <li class="mobile-nav-cta">
-          <a href="https://wa.me/905519849333" target="_blank" rel="noopener noreferrer">Randevu Al</a>
+          <a
+            href="https://wa.me/905519849333?text=Merhaba%2C%20Rana%20%C4%B0%C5%9Fitme%20Merkezi%27nden%20randevu%20almak%20istiyorum."
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Randevu Al
+          </a>
         </li>
       </ul>
     </nav>
 
-    <div class="hamburger" aria-label="Menüyü aç/kapat" role="button" tabindex="0">
+    <div
+      class="hamburger"
+      aria-label="Menüyü aç/kapat"
+      role="button"
+      tabindex="0"
+      aria-expanded="false"
+    >
       <div class="line1"></div>
       <div class="line2"></div>
       <div class="line3"></div>
     </div>
 
-    <a href="https://wa.me/905519849333" target="_blank" rel="noopener noreferrer" class="btn-primary nav-appointment">
+    <a
+      href="https://wa.me/905519849333?text=Merhaba%2C%20Rana%20%C4%B0%C5%9Fitme%20Merkezi%27nden%20randevu%20almak%20istiyorum."
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-primary nav-appointment"
+    >
       Randevu Al <i class="fa-solid fa-arrow-right"></i>
     </a>
   </header>
 
   <main>
+
     <!-- ANA KARŞILAMA ALANI -->
     <section id="home" class="hero home-hero">
       <div class="hero-content home-hero-copy">
         <span class="eyebrow">RANA İŞİTME MERKEZİ</span>
+
         <h1>Hayatın seslerine <em>yeniden</em> bağlanın.</h1>
+
         <p>
           İşitme sağlığınız için doğru değerlendirme,
           size uygun işitme çözümleri ve her adımda
           yanınızda olan bir uzman yaklaşımı.
         </p>
+
         <div class="hero-actions">
-          <a href="https://wa.me/905519849333" target="_blank" rel="noopener noreferrer" class="btn-large">
+          <a
+            href="https://wa.me/905519849333?text=Merhaba%2C%20Rana%20%C4%B0%C5%9Fitme%20Merkezi%27nden%20randevu%20almak%20istiyorum."
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-large"
+          >
             Randevu Oluştur <i class="fa-solid fa-arrow-right"></i>
           </a>
+
           <a href="#cozumler" class="hero-text-link">
-            Çözümlerimizi keşfedin <i class="fa-solid fa-chevron-down"></i>
+            Çözümlerimizi keşfedin
+            <i class="fa-solid fa-chevron-down"></i>
           </a>
         </div>
+
         <div class="hero-trust-points">
           <span><i class="fa-solid fa-check"></i> Kişiye özel yaklaşım</span>
           <span><i class="fa-solid fa-check"></i> Odyolojik değerlendirme</span>
         </div>
       </div>
+
       <div class="hero-media-wrap">
         <div class="hero-media-main">
-          <img class="hero-main-image"
+          <img
+            class="hero-main-image"
             src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1100&q=85"
-            alt="İşitme sağlığı uzmanı danışanıyla görüşürken">
+            alt="İşitme sağlığı uzmanı danışanıyla görüşürken"
+            loading="eager"
+          >
         </div>
+
         <div class="hero-floating-card">
-          <span class="floating-icon"><i class="fa-solid fa-ear-listen"></i></span>
-          <span><strong>Sizi dinliyoruz.</strong><small>İhtiyacınıza uygun çözüm için.</small></span>
+          <span class="floating-icon">
+            <i class="fa-solid fa-ear-listen"></i>
+          </span>
+          <span>
+            <strong>Sizi dinliyoruz.</strong>
+            <small>İhtiyacınıza uygun çözüm için.</small>
+          </span>
         </div>
+
         <div class="hero-red-orbit"></div>
       </div>
+
       <div class="hero-bottom-note">
         <span>01</span>
         <span>İşitme sağlığında güvenilir yol arkadaşınız</span>
@@ -107,11 +161,15 @@
     <!-- MARKALAR -->
     <section class="brand-strip">
       <div class="brand-strip-intro">
-        Dünya markalarıyla<br><strong>kişiye özel çözümler</strong>
+        Dünya markalarıyla<br>
+        <strong>kişiye özel çözümler</strong>
       </div>
+
       <div class="brand-wordmark oticon">oticon</div>
       <div class="brand-wordmark phonak">PHONAK</div>
-      <div class="brand-wordmark audioservice">Audio<span>Service</span></div>
+      <div class="brand-wordmark audioservice">
+        Audio<span>Service</span>
+      </div>
     </section>
 
     <!-- ÇÖZÜMLER -->
@@ -121,17 +179,25 @@
           <span class="section-kicker">İŞİTME ÇÖZÜMLERİ</span>
           <h2>Size uygun çözüm,<br><em>doğru adımla</em> başlar.</h2>
         </div>
+
         <p>
           Her bireyin işitme ihtiyacı farklıdır.
           Bu nedenle süreci sizi tanıyarak,
           ihtiyaçlarınızı anlayarak yürütüyoruz.
         </p>
       </div>
+
       <div class="solution-grid">
+
         <a class="solution-card solution-card-feature" href="urunler.html">
           <div class="solution-card-image">
-            <img src="https://images.unsplash.com/photo-1584452964155-efc6f7e7b7f2?auto=format&fit=crop&w=900&q=80" alt="İşitme cihazı">
+            <img
+              src="https://images.unsplash.com/photo-1584452964155-efc6f7e7b7f2?auto=format&fit=crop&w=900&q=80"
+              alt="İşitme cihazı"
+              loading="lazy"
+            >
           </div>
+
           <div class="solution-card-content">
             <span class="solution-number">01 / CİHAZ SEÇİMİ</span>
             <h3>İşitme cihazı çözümleri</h3>
@@ -139,27 +205,37 @@
             <span class="round-arrow"><i class="fa-solid fa-arrow-right"></i></span>
           </div>
         </a>
+
         <a class="solution-card" href="urunler.html">
-          <div class="solution-card-icon"><i class="fa-solid fa-ear-listen"></i></div>
+          <div class="solution-card-icon">
+            <i class="fa-solid fa-ear-listen"></i>
+          </div>
           <span class="solution-number">02 / KULAK İÇİ</span>
           <h3>Kulak içi cihazlar</h3>
           <p>Kulak yapınıza göre kişiselleştirilen kompakt çözümler.</p>
           <span class="round-arrow"><i class="fa-solid fa-arrow-right"></i></span>
         </a>
+
         <a class="solution-card" href="urunler.html">
-          <div class="solution-card-icon"><i class="fa-solid fa-headphones"></i></div>
+          <div class="solution-card-icon">
+            <i class="fa-solid fa-headphones"></i>
+          </div>
           <span class="solution-number">03 / KULAK ARKASI</span>
           <h3>Kulak arkası cihazlar</h3>
           <p>Farklı işitme ihtiyaçlarına yönelik konforlu seçenekler.</p>
           <span class="round-arrow"><i class="fa-solid fa-arrow-right"></i></span>
         </a>
+
         <a class="solution-card" href="urunler.html">
-          <div class="solution-card-icon"><i class="fa-solid fa-battery-full"></i></div>
+          <div class="solution-card-icon">
+            <i class="fa-solid fa-battery-full"></i>
+          </div>
           <span class="solution-number">04 / ŞARJ EDİLEBİLİR</span>
           <h3>Şarj edilebilir modeller</h3>
           <p>Günlük kullanım kolaylığı sunan modern teknolojiler.</p>
           <span class="round-arrow"><i class="fa-solid fa-arrow-right"></i></span>
         </a>
+
       </div>
     </section>
 
@@ -167,22 +243,31 @@
     <section id="services" class="services home-services">
       <div class="services-intro">
         <span class="section-kicker">HİZMETLERİMİZ</span>
+
         <h2>İşitme yolculuğunuzun<br><em>her aşamasındayız.</em></h2>
+
         <p>
           İlk değerlendirmeden cihaz uyarlamasına ve
           sonraki kontrollere kadar ihtiyaç duyduğunuz
           desteği bir arada sunuyoruz.
         </p>
-        <a href="iletisim.html" class="inline-link">Hizmetler hakkında bilgi alın <i class="fa-solid fa-arrow-right"></i></a>
+
+        <a href="iletisim.html" class="inline-link">
+          Hizmetler hakkında bilgi alın
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
       </div>
+
       <div class="services-grid">
         <div class="services-visual">
           <div class="ear-symbol">
             <i class="fa-solid fa-ear-listen"></i>
           </div>
         </div>
+
         <div class="services-slider">
           <div class="services-animation-container" id="servicesContainer">
+
             <div class="service-card" data-key="test">
               <div class="card-content">
                 <div class="icon"><i class="fa-solid fa-ear-listen"></i></div>
@@ -190,6 +275,7 @@
                 <p>İşitme durumunuzun değerlendirilmesine yönelik test ve analiz süreçleri.</p>
               </div>
             </div>
+
             <div class="service-card" data-key="cihaz">
               <div class="card-content">
                 <div class="icon"><i class="fa-solid fa-headphones"></i></div>
@@ -197,6 +283,7 @@
                 <p>İhtiyacınıza ve yaşam tarzınıza uygun cihaz seçimi ve uyarlama.</p>
               </div>
             </div>
+
             <div class="service-card" data-key="pediatrik">
               <div class="card-content">
                 <div class="icon"><i class="fa-solid fa-child-reaching"></i></div>
@@ -204,6 +291,7 @@
                 <p>Bebek ve çocukların işitme ihtiyaçlarına yönelik değerlendirme.</p>
               </div>
             </div>
+
             <div class="service-card" data-key="tinnitus">
               <div class="card-content">
                 <div class="icon"><i class="fa-solid fa-wave-square"></i></div>
@@ -211,6 +299,7 @@
                 <p>Kulak çınlaması konusunda bilgilendirme ve uygun çözümlere yönlendirme.</p>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -219,27 +308,69 @@
     <!-- NEDEN RANA -->
     <section class="why-section">
       <div class="why-image">
-        <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1000&q=85" alt="Sağlık uzmanı danışanına destek oluyor">
+        <img
+          src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1000&q=85"
+          alt="Sağlık uzmanı danışanına destek oluyor"
+          loading="lazy"
+        >
+
         <div class="why-image-caption">
           <i class="fa-solid fa-heart"></i>
           <span>Önce sizi dinliyoruz.</span>
         </div>
       </div>
+
       <div class="why-content">
         <span class="section-kicker">NEDEN RANA?</span>
+
         <h2>Bizim için önemli olan,<br><em>sizin yaşamınız.</em></h2>
+
         <p>
           İşitme cihazı seçimi yalnızca bir ürün tercihi değildir.
           Günlük alışkanlıklarınızı, beklentilerinizi ve
           işitme ihtiyaçlarınızı anlamakla başlar.
         </p>
+
         <div class="why-list">
-          <div><span>01</span><section><h3>Kişiye özel değerlendirme</h3><p>İhtiyaçlarınızı ve işitme profilinizi birlikte ele alırız.</p></section></div>
-          <div><span>02</span><section><h3>Yaşam tarzınıza uygun seçim</h3><p>Farklı cihaz seçeneklerini kullanım alışkanlıklarınıza göre değerlendiririz.</p></section></div>
-          <div><span>03</span><section><h3>Uygulama ve ayar desteği</h3><p>Cihazınızın size uygun şekilde kullanılmasına destek oluruz.</p></section></div>
-          <div><span>04</span><section><h3>Sürekli takip</h3><p>Bakım, teknik destek ve ayar süreçlerinde yanınızdayız.</p></section></div>
+
+          <div>
+            <span>01</span>
+            <section>
+              <h3>Kişiye özel değerlendirme</h3>
+              <p>İhtiyaçlarınızı ve işitme profilinizi birlikte ele alırız.</p>
+            </section>
+          </div>
+
+          <div>
+            <span>02</span>
+            <section>
+              <h3>Yaşam tarzınıza uygun seçim</h3>
+              <p>Farklı cihaz seçeneklerini kullanım alışkanlıklarınıza göre değerlendiririz.</p>
+            </section>
+          </div>
+
+          <div>
+            <span>03</span>
+            <section>
+              <h3>Uygulama ve ayar desteği</h3>
+              <p>Cihazınızın size uygun şekilde kullanılmasına destek oluruz.</p>
+            </section>
+          </div>
+
+          <div>
+            <span>04</span>
+            <section>
+              <h3>Sürekli takip</h3>
+              <p>Bakım, teknik destek ve ayar süreçlerinde yanınızdayız.</p>
+            </section>
+          </div>
+
         </div>
-        <a href="hakkimizda.html" class="inline-link">Rana'yı daha yakından tanıyın <i class="fa-solid fa-arrow-right"></i></a>
+
+        <a href="hakkimizda.html" class="inline-link">
+          Rana'yı daha yakından tanıyın
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
       </div>
     </section>
 
@@ -249,10 +380,30 @@
         <span class="section-kicker">NASIL İLERLİYORUZ?</span>
         <h2>İlk görüşmeden sonrasına<br><em>güvenle birlikte.</em></h2>
       </div>
+
       <div class="journey-steps">
-        <div class="journey-step"><span>01</span><i class="fa-regular fa-comments"></i><h3>Ön görüşme</h3><p>İhtiyaçlarınızı ve beklentilerinizi dinliyoruz.</p></div>
-        <div class="journey-step"><span>02</span><i class="fa-solid fa-chart-line"></i><h3>Değerlendirme</h3><p>İşitme durumunuzu ve size uygun seçenekleri ele alıyoruz.</p></div>
-        <div class="journey-step"><span>03</span><i class="fa-solid fa-sliders"></i><h3>Uygulama ve takip</h3><p>Cihaz uyarlaması ve sonraki destek sürecini planlıyoruz.</p></div>
+
+        <div class="journey-step">
+          <span>01</span>
+          <i class="fa-regular fa-comments"></i>
+          <h3>Ön görüşme</h3>
+          <p>İhtiyaçlarınızı ve beklentilerinizi dinliyoruz.</p>
+        </div>
+
+        <div class="journey-step">
+          <span>02</span>
+          <i class="fa-solid fa-chart-line"></i>
+          <h3>Değerlendirme</h3>
+          <p>İşitme durumunuzu ve size uygun seçenekleri ele alıyoruz.</p>
+        </div>
+
+        <div class="journey-step">
+          <span>03</span>
+          <i class="fa-solid fa-sliders"></i>
+          <h3>Uygulama ve takip</h3>
+          <p>Cihaz uyarlaması ve sonraki destek sürecini planlıyoruz.</p>
+        </div>
+
       </div>
     </section>
 
@@ -263,40 +414,77 @@
         <h2>Daha iyi duymaya<br><em>bir adım atın.</em></h2>
         <p>İşitme sağlığınızla ilgili sorularınız ve randevu talepleriniz için bize ulaşın.</p>
       </div>
-      <a href="https://wa.me/905519849333" target="_blank" rel="noopener noreferrer" class="btn-large">
+
+      <a
+        href="https://wa.me/905519849333?text=Merhaba%2C%20Rana%20%C4%B0%C5%9Fitme%20Merkezi%27nden%20randevu%20almak%20istiyorum."
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-large"
+      >
         Bize Ulaşın <i class="fa-solid fa-arrow-right"></i>
       </a>
+
       <div class="cta-decoration"></div>
     </section>
 
-    <!-- BLOG / BİLGİ MERKEZİ -->
+    <!-- BİLGİ MERKEZİ -->
     <section id="blog" class="blog-section">
       <div class="section-heading-row blog-heading">
         <div>
           <span class="section-kicker">BİLGİ MERKEZİ</span>
           <h2>İşitme sağlığı hakkında<br><em>doğru bilgi.</em></h2>
         </div>
-        <p>İşitme sağlığı, cihaz teknolojileri ve günlük yaşam hakkında merak ettiklerinizi keşfedin.</p>
+
+        <p>
+          İşitme sağlığı, cihaz teknolojileri ve günlük yaşam
+          hakkında merak ettiklerinizi keşfedin.
+        </p>
       </div>
+
       <div class="blog-slider-wrapper">
-        <button class="slider-btn prev" id="prevBlogBtn" aria-label="Önceki yazılar"><i class="fas fa-chevron-left"></i></button>
+        <button
+          class="slider-btn prev"
+          id="prevBlogBtn"
+          aria-label="Önceki yazılar"
+          type="button"
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
         <div class="blog-slider-track" id="blogKapsayici"></div>
-        <button class="slider-btn next" id="nextBlogBtn" aria-label="Sonraki yazılar"><i class="fas fa-chevron-right"></i></button>
+
+        <button
+          class="slider-btn next"
+          id="nextBlogBtn"
+          aria-label="Sonraki yazılar"
+          type="button"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
     </section>
+
   </main>
 
   <!-- ALT BİLGİ -->
   <footer class="footer home-footer">
     <div class="footer-container">
+
       <div class="footer-col footer-brand-col">
         <a href="#home" class="logo">
           <img src="logo.png" alt="Rana İşitme Merkezi" onerror="this.style.display='none'">
           <span class="logo-fallback">RANA <small>İŞİTME MERKEZİ</small></span>
         </a>
-        <p>İşitme sağlığınız için kişiye özel çözümler, güvenilir hizmet ve ihtiyaç duyduğunuzda yanınızda olan destek.</p>
+
+        <p>
+          İşitme sağlığınız için kişiye özel çözümler,
+          güvenilir hizmet ve ihtiyaç duyduğunuzda
+          yanınızda olan destek.
+        </p>
+
         <div class="social-links"></div>
       </div>
+
       <div class="footer-col">
         <h4>Hızlı Menü</h4>
         <ul>
@@ -309,23 +497,34 @@
           <li><a href="iletisim.html">İletişim</a></li>
         </ul>
       </div>
+
       <div class="footer-col">
         <h4>İletişim</h4>
         <ul id="footerIletisim">
           <li><a href="tel:+905519849333">0551 984 93 33</a></li>
         </ul>
       </div>
+
       <div class="footer-col" id="footerSaatler">
         <h4>Size yardımcı olalım</h4>
         <p>İşitme sağlığınızla ilgili sorularınız için bizimle iletişime geçebilirsiniz.</p>
-        <a class="footer-contact-link" href="https://wa.me/905519849333" target="_blank" rel="noopener noreferrer">
+
+        <a
+          class="footer-contact-link"
+          href="https://wa.me/905519849333?text=Merhaba%2C%20Rana%20%C4%B0%C5%9Fitme%20Merkezi%27nden%20bilgi%20almak%20istiyorum."
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <i class="fa-brands fa-whatsapp"></i> WhatsApp ile yazın
         </a>
       </div>
+
     </div>
+
     <div class="footer-bottom">
       <div class="footer-bottom-content">
         <p>&copy; 2026 Rana İşitme Merkezi. Tüm Hakları Saklıdır.</p>
+
         <div class="footer-links">
           <a href="#" onclick="yasalMetinGoster('gizlilik'); return false;">Gizlilik Politikası</a>
           <a href="#" onclick="yasalMetinGoster('sartlar'); return false;">Kullanım Şartları</a>
@@ -335,7 +534,7 @@
     </div>
   </footer>
 
-  <!-- PENCERELER -->
+  <!-- HİZMET PENCERESİ -->
   <div id="serviceModal" class="service-modal">
     <div class="service-modal-content">
       <span class="close-service-modal">&times;</span>
@@ -344,28 +543,61 @@
     </div>
   </div>
 
+  <!-- BLOG PENCERESİ -->
   <div id="blogModal" class="service-modal">
     <div class="service-modal-content" style="max-width:800px">
       <span id="closeBlogModal" class="close-service-modal">&times;</span>
-      <img id="blogModalImage" src="" alt="" style="width:100%;height:300px;object-fit:cover;border-radius:10px;margin-bottom:20px">
+
+      <img
+        id="blogModalImage"
+        src=""
+        alt=""
+        style="width:100%;height:300px;object-fit:cover;border-radius:10px;margin-bottom:20px"
+      >
+
       <h3 id="blogModalTitle">Blog Başlığı</h3>
-      <div id="blogModalMeta" style="font-size:13px;color:#888;margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:15px"></div>
+
+      <div
+        id="blogModalMeta"
+        style="font-size:13px;color:#888;margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:15px"
+      ></div>
+
       <div id="blogModalBody" style="line-height:1.7"></div>
     </div>
   </div>
 
+  <!-- YASAL METİN PENCERESİ -->
   <div id="yasalModal" class="service-modal">
     <div class="service-modal-content" style="max-width:800px">
       <span id="closeYasalModal" class="close-service-modal">&times;</span>
+
       <h3 id="yasalModalTitle">Başlık</h3>
-      <div id="yasalModalBody" style="line-height:1.7;white-space:pre-wrap"></div>
+
+      <div
+        id="yasalModalBody"
+        style="line-height:1.7;white-space:pre-wrap"
+      ></div>
+
       <div style="text-align:right;margin-top:20px">
-        <button onclick="document.getElementById('yasalModal').style.display='none'" class="btn-primary">Kapat</button>
+        <button
+          onclick="document.getElementById('yasalModal').style.display='none'"
+          class="btn-primary"
+          type="button"
+        >
+          Kapat
+        </button>
       </div>
     </div>
   </div>
 
-  <a class="whatsapp-float" href="https://wa.me/905519849333" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp üzerinden randevu alın">
+  <!-- WHATSAPP SABİT BUTON -->
+  <a
+    class="whatsapp-float"
+    href="https://wa.me/905519849333?text=Merhaba%2C%20Rana%20%C4%B0%C5%9Fitme%20Merkezi%27nden%20bilgi%20almak%20istiyorum."
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="WhatsApp üzerinden randevu alın"
+  >
     <i class="fab fa-whatsapp"></i>
   </a>
 
