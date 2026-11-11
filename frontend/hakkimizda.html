@@ -1,63 +1,50 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-NG5WXPCD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-</script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hakkımızda | Rana İşitme Kliniği</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta name="description" content="Rana İşitme Merkezi hakkında bilgi alın. İşitme sağlığınız için kişiye özel çözümler ve profesyonel destek.">
+    <title>Hakkımızda | Rana İşitme Merkezi</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .about-section { padding: 100px 50px; max-width: 1200px; margin: 0 auto; }
-        .about-container { display: flex; gap: 50px; align-items: center; }
-        .about-image { flex: 1; }
-        .about-image img { width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .about-content { flex: 1; }
-        .about-content h1 { font-size: 36px; color: var(--primary-color); margin-bottom: 20px; }
-        .about-content p { font-size: 16px; line-height: 1.8; color: #555; margin-bottom: 20px; }
-        
-        @media (max-width: 768px) {
-            .about-container { flex-direction: column; }
-            .about-section { padding: 50px 20px; }
-        }
-    </style>
 </head>
-<body>
-    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-NG5WXPCD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-</script>
 
-    <!-- Top Bar -->
+<body>
+
+    <!-- ÜST İLETİŞİM ŞERİDİ -->
     <div class="top-bar">
         <div class="container">
             <div class="contact-info">
-                <span id="headerTelefon"><i class="fas fa-phone-alt"></i> 0212 123 45 67</span>
-                <span id="headerEmail"><i class="fas fa-envelope"></i> info@ranaklinik.com</span>
-                <span id="headerAdres" class="hide-mobile"><i class="fas fa-map-marker-alt"></i> Kadıköy, İstanbul</span>
+                <span id="headerTelefon">
+                    <i class="fas fa-phone-alt"></i> 0551 984 93 33
+                </span>
+                <span id="headerEmail"></span>
+                <span id="headerAdres" class="hide-mobile"></span>
             </div>
-            <div class="social-icons-top" id="headerSocials">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
+            <div class="social-icons-top" id="headerSocials"></div>
         </div>
     </div>
 
+    <!-- ANA MENÜ -->
     <header class="navbar">
-        <a href="index.html" class="logo" style="text-decoration: none;">Rana<span>.</span></a>
+        <a href="index.html" class="logo" style="text-decoration:none;">
+            Rana<span>.</span>
+        </a>
+
         <nav>
             <ul class="nav-links">
                 <li><a href="index.html">Ana Sayfa</a></li>
-                <li><a href="hakkimizda.html" style="color: var(--primary-color);">Hakkımızda</a></li>
+                <li><a href="hakkimizda.html" class="active">Hakkımızda</a></li>
                 <li><a href="urunler.html">Ürünlerimiz</a></li>
                 <li><a href="index.html#services">Hizmetler</a></li>
                 <li><a href="index.html#blog">Blog</a></li>
@@ -65,37 +52,112 @@
                 <li><a href="index.html#randevu">Randevu Al</a></li>
             </ul>
         </nav>
+
         <div class="hamburger">
             <div class="line1"></div>
             <div class="line2"></div>
             <div class="line3"></div>
         </div>
+
         <a href="index.html#randevu" class="btn-primary">Randevu Al</a>
     </header>
 
-    <section class="about-section">
-        <div class="about-container">
-            <div class="about-image">
-                <img id="aboutImage" src="https://via.placeholder.com/600x400" alt="Hakkımızda">
-            </div>
-            <div class="about-content">
-                <h1 id="aboutTitle">Hakkımızda</h1>
-                <div id="aboutContent">
-                    <p>Yükleniyor...</p>
+    <main class="about-page">
+
+        <!-- SAYFA BAŞLIĞI -->
+        <section class="about-hero">
+            <div class="about-hero-inner">
+                <span class="about-eyebrow">
+                    <span></span> RANA İŞİTME MERKEZİ
+                </span>
+
+                <h1>İşitmenin Değerini<br>
+                    <strong>Birlikte Yaşatıyoruz.</strong>
+                </h1>
+
+                <p>
+                    İşitme sağlığınız için doğru çözümler, kişiye özel yaklaşım
+                    ve güvenilir destek.
+                </p>
+
+                <div class="about-breadcrumb">
+                    <a href="index.html">Ana Sayfa</a>
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Hakkımızda</span>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer class="footer">
+        <!-- HAKKIMIZDA İÇERİĞİ -->
+        <section class="about-main-section">
+            <div class="about-main-container">
+
+                <div class="about-image-wrap">
+                    <div class="about-image-frame">
+                        <img
+                            id="aboutImage"
+                            src="https://via.placeholder.com/800x600?text=Rana+%C4%B0%C5%9Fitme+Merkezi"
+                            alt="Rana İşitme Merkezi"
+                        >
+                    </div>
+
+                    <div class="about-image-label">
+                        <i class="fas fa-heart"></i>
+                        <span>İşitme sağlığınız için yanınızdayız.</span>
+                    </div>
+                </div>
+
+                <div class="about-content-wrap">
+                    <span class="about-section-label">
+                        <span></span> BİZ KİMİZ?
+                    </span>
+
+                    <h2 id="aboutTitle">Hakkımızda</h2>
+
+                    <div id="aboutContent" class="about-dynamic-content">
+                        <p>Yükleniyor...</p>
+                    </div>
+
+                    <a href="iletisim.html" class="about-contact-button">
+                        Bizimle İletişime Geçin
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- GÜVEN MESAJI -->
+        <section class="about-values-section">
+            <div class="about-values-inner">
+                <span class="about-section-label">
+                    <span></span> RANA İŞİTME MERKEZİ
+                </span>
+
+                <h2>Her Kulak Biriciktir.</h2>
+
+                <p>
+                    Her bireyin işitme ihtiyacı farklıdır. Bu nedenle doğru çözümün,
+                    kişiye özel değerlendirme ve düzenli takip ile mümkün olduğuna inanıyoruz.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ALT BİLGİ -->
+    <footer class="home-footer">
         <div class="footer-container">
+
             <div class="footer-col">
                 <a href="index.html" class="footer-logo">Rana<span>.</span></a>
-                <p>İşitme sağlığınız için en doğru adres. Uzman kadromuz ve son teknoloji cihazlarımızla hizmetinizdeyiz.</p>
-                <div class="social-links" id="footerSocials">
-                    <!-- Sosyal medya ikonları app.js tarafından eklenecek -->
-                </div>
+                <p>
+                    İşitme sağlığınız için kişiye özel çözümler ve güvenilir destek.
+                    İhtiyaç duyduğunuz her aşamada yanınızdayız.
+                </p>
+                <div class="social-links" id="footerSocials"></div>
             </div>
+
             <div class="footer-col">
                 <h4>Hızlı Menü</h4>
                 <ul>
@@ -105,33 +167,38 @@
                     <li><a href="index.html#services">Hizmetler</a></li>
                     <li><a href="index.html#blog">Blog</a></li>
                     <li><a href="iletisim.html">İletişim</a></li>
-                    <li><a href="index.html#randevu">Randevu Al</a></li>
                 </ul>
             </div>
+
             <div class="footer-col" id="footerSaatler">
                 <h4>Çalışma Saatleri</h4>
-                <!-- Çalışma saatleri app.js tarafından eklenecek -->
             </div>
+
             <div class="footer-col">
                 <h4>İletişim</h4>
-                <ul id="footerIletisim">
-                    <!-- İletişim bilgileri app.js tarafından eklenecek -->
-                </ul>
+                <ul id="footerIletisim"></ul>
             </div>
+
         </div>
+
         <div class="footer-bottom">
             <div class="footer-bottom-content">
-                <p>&copy; 2024 Rana Klinik. Tüm Hakları Saklıdır.</p>
+                <p>&copy; 2026 Rana İşitme Merkezi. Tüm Hakları Saklıdır.</p>
+
                 <div class="footer-links">
-                    <a href="javascript:void(0)" onclick="yasalMetinGoster('gizlilik')">Gizlilik Politikası</a>
-                    <a href="javascript:void(0)" onclick="yasalMetinGoster('sartlar')">Kullanım Şartları</a>
+                    <a href="javascript:void(0)" onclick="yasalMetinGoster('gizlilik')">
+                        Gizlilik Politikası
+                    </a>
+                    <a href="javascript:void(0)" onclick="yasalMetinGoster('sartlar')">
+                        Kullanım Şartları
+                    </a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Yasal Metin Modalı (app.js'in çalışması için gerekli) -->
-    <div id="yasalModal" class="service-modal" style="display: none;"></div>
+    <!-- YASAL METİN MODALI -->
+    <div id="yasalModal" class="service-modal" style="display:none;"></div>
 
     <script src="app.js"></script>
 </body>
