@@ -2970,3 +2970,24 @@ header.navbar,
         font-size: 14px !important;
     }
 }
+/* ÜST İLETİŞİM ALANINDAKİ BEYAZ ARKA PLANI KALDIR */
+.top-bar,
+.top-bar .container,
+.top-bar .contact-info,
+.top-bar .contact-info a,
+.top-bar #headerSocials,
+.top-bar #headerSocials a {
+    background: #c92335 !important;
+    background-color: #c92335 !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+}
+
+.top-bar {
+    width: 100% !important;
+}
+
+.top-bar a,
+.top-bar i {
+    color: #ffffff !important;
+}
