@@ -3102,3 +3102,59 @@ a {
 #yasalModal {
     display: none !important;
 }
+/* MOBİL MENÜ DÜZELTME */
+@media screen and (max-width: 991px) {
+    .navbar {
+        position: relative;
+        z-index: 9999;
+    }
+
+    .hamburger {
+        display: flex !important;
+        position: relative;
+        z-index: 10002;
+        cursor: pointer;
+    }
+
+    .nav-links {
+        position: fixed !important;
+        top: 0 !important;
+        right: -100% !important;
+        width: 85% !important;
+        max-width: 360px;
+        height: 100vh !important;
+        background: #ffffff !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        padding: 100px 30px 40px !important;
+        gap: 22px !important;
+        z-index: 10001 !important;
+        transition: right 0.3s ease !important;
+        overflow-y: auto;
+        visibility: hidden;
+        box-shadow: -10px 0 30px rgba(0,0,0,0.12);
+    }
+
+    .nav-links.nav-active {
+        right: 0 !important;
+        visibility: visible !important;
+    }
+
+    .nav-links li {
+        display: block !important;
+        width: 100%;
+    }
+
+    .nav-links li a {
+        display: block;
+        color: #222222 !important;
+        font-size: 16px;
+        text-decoration: none;
+    }
+
+    .mobile-nav-cta {
+        display: block !important;
+    }
+}
