@@ -1,8 +1,8 @@
 
 /* =====================================================
    RANA İŞİTME MERKEZİ
-   Kurumsal kırmızı-beyaz tasarım
-   Masaüstü + tablet + mobil
+   KURUMSAL KIRMIZI-BEYAZ TASARIM
+   MASAÜSTÜ + TABLET + MOBİL
 ===================================================== */
 
 :root {
@@ -13,11 +13,13 @@
     --rana-light: #f7f7f7;
     --rana-white: #ffffff;
     --rana-border: #e9e9e9;
-    --rana-shadow: 0 12px 35px rgba(0, 0, 0, .07);
+    --rana-shadow: 0 12px 35px rgba(0,0,0,.07);
     --rana-radius: 14px;
 }
 
-* {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -26,9 +28,13 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 90px;
+    width: 100%;
+    max-width: 100%;
 }
 
 body {
+    width: 100%;
+    max-width: 100%;
     font-family: "DM Sans", "Manrope", Arial, sans-serif;
     color: var(--rana-text);
     background: var(--rana-white);
@@ -44,8 +50,13 @@ select {
     font-family: "DM Sans", "Manrope", Arial, sans-serif;
 }
 
-img {
+img,
+video,
+iframe {
     max-width: 100%;
+}
+
+img {
     display: block;
 }
 
@@ -62,10 +73,12 @@ button {
 .section-container {
     width: min(1200px, 92%);
     margin: 0 auto;
+    min-width: 0;
 }
 
 section {
     position: relative;
+    min-width: 0;
 }
 
 .section-title {
@@ -93,9 +106,7 @@ section {
     font-size: 15px;
 }
 
-/* =====================================================
-   ÜST BİLGİ ÇUBUĞU
-===================================================== */
+/* ÜST BİLGİ ÇUBUĞU */
 
 .top-bar {
     background: #f8f8f8;
@@ -135,24 +146,22 @@ section {
     gap: 13px;
 }
 
-.top-bar .social-links a,
-#headerSocials a {
-    color: #555;
-}
-
-/* =====================================================
-   HEADER VE NAVİGASYON
-===================================================== */
+/* HEADER VE MENÜ */
 
 header,
+.main-header,
+.site-header {
+    background: rgba(255,255,255,.97);
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    backdrop-filter: blur(12px);
+}
+
 .main-header,
 .site-header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, .97);
-    border-bottom: 1px solid rgba(0, 0, 0, .06);
-    backdrop-filter: blur(12px);
+    width: 100%;
 }
 
 .navbar,
@@ -164,7 +173,8 @@ header,
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 25px;
+    gap: 20px;
+    min-width: 0;
 }
 
 .logo,
@@ -172,6 +182,7 @@ header,
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    min-width: 0;
     color: var(--rana-red);
     font-size: 25px;
     font-weight: 850;
@@ -188,8 +199,9 @@ header,
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 25px;
+    gap: 22px;
     list-style: none;
+    min-width: 0;
 }
 
 .nav-links a {
@@ -246,6 +258,7 @@ header,
     display: none;
     width: 42px;
     height: 42px;
+    flex-shrink: 0;
     border: 0;
     background: #fff;
     border-radius: 7px;
@@ -281,9 +294,7 @@ header,
     transform: translateY(-7px) rotate(-45deg);
 }
 
-/* =====================================================
-   GENEL BUTONLAR
-===================================================== */
+/* BUTONLAR */
 
 .btn,
 .btn-primary,
@@ -326,9 +337,7 @@ header,
     color: #fff;
 }
 
-/* =====================================================
-   ANA SAYFA HERO
-===================================================== */
+/* ANA SAYFA HERO */
 
 .home-hero,
 .hero {
@@ -347,7 +356,7 @@ header,
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.88) 48%, rgba(255,255,255,.22) 100%);
+    background: linear-gradient(90deg,rgba(255,255,255,.97) 0%,rgba(255,255,255,.88) 48%,rgba(255,255,255,.22) 100%);
     pointer-events: none;
 }
 
@@ -355,8 +364,9 @@ header,
 .home-hero-content {
     position: relative;
     z-index: 1;
-    width: min(1200px, 100%);
+    width: min(1200px,100%);
     margin: auto;
+    min-width: 0;
 }
 
 .hero-content > *,
@@ -378,7 +388,7 @@ header,
 .hero-content h1,
 .home-hero h1 {
     color: #252525;
-    font-size: clamp(36px, 5vw, 60px);
+    font-size: clamp(36px,5vw,60px);
     line-height: 1.12;
     font-weight: 850;
     letter-spacing: -1.5px;
@@ -405,9 +415,7 @@ header,
     gap: 13px;
 }
 
-/* =====================================================
-   MARKA ŞERİDİ
-===================================================== */
+/* MARKA ŞERİDİ */
 
 .brand-strip {
     padding: 28px 5%;
@@ -418,7 +426,7 @@ header,
 
 .brand-strip-inner,
 .brand-logos {
-    width: min(1050px, 100%);
+    width: min(1050px,100%);
     margin: auto;
     display: flex;
     align-items: center;
@@ -444,9 +452,7 @@ header,
     opacity: 1;
 }
 
-/* =====================================================
-   ÇÖZÜMLERİMİZ
-===================================================== */
+/* ÇÖZÜMLERİMİZ */
 
 .solutions-section {
     padding: 90px 5%;
@@ -454,15 +460,16 @@ header,
 }
 
 .solution-grid {
-    width: min(1200px, 100%);
+    width: min(1200px,100%);
     margin: auto;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3,minmax(0,1fr));
     gap: 23px;
 }
 
 .solution-card {
     position: relative;
+    min-width: 0;
     padding: 32px 27px;
     background: #fff;
     border: 1px solid var(--rana-border);
@@ -496,9 +503,7 @@ header,
     line-height: 1.75;
 }
 
-/* =====================================================
-   HİZMETLER
-===================================================== */
+/* HİZMETLER */
 
 .home-services,
 .services-section {
@@ -508,15 +513,16 @@ header,
 
 #servicesContainer,
 .services-grid {
-    width: min(1200px, 100%);
+    width: min(1200px,100%);
     margin: auto;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(4,minmax(0,1fr));
     gap: 20px;
 }
 
 .service-card {
     position: relative;
+    min-width: 0;
     min-height: 235px;
     padding: 28px 24px;
     background: #fff;
@@ -524,7 +530,7 @@ header,
     border-radius: 12px;
     box-shadow: 0 5px 20px rgba(0,0,0,.04);
     cursor: pointer;
-    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    transition: transform .25s ease,box-shadow .25s ease,border-color .25s ease;
     overflow: hidden;
 }
 
@@ -579,9 +585,7 @@ header,
     overflow: hidden;
 }
 
-/* =====================================================
-   NEDEN BİZ
-===================================================== */
+/* NEDEN BİZ */
 
 .why-section {
     padding: 90px 5%;
@@ -591,7 +595,7 @@ header,
 .why-section .container,
 .why-section .section-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
     gap: 55px;
     align-items: center;
 }
@@ -603,7 +607,7 @@ header,
 }
 
 .why-section h2 {
-    font-size: clamp(28px, 4vw, 40px);
+    font-size: clamp(28px,4vw,40px);
     line-height: 1.2;
     margin-bottom: 20px;
 }
@@ -617,9 +621,7 @@ header,
     margin-bottom: 15px;
 }
 
-/* =====================================================
-   SÜREÇ / JOURNEY
-===================================================== */
+/* SÜREÇ */
 
 .journey-section {
     padding: 85px 5%;
@@ -627,14 +629,15 @@ header,
 }
 
 .journey-grid {
-    width: min(1100px, 100%);
+    width: min(1100px,100%);
     margin: auto;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(4,minmax(0,1fr));
     gap: 20px;
 }
 
 .journey-item {
+    min-width: 0;
     text-align: center;
     padding: 25px 18px;
 }
@@ -664,9 +667,7 @@ header,
     font-size: 13px;
 }
 
-/* =====================================================
-   ANA SAYFA CTA
-===================================================== */
+/* ANA SAYFA CTA */
 
 .home-cta {
     padding: 70px 5%;
@@ -676,7 +677,7 @@ header,
 }
 
 .home-cta h2 {
-    font-size: clamp(27px, 4vw, 38px);
+    font-size: clamp(27px,4vw,38px);
     font-weight: 850;
     margin-bottom: 12px;
 }
@@ -694,9 +695,7 @@ header,
     border-color: #fff;
 }
 
-/* =====================================================
-   BLOG
-===================================================== */
+/* BLOG */
 
 .blog-section {
     padding: 90px 5%;
@@ -705,9 +704,10 @@ header,
 }
 
 .blog-slider-wrapper {
-    width: min(1200px, 100%);
+    width: min(1200px,100%);
     margin: auto;
     overflow: hidden;
+    min-width: 0;
 }
 
 #blogKapsayici {
@@ -717,6 +717,8 @@ header,
     scroll-behavior: smooth;
     scrollbar-width: none;
     padding: 5px 3px 20px;
+    min-width: 0;
+    max-width: 100%;
 }
 
 #blogKapsayici::-webkit-scrollbar {
@@ -755,7 +757,6 @@ header,
     font-size: 18px;
     line-height: 1.4;
     margin-bottom: 10px;
-    color: #292929;
 }
 
 .blog-body p {
@@ -789,9 +790,7 @@ header,
     color: #fff;
 }
 
-/* =====================================================
-   FOOTER
-===================================================== */
+/* FOOTER */
 
 .home-footer,
 footer {
@@ -800,7 +799,7 @@ footer {
 }
 
 .footer-main {
-    width: min(1200px, 92%);
+    width: min(1200px,92%);
     margin: auto;
     padding: 65px 0 45px;
     display: grid;
@@ -894,9 +893,7 @@ footer {
     background: var(--rana-red);
 }
 
-/* =====================================================
-   WHATSAPP SABİT BUTON
-===================================================== */
+/* WHATSAPP */
 
 .whatsapp-float,
 .whatsapp-button {
@@ -949,9 +946,7 @@ footer {
     transform: translateY(0);
 }
 
-/* =====================================================
-   MODALLAR
-===================================================== */
+/* MODALLAR */
 
 #serviceModal,
 #blogModal,
@@ -974,7 +969,7 @@ footer {
 .yasal-modal-content,
 .kvkk-content {
     position: relative;
-    width: min(680px, 100%);
+    width: min(680px,100%);
     max-height: 85vh;
     overflow-y: auto;
     background: #fff;
@@ -1037,9 +1032,7 @@ footer {
     margin-bottom: 18px;
 }
 
-/* =====================================================
-   TOAST BİLDİRİMLERİ
-===================================================== */
+/* TOAST */
 
 #toast-container,
 .toast-container {
@@ -1054,7 +1047,7 @@ footer {
 
 .toast {
     min-width: 230px;
-    max-width: 360px;
+    max-width: min(360px,calc(100vw - 40px));
     padding: 14px 18px;
     border-radius: 8px;
     background: #333;
@@ -1072,9 +1065,7 @@ footer {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* =====================================================
-   PRELOADER
-===================================================== */
+/* PRELOADER */
 
 #preloader {
     position: fixed;
@@ -1084,7 +1075,7 @@ footer {
     align-items: center;
     justify-content: center;
     background: #fff;
-    transition: opacity .4s ease, visibility .4s ease;
+    transition: opacity .4s ease,visibility .4s ease;
 }
 
 .loader,
@@ -1101,9 +1092,7 @@ footer {
     to { transform: rotate(360deg); }
 }
 
-/* =====================================================
-   ÇEREZ BİLDİRİMİ
-===================================================== */
+/* ÇEREZ BİLDİRİMİ */
 
 .cookie-banner {
     position: fixed;
@@ -1157,18 +1146,14 @@ footer {
     background: var(--rana-red);
 }
 
-/* =====================================================
-   SAYFA GEÇİŞİ
-===================================================== */
+/* SAYFA GEÇİŞİ */
 
 body.fade-out {
     opacity: .5;
     transition: opacity .25s ease;
 }
 
-/* =====================================================
-   HAKKIMIZDA SAYFASI
-===================================================== */
+/* HAKKIMIZDA */
 
 .about-hero,
 .page-hero {
@@ -1180,7 +1165,7 @@ body.fade-out {
 .about-hero h1,
 .page-hero h1 {
     color: #292929;
-    font-size: clamp(32px, 5vw, 48px);
+    font-size: clamp(32px,5vw,48px);
     font-weight: 850;
     margin-bottom: 12px;
 }
@@ -1203,10 +1188,10 @@ body.fade-out {
 
 .about-section .container,
 .about-content {
-    width: min(1150px, 100%);
+    width: min(1150px,100%);
     margin: auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
     gap: 45px;
     align-items: center;
 }
@@ -1220,7 +1205,7 @@ body.fade-out {
 
 .about-section h2,
 .about-content h2 {
-    font-size: clamp(26px, 4vw, 38px);
+    font-size: clamp(26px,4vw,38px);
     line-height: 1.25;
     margin-bottom: 18px;
 }
@@ -1236,24 +1221,23 @@ body.fade-out {
     margin-bottom: 15px;
 }
 
-/* =====================================================
-   İLETİŞİM SAYFASI
-===================================================== */
+/* İLETİŞİM */
 
 .contact-section {
     padding: 75px 5%;
 }
 
 .contact-grid {
-    width: min(1150px, 100%);
+    width: min(1150px,100%);
     margin: auto;
     display: grid;
-    grid-template-columns: .9fr 1.1fr;
+    grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr);
     gap: 35px;
 }
 
 .contact-info,
 .contact-form {
+    min-width: 0;
     padding: 30px;
     border: 1px solid var(--rana-border);
     border-radius: 12px;
@@ -1290,6 +1274,7 @@ body.fade-out {
 .contact-form select,
 .form-control {
     width: 100%;
+    min-width: 0;
     min-height: 45px;
     padding: 12px 14px;
     margin-bottom: 16px;
@@ -1330,9 +1315,7 @@ body.fade-out {
     border: 0;
 }
 
-/* =====================================================
-   ÜRÜNLER SAYFASI
-===================================================== */
+/* ÜRÜNLER */
 
 .products-page {
     padding: 75px 5%;
@@ -1340,8 +1323,9 @@ body.fade-out {
 }
 
 .products-page-container {
-    width: min(1240px, 100%);
+    width: min(1240px,100%);
     margin: auto;
+    min-width: 0;
 }
 
 .products-page-heading {
@@ -1350,7 +1334,7 @@ body.fade-out {
 }
 
 .products-page-heading h1 {
-    font-size: clamp(30px, 4vw, 44px);
+    font-size: clamp(30px,4vw,44px);
     font-weight: 850;
     margin-bottom: 12px;
 }
@@ -1368,11 +1352,13 @@ body.fade-out {
 .products-list,
 .products-page-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3,minmax(0,1fr));
     gap: 24px;
+    min-width: 0;
 }
 
 .product-card {
+    min-width: 0;
     background: #fff;
     border: 1px solid var(--rana-border);
     border-radius: 14px;
@@ -1409,36 +1395,43 @@ body.fade-out {
     line-height: 1.7;
 }
 
-/* =====================================================
-   TABLET
-===================================================== */
+/* TABLET */
 
 @media (max-width: 1050px) {
+    .navbar,
+    .nav-container,
+    .header-inner {
+        width: 96%;
+        gap: 10px;
+    }
+
     .nav-links {
-        gap: 15px;
+        gap: 10px;
     }
 
     .nav-links a {
-        font-size: 12px;
+        font-size: 11px;
+    }
+
+    .nav-links .nav-appointment {
+        padding: 10px 12px;
     }
 
     #servicesContainer,
     .services-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2,minmax(0,1fr));
     }
 
     .footer-main {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2,minmax(0,1fr));
     }
 
     .solution-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2,minmax(0,1fr));
     }
 }
 
-/* =====================================================
-   MOBİL
-===================================================== */
+/* MOBİL */
 
 @media (max-width: 768px) {
     html {
@@ -1454,6 +1447,8 @@ body.fade-out {
     .header-inner {
         min-height: 70px;
         width: 92%;
+        margin: auto;
+        position: relative;
     }
 
     .logo img,
@@ -1469,7 +1464,9 @@ body.fade-out {
         position: fixed;
         top: 70px;
         right: -100%;
-        width: min(340px, 86%);
+        left: auto;
+        width: min(340px,86vw);
+        max-width: 100%;
         height: calc(100dvh - 70px);
         padding: 25px 22px 35px;
         background: #fff;
@@ -1480,12 +1477,18 @@ body.fade-out {
         justify-content: flex-start;
         gap: 4px;
         overflow-y: auto;
+        overflow-x: hidden;
         transition: right .3s ease;
-        z-index: 1050;
+        z-index: 10000;
     }
 
-    .nav-links.nav-active {
-        right: 0;
+    .nav-links.nav-active,
+    .nav-links.active {
+        right: 0 !important;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
     }
 
     .nav-links a {
@@ -1493,6 +1496,7 @@ body.fade-out {
         padding: 14px 5px;
         border-bottom: 1px solid #eee;
         font-size: 14px;
+        white-space: normal;
     }
 
     .nav-links a::after {
@@ -1508,9 +1512,11 @@ body.fade-out {
 
     .home-hero,
     .hero {
+        width: 100%;
         min-height: 540px;
         padding: 70px 6%;
         background-position: 60% center;
+        overflow: hidden;
     }
 
     .home-hero::before,
@@ -1518,14 +1524,26 @@ body.fade-out {
         background: rgba(255,255,255,.88);
     }
 
+    .hero-content,
+    .home-hero-content {
+        width: 100%;
+        min-width: 0;
+    }
+
     .hero-content h1,
     .home-hero h1 {
-        font-size: clamp(34px, 9vw, 46px);
+        font-size: clamp(34px,9vw,46px);
+        overflow-wrap: anywhere;
     }
 
     .hero-content p,
     .home-hero p {
         font-size: 15px;
+    }
+
+    .hero-buttons {
+        width: 100%;
+        min-width: 0;
     }
 
     .solutions-section,
@@ -1567,8 +1585,20 @@ body.fade-out {
     }
 
     .journey-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2,minmax(0,1fr));
         gap: 10px;
+    }
+
+    .blog-slider-wrapper {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    #blogKapsayici {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
     }
 
     .blog-card {
@@ -1580,6 +1610,7 @@ body.fade-out {
     }
 
     .footer-main {
+        width: 92%;
         grid-template-columns: 1fr 1fr;
         gap: 28px 20px;
         padding: 45px 0 30px;
@@ -1591,13 +1622,14 @@ body.fade-out {
 
     .products-list,
     .products-page-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2,minmax(0,1fr));
     }
 
     .cookie-banner {
         left: 12px;
         right: 12px;
         bottom: 12px;
+        max-width: calc(100% - 24px);
         padding: 15px;
         flex-direction: column;
         align-items: stretch;
@@ -1617,13 +1649,13 @@ body.fade-out {
     .blog-modal-content,
     .yasal-modal-content,
     .kvkk-content {
+        width: 100%;
+        max-width: 100%;
         padding: 28px 20px;
     }
 }
 
-/* =====================================================
-   KÜÇÜK TELEFONLAR
-===================================================== */
+/* KÜÇÜK TELEFONLAR */
 
 @media (max-width: 480px) {
     .container,
@@ -1664,7 +1696,7 @@ body.fade-out {
     }
 
     .journey-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2,minmax(0,1fr));
     }
 
     .footer-main {
@@ -1700,14 +1732,13 @@ body.fade-out {
     }
 }
 
-/* =====================================================
-   ERİŞİLEBİLİRLİK VE SON DÜZENLEMELER
-===================================================== */
+/* ERİŞİLEBİLİRLİK */
 
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
+textarea:focus-visible,
+select:focus-visible {
     outline: 3px solid rgba(201,35,53,.35);
     outline-offset: 3px;
 }
@@ -1719,42 +1750,5 @@ textarea:focus-visible {
         scroll-behavior: auto !important;
         animation-duration: .01ms !important;
         transition-duration: .01ms !important;
-    }
-}
-/* MOBİL MENÜ SINIF ÇAKIŞMASI DÜZELTMESİ */
-@media (max-width: 768px) {
-    .site-header {
-        position: sticky;
-        top: 0;
-        z-index: 9999;
-    }
-
-    .navbar {
-        position: relative;
-    }
-
-    .nav-links.nav-active,
-    .nav-links.active {
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        pointer-events: auto !important;
-        right: 0 !important;
-    }
-
-    .nav-links {
-        z-index: 10000;
-    }
-
-    html,
-    body {
-        max-width: 100%;
-        overflow-x: hidden;
-    }
-
-    img,
-    video,
-    iframe {
-        max-width: 100%;
     }
 }
