@@ -8,12 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.hostname === 'localhost' ||
         window.location.hostname === '127.0.0.1';
 
-    const API_URL = isLocal
-        ? 'http://localhost:5501/api'
-        : '/api';
+    const API_URL = isLocal ? 'http://localhost:5501/api' : '/api';
 
     const WHATSAPP_NUMARA = '905519849333';
-
     const WHATSAPP_MESAJ =
         'Merhaba, Rana İşitme Merkezi üzerinden randevu almak istiyorum. Randevu konusunda yardımcı olabilir misiniz?';
 
@@ -22,14 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let allBlogs = [];
     let allProducts = [];
 
+    const get = id => document.getElementById(id);
+
     // --------------------------------------------------
     // GENEL YARDIMCILAR
     // --------------------------------------------------
 
     function whatsappRandevu(mesaj = WHATSAPP_MESAJ) {
-        const url =
-            `https://wa.me/${WHATSAPP_NUMARA}?text=${encodeURIComponent(mesaj)}`;
-
+        const url = `https://wa.me/${WHATSAPP_NUMARA}?text=${encodeURIComponent(mesaj)}`;
         window.open(url, '_blank', 'noopener,noreferrer');
     }
 
@@ -38,13 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', event => {
         const link = event.target.closest('a[href="#randevu"]');
         if (!link) return;
-
         event.preventDefault();
         whatsappRandevu();
     }, true);
 
     window.showToast = (message, type = 'info') => {
-        let container = document.getElementById('toast-container');
+        let container = get('toast-container');
 
         if (!container) {
             container = document.createElement('div');
@@ -64,14 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function formatTelefon(value) {
         let digits = String(value || '').replace(/\D/g, '');
 
-        if (digits.startsWith('0')) {
-            digits = digits.slice(1);
-        }
-
+        if (digits.startsWith('0')) digits = digits.slice(1);
         digits = digits.slice(0, 10);
 
         let result = '';
-
         if (digits.length > 0) result = `(${digits.slice(0, 3)}`;
         if (digits.length >= 4) result += `) ${digits.slice(3, 6)}`;
         if (digits.length >= 7) result += ` ${digits.slice(6, 8)}`;
@@ -81,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function bindInputFormat(inputId, formatter) {
-        const input = document.getElementById(inputId);
+        const input = get(inputId);
         if (!input) return;
 
         input.addEventListener('input', () => {
@@ -90,82 +82,88 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     bindInputFormat('telefon', formatTelefon);
-
     bindInputFormat('sorguTc', value =>
         String(value || '').replace(/\D/g, '').slice(0, 11)
     );
-
     bindInputFormat('tcKimlik', value =>
         String(value || '').replace(/\D/g, '').slice(0, 11)
     );
 
+    function fotoğrafAdresiniDüzenle(url) {
+        if (!url) return '';
+
+        const value = String(url).trim();
+
+        if (/^(https?:\/\/|data:|blob:)/i.test(value)) return value;
+        if (value.startsWith('/')) return value;
+
+        return `/${value}`;
+    }
+
+    async function apiGet(endpoint) {
+        const response = await fetch(`${API_URL}/${endpoint}?_t=${Date.now()}`);
+        if (!response.ok) throw new Error(`İstek başarısız: ${response.status}`);
+        return response.json();
+    }
+
     // --------------------------------------------------
-    // ÜRÜNLER BÖLÜMÜ TASARIMI
+    // ÜRÜNLER
     // --------------------------------------------------
 
     function urunlerStiliniEkle() {
-        if (document.getElementById('rana-products-style')) return;
+        if (get('rana-products-style')) return;
 
         const style = document.createElement('style');
         style.id = 'rana-products-style';
-
         style.textContent = `
             #ranaProducts {
                 padding: 85px 5%;
                 background: #fff;
                 overflow: hidden;
             }
-
             #ranaProducts .products-inner {
                 max-width: 1240px;
                 margin: auto;
             }
-
             #ranaProducts .products-heading {
                 text-align: center;
                 max-width: 720px;
                 margin: 0 auto 42px;
             }
-
             #ranaProducts .products-eyebrow {
                 display: inline-block;
-                color: #c8202f;
+                color: #c92335;
                 font-size: 13px;
-                font-weight: 700;
+                font-weight: 800;
                 letter-spacing: 2px;
                 text-transform: uppercase;
                 margin-bottom: 12px;
             }
-
             #ranaProducts .products-heading h2 {
-                color: #242424;
+                color: #252525;
                 font-size: clamp(27px, 4vw, 40px);
                 font-weight: 800;
                 line-height: 1.2;
                 margin: 0 0 14px;
             }
-
             #ranaProducts .products-heading h2 span {
-                color: #c8202f;
+                color: #c92335;
             }
-
             #ranaProducts .products-heading p {
                 color: #707070;
                 font-size: 16px;
                 line-height: 1.7;
                 margin: 0;
             }
-
             #ranaProducts .products-grid {
                 display: grid;
                 grid-template-columns: repeat(3, minmax(0, 1fr));
                 gap: 25px;
             }
-
             #ranaProducts .product-card {
                 background: #fff;
-                border: 1px solid #eeeeee;
-                border-radius: 15px;
+                border: 1px solid #ececec;
+                border-radius: 16px;
                 overflow: hidden;
                 box-shadow: 0 8px 28px rgba(0,0,0,.055);
                 transition: transform .25s ease, box-shadow .25s ease;
@@ -173,55 +171,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 flex-direction: column;
                 min-width: 0;
             }
-
             #ranaProducts .product-card:hover {
                 transform: translateY(-6px);
-                box-shadow: 0 15px 35px rgba(0,0,0,.11);
+                box-shadow: 0 16px 36px rgba(0,0,0,.11);
             }
-
             #ranaProducts .product-image-wrap {
                 height: 245px;
-                background: #f7f7f7;
+                background: #f8f8f8;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 overflow: hidden;
                 padding: 18px;
             }
-
             #ranaProducts .product-image {
                 width: 100%;
                 height: 100%;
                 object-fit: contain;
                 transition: transform .3s ease;
             }
-
             #ranaProducts .product-card:hover .product-image {
                 transform: scale(1.045);
             }
-
             #ranaProducts .product-no-image {
-                color: #c8202f;
+                color: #c92335;
                 font-size: 48px;
                 opacity: .65;
             }
-
             #ranaProducts .product-info {
                 padding: 22px;
                 display: flex;
                 flex-direction: column;
                 flex: 1;
             }
-
             #ranaProducts .product-brand {
-                color: #c8202f;
+                color: #c92335;
                 font-size: 12px;
                 font-weight: 800;
                 letter-spacing: 1.2px;
                 text-transform: uppercase;
                 margin-bottom: 9px;
             }
-
             #ranaProducts .product-info h3 {
                 color: #252525;
                 font-size: 20px;
@@ -229,7 +219,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 margin: 0 0 10px;
                 font-weight: 750;
             }
-
             #ranaProducts .product-description {
                 color: #747474;
                 font-size: 14px;
@@ -240,7 +229,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 -webkit-box-orient: vertical;
                 overflow: hidden;
             }
-
             #ranaProducts .product-category {
                 display: inline-block;
                 color: #555;
@@ -251,36 +239,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 margin: auto 0 16px;
                 align-self: flex-start;
             }
-
             #ranaProducts .product-detail-link {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 min-height: 45px;
-                border: 1px solid #c8202f;
+                border: 1px solid #c92335;
                 border-radius: 7px;
-                color: #c8202f;
+                color: #c92335;
                 text-decoration: none;
                 font-size: 14px;
                 font-weight: 700;
                 transition: .2s ease;
             }
-
             #ranaProducts .product-detail-link:hover {
-                background: #c8202f;
+                background: #c92335;
                 color: #fff;
             }
-
             #ranaProducts .products-bottom {
                 text-align: center;
                 margin-top: 38px;
             }
-
             #ranaProducts .all-products-link {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                background: #c8202f;
+                background: #c92335;
                 color: #fff;
                 text-decoration: none;
                 padding: 15px 30px;
@@ -288,113 +272,86 @@ document.addEventListener('DOMContentLoaded', () => {
                 font-weight: 700;
                 transition: .2s ease;
             }
-
             #ranaProducts .all-products-link:hover {
-                background: #a71927;
+                background: #a91d2c;
                 transform: translateY(-2px);
             }
-
             #ranaProducts .products-message {
                 text-align: center;
                 padding: 35px 15px;
                 color: #777;
                 grid-column: 1 / -1;
             }
-
             @media (max-width: 900px) {
                 #ranaProducts .products-grid {
                     grid-template-columns: repeat(2, minmax(0, 1fr));
                     gap: 18px;
                 }
-
-                #ranaProducts .product-image-wrap {
-                    height: 210px;
-                }
+                #ranaProducts .product-image-wrap { height: 210px; }
             }
-
             @media (max-width: 560px) {
-                #ranaProducts {
-                    padding: 58px 16px;
-                }
-
-                #ranaProducts .products-heading {
-                    margin-bottom: 28px;
-                }
-
-                #ranaProducts .products-heading p {
-                    font-size: 14px;
-                }
-
-                #ranaProducts .products-grid {
-                    grid-template-columns: 1fr;
-                    gap: 18px;
-                }
-
-                #ranaProducts .product-image-wrap {
-                    height: 230px;
-                }
-
-                #ranaProducts .product-info {
-                    padding: 18px;
-                }
-
-                #ranaProducts .product-info h3 {
-                    font-size: 18px;
-                }
-
+                #ranaProducts { padding: 58px 16px; }
+                #ranaProducts .products-heading { margin-bottom: 28px; }
+                #ranaProducts .products-heading p { font-size: 14px; }
+                #ranaProducts .products-grid { grid-template-columns: 1fr; gap: 18px; }
+                #ranaProducts .product-image-wrap { height: 230px; }
+                #ranaProducts .product-info { padding: 18px; }
+                #ranaProducts .product-info h3 { font-size: 18px; }
                 #ranaProducts .all-products-link {
                     width: 100%;
                     box-sizing: border-box;
                 }
             }
         `;
-
         document.head.appendChild(style);
     }
 
+    function urunlerMenuLinkiEkle() {
+        const nav = document.querySelector('.nav-links');
+        if (!nav) return;
+
+        if (nav.querySelector('a[href="urunler.html"], a[href="#ranaProducts"]')) return;
+
+        const link = document.createElement('a');
+        link.href = 'urunler.html';
+        link.textContent = 'Ürünler';
+
+        const servicesLink = nav.querySelector('a[href="#services"]');
+        if (servicesLink) nav.insertBefore(link, servicesLink);
+        else nav.appendChild(link);
+    }
+
     function urunlerBolumunuOlustur() {
-        let section = document.getElementById('ranaProducts');
+        let section = get('ranaProducts');
 
         if (!section) {
             section = document.createElement('section');
             section.id = 'ranaProducts';
-
             section.innerHTML = `
                 <div class="products-inner">
                     <div class="products-heading">
                         <span class="products-eyebrow">Rana İşitme Merkezi</span>
                         <h2>Size Uygun İşitme <span>Çözümleri</span></h2>
-                        <p>
-                            İhtiyaçlarınıza ve yaşam tarzınıza uygun
-                            işitme cihazı seçeneklerini keşfedin.
-                        </p>
+                        <p>İhtiyaçlarınıza ve yaşam tarzınıza uygun işitme cihazı seçeneklerini keşfedin.</p>
                     </div>
-
                     <div class="products-grid" id="ranaProductsGrid">
-                        <div class="products-message">
-                            Ürünler yükleniyor...
-                        </div>
+                        <div class="products-message">Ürünler yükleniyor...</div>
                     </div>
-
                     <div class="products-bottom">
-                        <a href="urunler.html" class="all-products-link">
-                            Tüm Ürünleri Gör
-                        </a>
+                        <a href="urunler.html" class="all-products-link">Tüm Ürünleri Gör</a>
                     </div>
                 </div>
             `;
 
-            const services = document.getElementById('services');
+            const services = get('services');
+            const blog = get('blog');
 
-            if (services && services.parentNode) {
+            if (services?.parentNode) {
                 services.parentNode.insertBefore(section, services);
+            } else if (blog?.parentNode) {
+                blog.parentNode.insertBefore(section, blog);
             } else {
-                const blog = document.getElementById('blog');
-                if (blog && blog.parentNode) {
-                    blog.parentNode.insertBefore(section, blog);
-                } else {
-                    document.body.appendChild(section);
-                }
+                document.body.appendChild(section);
             }
         }
 
@@ -402,58 +359,11 @@ document.addEventListener('DOMContentLoaded', () => {
         urunlerMenuLinkiEkle();
     }
 
-    function urunlerMenuLinkiEkle() {
-        const nav = document.querySelector('.nav-links');
-        if (!nav) return;
-
-        const existingLink = nav.querySelector(
-            'a[href="urunler.html"], a[href="#ranaProducts"]'
-        );
-
-        if (existingLink) return;
-
-        const link = document.createElement('a');
-        link.href = '#ranaProducts';
-        link.textContent = 'Ürünler';
-
-        const servicesLink = Array.from(nav.querySelectorAll('a'))
-            .find(item =>
-                item.getAttribute('href') === '#services'
-            );
-
-        if (servicesLink && servicesLink.nextSibling) {
-            nav.insertBefore(link, servicesLink.nextSibling);
-        } else {
-            nav.appendChild(link);
-        }
-    }
-
-    function fotoğrafAdresiniDüzenle(url) {
-        if (!url) return '';
-
-        const value = String(url).trim();
-
-        if (
-            value.startsWith('https://') ||
-            value.startsWith('http://') ||
-            value.startsWith('data:') ||
-            value.startsWith('blob:')
-        ) {
-            return value;
-        }
-
-        if (value.startsWith('/')) {
-            return value;
-        }
-
-        return `/${value}`;
-    }
-
     function urunVerileriniDüzenle(result) {
         if (Array.isArray(result)) return result;
-        if (Array.isArray(result.veri)) return result.veri;
-        if (Array.isArray(result.urunler)) return result.urunler;
-        if (Array.isArray(result.data)) return result.data;
+        if (Array.isArray(result?.veri)) return result.veri;
+        if (Array.isArray(result?.urunler)) return result.urunler;
+        if (Array.isArray(result?.data)) return result.data;
         return [];
     }
 
@@ -475,7 +385,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             image.onerror = () => {
                 image.remove();
-
                 const fallback = document.createElement('div');
                 fallback.className = 'product-no-image';
                 fallback.textContent = '♫';
@@ -503,7 +412,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const description = document.createElement('p');
         description.className = 'product-description';
         description.textContent =
-            urun.aciklama || 'Ürün hakkında detaylı bilgi almak için bizimle iletişime geçebilirsiniz.';
+            urun.aciklama ||
+            'Ürün hakkında detaylı bilgi almak için bizimle iletişime geçebilirsiniz.';
 
         info.append(brand, title, description);
 
@@ -528,47 +438,33 @@ document.addEventListener('DOMContentLoaded', () => {
     async function urunleriGetir() {
         urunlerBolumunuOlustur();
 
-        const grid = document.getElementById('ranaProductsGrid');
+        const grid = get('ranaProductsGrid');
         if (!grid) return;
 
         try {
-            const response = await fetch(
-                `${API_URL}/urunler?_t=${Date.now()}`
-            );
-
-            if (!response.ok) {
-                throw new Error(`Ürün isteği başarısız: ${response.status}`);
-            }
-
-            const result = await response.json();
+            const result = await apiGet('urunler');
             allProducts = urunVerileriniDüzenle(result);
-
             grid.replaceChildren();
 
             if (!allProducts.length) {
                 const message = document.createElement('div');
                 message.className = 'products-message';
-                message.textContent =
-                    'Şu anda gösterilecek ürün bulunamadı.';
+                message.textContent = 'Şu anda gösterilecek ürün bulunamadı.';
                 grid.appendChild(message);
                 return;
             }
 
-            // Ana sayfada en fazla 6 ürün gösterilir.
             allProducts.slice(0, 6).forEach(urun => {
                 grid.appendChild(urunKartiniOlustur(urun));
             });
-
         } catch (error) {
             console.error('Ürünler yüklenemedi:', error);
-
             grid.replaceChildren();
 
             const message = document.createElement('div');
             message.className = 'products-message';
             message.textContent =
                 'Ürünler şu anda yüklenemiyor. Lütfen daha sonra tekrar deneyin.';
-
             grid.appendChild(message);
         }
     }
@@ -579,88 +475,71 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function siteAyarlariniGetir() {
         try {
-            const response = await fetch(
-                `${API_URL}/site-ayarlari?_t=${Date.now()}`
-            );
-
-            if (!response.ok) return;
-
-            const ayarlar = await response.json();
+            const ayarlar = await apiGet('site-ayarlari');
             yasalMetinlerData = ayarlar.yasalMetinler || {};
 
             if (ayarlar.logo) {
-                document.querySelectorAll('.logo, .footer-logo')
-                    .forEach(el => {
-                        const img = document.createElement('img');
-                        img.src = ayarlar.logo;
-                        img.alt = 'Rana İşitme Merkezi';
-                        img.style.height =
-                            el.classList.contains('logo') ? '55px' : '40px';
-                        img.style.width = 'auto';
-                        img.style.maxWidth = '180px';
-                        img.style.objectFit = 'contain';
-
-                        img.onerror = () => img.remove();
-                        el.replaceChildren(img);
-                    });
+                document.querySelectorAll('.logo, .footer-logo').forEach(el => {
+                    const img = document.createElement('img');
+                    img.src = ayarlar.logo;
+                    img.alt = 'Rana İşitme Merkezi';
+                    img.style.height = el.classList.contains('logo') ? '55px' : '40px';
+                    img.style.width = 'auto';
+                    img.style.maxWidth = '180px';
+                    img.style.objectFit = 'contain';
+                    img.onerror = () => img.remove();
+                    el.replaceChildren(img);
+                });
             }
 
             if (ayarlar.favicon) {
                 let favicon = document.querySelector("link[rel~='icon']");
-
                 if (!favicon) {
                     favicon = document.createElement('link');
                     favicon.rel = 'icon';
                     document.head.appendChild(favicon);
                 }
-
                 favicon.href = ayarlar.favicon;
             }
 
             if (ayarlar.heroGorsel) {
-                const hero = document.querySelector('.hero');
-
+                const hero = document.querySelector('.hero, .home-hero');
                 if (hero) {
-                    hero.style.background =
-                        `linear-gradient(rgba(255,255,255,.8), rgba(255,255,255,.8)), url("${ayarlar.heroGorsel}") center/cover`;
+                    hero.style.backgroundImage =
+                        `linear-gradient(rgba(255,255,255,.80), rgba(255,255,255,.80)), url("${ayarlar.heroGorsel}")`;
+                    hero.style.backgroundPosition = 'center';
+                    hero.style.backgroundSize = 'cover';
                 }
             }
 
             if (ayarlar.anaRenk) {
-                document.documentElement.style.setProperty(
-                    '--primary-color',
-                    ayarlar.anaRenk
-                );
+                document.documentElement.style.setProperty('--primary-color', ayarlar.anaRenk);
+                document.documentElement.style.setProperty('--rana-red', ayarlar.anaRenk);
             }
 
             if (ayarlar.ikincilRenk) {
-                document.documentElement.style.setProperty(
-                    '--accent-color',
-                    ayarlar.ikincilRenk
-                );
+                document.documentElement.style.setProperty('--accent-color', ayarlar.ikincilRenk);
             }
 
-            const aboutTitle = document.getElementById('aboutTitle');
-            const aboutContent = document.getElementById('aboutContent');
-            const aboutImage = document.getElementById('aboutImage');
+            const aboutTitle = get('aboutTitle');
+            const aboutContent = get('aboutContent');
+            const aboutImage = get('aboutImage');
 
             if (aboutTitle && ayarlar.hakkimizda) {
                 aboutTitle.textContent = ayarlar.hakkimizda.baslik || '';
             }
-
             if (aboutContent && ayarlar.hakkimizda) {
                 aboutContent.textContent = ayarlar.hakkimizda.icerik || '';
             }
-
             if (aboutImage && ayarlar.hakkimizda?.gorsel) {
                 aboutImage.src = ayarlar.hakkimizda.gorsel;
             }
 
             const iletisim = ayarlar.iletisim || {};
 
-            const headerTelefon = document.getElementById('headerTelefon');
-            const headerEmail = document.getElementById('headerEmail');
-            const headerAdres = document.getElementById('headerAdres');
+            const headerTelefon = get('headerTelefon');
+            const headerEmail = get('headerEmail');
+            const headerAdres = get('headerAdres');
 
             if (headerTelefon && iletisim.telefon) {
                 const a = document.createElement('a');
@@ -680,11 +559,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 headerAdres.textContent = iletisim.adres;
             }
 
-            const pageAdres = document.getElementById('pageAdres');
-            const pageTelefon = document.getElementById('pageTelefon');
-            const pageEmail = document.getElementById('pageEmail');
-            const pageSaatler = document.getElementById('pageSaatler');
-            const googleMapFrame = document.getElementById('googleMapFrame');
+            const pageAdres = get('pageAdres');
+            const pageTelefon = get('pageTelefon');
+            const pageEmail = get('pageEmail');
+            const pageSaatler = get('pageSaatler');
+            const googleMapFrame = get('googleMapFrame');
 
             if (pageAdres) pageAdres.textContent = iletisim.adres || '';
 
@@ -710,16 +589,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (googleMapFrame && ayarlar.haritaEmbed) {
-                let embedUrl = ayarlar.haritaEmbed;
-                const match = embedUrl.match(/src=["']([^"']+)["']/);
-
+                let embedUrl = String(ayarlar.haritaEmbed).trim();
+                const match = embedUrl.match(/src=["']([^"']+)["']/i);
                 if (match) embedUrl = match[1];
-
                 googleMapFrame.src = embedUrl;
             }
 
-            const footerIletisim = document.getElementById('footerIletisim');
-
+            const footerIletisim = get('footerIletisim');
             if (footerIletisim) {
                 footerIletisim.replaceChildren();
 
@@ -734,8 +610,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            const footerSaatler = document.getElementById('footerSaatler');
-
+            const footerSaatler = get('footerSaatler');
             if (footerSaatler && ayarlar.calismaSaatleri) {
                 footerSaatler.replaceChildren();
 
@@ -777,7 +652,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const i = document.createElement('i');
                     i.className = `fab fa-${icon}`;
-
                     a.appendChild(i);
                     element.appendChild(a);
                 });
@@ -787,23 +661,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector('.social-links'),
                 ayarlar.sosyalMedya
             );
+            sosyalMedyaYukle(get('headerSocials'), ayarlar.sosyalMedya);
 
-            sosyalMedyaYukle(
-                document.getElementById('headerSocials'),
-                ayarlar.sosyalMedya
-            );
-
-            const servicesContainer =
-                document.getElementById('servicesContainer');
+            const servicesContainer = get('servicesContainer');
 
             if (
                 servicesContainer &&
                 Array.isArray(ayarlar.hizmetler) &&
                 ayarlar.hizmetler.length
             ) {
-                servicesContainer
-                    .querySelectorAll('.service-card')
-                    .forEach(card => card.remove());
+                servicesContainer.querySelectorAll('.service-card').forEach(card => card.remove());
 
                 ayarlar.hizmetler.forEach((service, index) => {
                     dynamicServiceDetails[service.key] = {
@@ -840,7 +707,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 servicesContainer.classList.add('loaded');
                 attachServiceClickEvents();
             }
-
         } catch (error) {
             console.error('Site ayarları yüklenemedi:', error);
         }
@@ -850,24 +716,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // HİZMET DETAY PENCERESİ
     // --------------------------------------------------
 
-    const serviceModal = document.getElementById('serviceModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
+    const serviceModal = get('serviceModal');
+    const modalTitle = get('modalTitle');
+    const modalBody = get('modalBody');
 
     function attachServiceClickEvents() {
         document.querySelectorAll('.service-card').forEach(card => {
             if (card.dataset.listenerAdded === 'true') return;
-
             card.dataset.listenerAdded = 'true';
 
             card.addEventListener('click', () => {
                 const data = dynamicServiceDetails[card.dataset.key];
-
                 if (!serviceModal || !data) return;
 
                 if (modalTitle) modalTitle.textContent = data.title;
                 if (modalBody) modalBody.textContent = data.content;
-
                 serviceModal.style.display = 'flex';
             });
         });
@@ -875,9 +738,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     attachServiceClickEvents();
 
-    const closeServiceModal =
-        document.querySelector('.close-service-modal');
-
+    const closeServiceModal = document.querySelector('.close-service-modal');
     if (closeServiceModal && serviceModal) {
         closeServiceModal.addEventListener('click', () => {
             serviceModal.style.display = 'none';
@@ -888,21 +749,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // BLOG
     // --------------------------------------------------
 
-    const blogContainer = document.getElementById('blogKapsayici');
+    const blogContainer = get('blogKapsayici');
+    const blogModal = get('blogModal');
 
     function openBlogModal(id) {
         const blog = allBlogs.find(
             item => String(item._id || item.id) === String(id)
         );
 
-        const blogModal = document.getElementById('blogModal');
-
         if (!blog || !blogModal) return;
 
-        const image = document.getElementById('blogModalImage');
-        const title = document.getElementById('blogModalTitle');
-        const meta = document.getElementById('blogModalMeta');
-        const body = document.getElementById('blogModalBody');
+        const image = get('blogModalImage');
+        const title = get('blogModalTitle');
+        const meta = get('blogModalMeta');
+        const body = get('blogModalBody');
 
         if (image) {
             image.src = blog.gorselUrl || '';
@@ -912,16 +772,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (title) title.textContent = blog.baslik || '';
 
         if (meta) {
-            meta.textContent =
-                `${blog.yazar || ''} · ${
-                    blog.createdAt
-                        ? new Date(blog.createdAt).toLocaleDateString('tr-TR')
-                        : ''
-                }`;
+            meta.textContent = `${blog.yazar || ''} · ${
+                blog.createdAt
+                    ? new Date(blog.createdAt).toLocaleDateString('tr-TR')
+                    : ''
+            }`;
         }
 
         if (body) body.textContent = blog.icerik || '';
-
         blogModal.style.display = 'flex';
     }
 
@@ -929,22 +787,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!blogContainer) return;
 
         try {
-            const response = await fetch(
-                `${API_URL}/blog?_t=${Date.now()}`
-            );
-
-            if (!response.ok) {
-                throw new Error('Bloglar alınamadı.');
-            }
-
-            const result = await response.json();
-            allBlogs = result.veri || [];
+            const result = await apiGet('blog');
+            allBlogs = Array.isArray(result) ? result : (result.veri || []);
 
             blogContainer.replaceChildren();
 
             if (!allBlogs.length) {
-                blogContainer.textContent =
-                    'Henüz paylaşılmış bir blog yazısı bulunamadı.';
+                blogContainer.textContent = 'Henüz paylaşılmış bir blog yazısı bulunamadı.';
                 return;
             }
 
@@ -953,9 +802,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.className = 'blog-card';
 
                 const image = document.createElement('img');
-                image.src = blog.gorselUrl || '';
+                image.src = fotoğrafAdresiniDüzenle(blog.gorselUrl);
                 image.alt = blog.baslik || 'Blog görseli';
                 image.className = 'blog-img';
+                image.loading = 'lazy';
 
                 const body = document.createElement('div');
                 body.className = 'blog-body';
@@ -964,8 +814,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 title.textContent = blog.baslik || '';
 
                 const excerpt = document.createElement('p');
-                excerpt.textContent =
-                    `${String(blog.icerik || '').substring(0, 120)}...`;
+                excerpt.textContent = `${String(blog.icerik || '').substring(0, 120)}...`;
 
                 const footer = document.createElement('div');
                 footer.className = 'blog-footer';
@@ -985,64 +834,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 blogContainer.appendChild(card);
             });
-
         } catch (error) {
             console.error('Blog getirme hatası:', error);
-            blogContainer.textContent =
-                'Bloglar şu anda yüklenemiyor.';
+            blogContainer.textContent = 'Bloglar şu anda yüklenemiyor.';
         }
     }
 
-    const closeBlogModal = document.getElementById('closeBlogModal');
-    const blogModal = document.getElementById('blogModal');
-
+    const closeBlogModal = get('closeBlogModal');
     if (closeBlogModal && blogModal) {
         closeBlogModal.addEventListener('click', () => {
             blogModal.style.display = 'none';
         });
     }
 
-    const previousBlogButton = document.getElementById('prevBlogBtn');
-    const nextBlogButton = document.getElementById('nextBlogBtn');
+    const previousBlogButton = get('prevBlogBtn');
+    const nextBlogButton = get('nextBlogBtn');
 
     if (previousBlogButton && blogContainer) {
         previousBlogButton.addEventListener('click', () => {
-            blogContainer.scrollBy({
-                left: -320,
-                behavior: 'smooth'
-            });
+            blogContainer.scrollBy({ left: -320, behavior: 'smooth' });
         });
     }
 
     if (nextBlogButton && blogContainer) {
         nextBlogButton.addEventListener('click', () => {
-            blogContainer.scrollBy({
-                left: 320,
-                behavior: 'smooth'
-            });
+            blogContainer.scrollBy({ left: 320, behavior: 'smooth' });
         });
     }
 
     // --------------------------------------------------
-    // MOBİL MENÜ
+    // MOBİL MENÜ - TEK EVENT SİSTEMİ
     // --------------------------------------------------
 
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
 
+    function mobilMenuKapat() {
+        navLinks?.classList.remove('nav-active');
+        hamburger?.classList.remove('toggle');
+        hamburger?.setAttribute('aria-expanded', 'false');
+    }
+
     if (hamburger && navLinks) {
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('nav-active');
-            hamburger.classList.toggle('toggle');
+        hamburger.setAttribute('aria-expanded', 'false');
+
+        hamburger.addEventListener('click', event => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const isOpen = navLinks.classList.toggle('nav-active');
+            hamburger.classList.toggle('toggle', isOpen);
+            hamburger.setAttribute('aria-expanded', String(isOpen));
         });
 
         navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (navLinks.classList.contains('nav-active')) {
-                    navLinks.classList.remove('nav-active');
-                    hamburger.classList.remove('toggle');
-                }
-            });
+            link.addEventListener('click', mobilMenuKapat);
+        });
+
+        document.addEventListener('click', event => {
+            if (
+                navLinks.classList.contains('nav-active') &&
+                !navLinks.contains(event.target) &&
+                !hamburger.contains(event.target)
+            ) {
+                mobilMenuKapat();
+            }
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') mobilMenuKapat();
         });
     }
 
@@ -1050,28 +910,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // SAYFA BAŞINA DÖN
     // --------------------------------------------------
 
-    const scrollTopButton = document.getElementById('scrollTopBtn');
+    const scrollTopButton = get('scrollTopBtn');
 
     window.addEventListener('scroll', () => {
-        document.body.classList.toggle(
-            'scrolled',
-            window.scrollY > 50
-        );
+        document.body.classList.toggle('scrolled', window.scrollY > 50);
 
         if (scrollTopButton) {
-            scrollTopButton.classList.toggle(
-                'visible',
-                window.scrollY > 50
-            );
+            scrollTopButton.classList.toggle('visible', window.scrollY > 50);
         }
     });
 
     if (scrollTopButton) {
         scrollTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 
@@ -1088,8 +939,7 @@ document.addEventListener('DOMContentLoaded', () => {
             blogModal.style.display = 'none';
         }
 
-        const legalModal = document.getElementById('yasalModal');
-
+        const legalModal = get('yasalModal');
         if (legalModal && event.target === legalModal) {
             legalModal.style.display = 'none';
         }
@@ -1100,9 +950,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------
 
     window.yasalMetinGoster = function (type) {
-        const modal = document.getElementById('yasalModal');
-        const title = document.getElementById('yasalModalTitle');
-        const body = document.getElementById('yasalModalBody');
+        const modal = get('yasalModal');
+        const title = get('yasalModalTitle');
+        const body = get('yasalModalBody');
 
         if (!modal || !title || !body) return;
 
@@ -1128,12 +978,10 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'flex';
     };
 
-    const closeLegalModal =
-        document.getElementById('closeYasalModal');
-
+    const closeLegalModal = get('closeYasalModal');
     if (closeLegalModal) {
         closeLegalModal.addEventListener('click', () => {
-            const modal = document.getElementById('yasalModal');
+            const modal = get('yasalModal');
             if (modal) modal.style.display = 'none';
         });
     }
@@ -1142,14 +990,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // PRELOADER
     // --------------------------------------------------
 
-    window.addEventListener('load', () => {
-        const preloader = document.getElementById('preloader');
+    function preloaderKapat() {
+        const preloader = get('preloader');
+        if (!preloader) return;
 
-        if (preloader) {
-            preloader.style.opacity = '0';
-            preloader.style.visibility = 'hidden';
-        }
-    });
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+        preloader.style.pointerEvents = 'none';
+    }
+
+    window.addEventListener('load', preloaderKapat);
+    window.setTimeout(preloaderKapat, 2500);
 
     // --------------------------------------------------
     // SAYFA İÇİ KAYDIRMA
@@ -1161,22 +1012,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!href || href === '#' || href === '#randevu') return;
 
-            const target = document.querySelector(href);
+            let target;
+            try {
+                target = document.querySelector(href);
+            } catch {
+                return;
+            }
 
             if (!target) return;
 
             event.preventDefault();
 
-            const offset = 85;
             const position =
-                target.getBoundingClientRect().top +
-                window.scrollY -
-                offset;
+                target.getBoundingClientRect().top + window.scrollY - 85;
 
-            window.scrollTo({
-                top: position,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: position, behavior: 'smooth' });
         });
     });
 
@@ -1200,13 +1050,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            event.preventDefault();
+            if (
+                event.defaultPrevented ||
+                event.ctrlKey ||
+                event.metaKey ||
+                event.shiftKey ||
+                event.altKey
+            ) return;
 
+            if (link.hasAttribute('download')) return;
+
+            let destination;
+            try {
+                destination = new URL(href, window.location.href);
+            } catch {
+                return;
+            }
+
+            if (destination.origin !== window.location.origin) return;
+
+            event.preventDefault();
             document.body.classList.add('fade-out');
 
             window.setTimeout(() => {
-                window.location.href = href;
-            }, 300);
+                window.location.href = destination.href;
+            }, 250);
         });
     });
 
@@ -1215,7 +1083,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------
 
     initKVKK();
-
     siteAyarlariniGetir();
     bloglariGetir();
     urunleriGetir();
@@ -1235,9 +1102,7 @@ function initKVKK() {
     }
 
     try {
-        if (localStorage.getItem('cookieConsent') === 'true') {
-            return;
-        }
+        if (localStorage.getItem('cookieConsent') === 'true') return;
     } catch (error) {
         console.warn('Çerez tercihi okunamadı:', error);
     }
@@ -1282,59 +1147,28 @@ function initKVKK() {
 
     document.body.append(banner, modal);
 
-    document.getElementById('acceptCookie').addEventListener('click', () => {
+    const acceptButton = document.getElementById('acceptCookie');
+    const openButton = document.getElementById('openKvkk');
+    const closeButton = document.getElementById('closeKvkk');
+
+    acceptButton?.addEventListener('click', () => {
         try {
             localStorage.setItem('cookieConsent', 'true');
         } catch (error) {
             console.warn('Çerez tercihi kaydedilemedi:', error);
         }
-
         banner.remove();
     });
 
-    document.getElementById('openKvkk').addEventListener('click', () => {
+    openButton?.addEventListener('click', () => {
         modal.style.display = 'flex';
     });
 
-    document.getElementById('closeKvkk').addEventListener('click', () => {
+    closeButton?.addEventListener('click', () => {
         modal.style.display = 'none';
     });
 
     modal.addEventListener('click', event => {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
+        if (event.target === modal) modal.style.display = 'none';
     });
 }
-
-/* MOBİL MENÜ AÇMA KAPAMA */
-(function () {
-    function mobilMenuBaslat() {
-        const hamburger = document.querySelector('.hamburger');
-        const menu = document.querySelector('.nav-links');
-
-        if (!hamburger || !menu || hamburger.dataset.menuReady === '1') return;
-
-        hamburger.dataset.menuReady = '1';
-
-        hamburger.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            menu.classList.toggle('nav-active');
-            hamburger.classList.toggle('toggle');
-        });
-
-        menu.querySelectorAll('a').forEach(function (link) {
-            link.addEventListener('click', function () {
-                menu.classList.remove('nav-active');
-                hamburger.classList.remove('toggle');
-            });
-        });
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', mobilMenuBaslat);
-    } else {
-        mobilMenuBaslat();
-    }
-})();
