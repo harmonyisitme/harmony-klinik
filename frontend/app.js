@@ -32,12 +32,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.randevuAdimGec = () => whatsappRandevu();
 
+    // Randevu bağlantılarını hazır mesajla WhatsApp'a yönlendir.
     document.addEventListener('click', event => {
         const link = event.target.closest('a[href="#randevu"]');
         if (!link) return;
+
         event.preventDefault();
         whatsappRandevu();
-    }, true);
+    });
+
+    // Sayfadaki doğrudan WhatsApp bağlantılarını da standartlaştır.
+    document.querySelectorAll('a[href*="wa.me/"]').forEach(link => {
+        try {
+            const mevcutUrl = new URL(link.href);
+            const mesaj = mevcutUrl.searchParams.get('text') || WHATSAPP_MESAJ;
+
+            link.href = `https://wa.me/${WHATSAPP_NUMARA}?text=${encodeURIComponent(mesaj)}`;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+        } catch (error) {
+            console.warn('WhatsApp bağlantısı düzenlenemedi:', error);
+        }
+    });
 
     window.showToast = (message, type = 'info') => {
         let container = get('toast-container');
@@ -89,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         String(value || '').replace(/\D/g, '').slice(0, 11)
     );
 
-    function fotoğrafAdresiniDüzenle(url) {
+    function fotografAdresiniDuzenle(url) {
         if (!url) return '';
 
         const value = String(url).trim();
@@ -102,7 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function apiGet(endpoint) {
         const response = await fetch(`${API_URL}/${endpoint}?_t=${Date.now()}`);
-        if (!response.ok) throw new Error(`İstek başarısız: ${response.status}`);
+
+        if (!response.ok) {
+            throw new Error(`İstek başarısız: ${response.status}`);
+        }
+
         return response.json();
     }
 
@@ -115,21 +135,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const style = document.createElement('style');
         style.id = 'rana-products-style';
+
         style.textContent = `
             #ranaProducts {
                 padding: 85px 5%;
                 background: #fff;
                 overflow: hidden;
             }
+
             #ranaProducts .products-inner {
                 max-width: 1240px;
                 margin: auto;
             }
+
             #ranaProducts .products-heading {
                 text-align: center;
                 max-width: 720px;
                 margin: 0 auto 42px;
             }
+
             #ranaProducts .products-eyebrow {
                 display: inline-block;
                 color: #c92335;
@@ -139,6 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 text-transform: uppercase;
                 margin-bottom: 12px;
             }
+
             #ranaProducts .products-heading h2 {
                 color: #252525;
                 font-size: clamp(27px, 4vw, 40px);
@@ -146,20 +171,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 line-height: 1.2;
                 margin: 0 0 14px;
             }
+
             #ranaProducts .products-heading h2 span {
                 color: #c92335;
             }
+
             #ranaProducts .products-heading p {
                 color: #707070;
                 font-size: 16px;
                 line-height: 1.7;
                 margin: 0;
             }
+
             #ranaProducts .products-grid {
                 display: grid;
                 grid-template-columns: repeat(3, minmax(0, 1fr));
                 gap: 25px;
             }
+
             #ranaProducts .product-card {
                 background: #fff;
                 border: 1px solid #ececec;
@@ -171,10 +200,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 flex-direction: column;
                 min-width: 0;
             }
+
             #ranaProducts .product-card:hover {
                 transform: translateY(-6px);
                 box-shadow: 0 16px 36px rgba(0,0,0,.11);
             }
+
             #ranaProducts .product-image-wrap {
                 height: 245px;
                 background: #f8f8f8;
@@ -184,26 +215,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 overflow: hidden;
                 padding: 18px;
             }
+
             #ranaProducts .product-image {
                 width: 100%;
                 height: 100%;
                 object-fit: contain;
                 transition: transform .3s ease;
             }
+
             #ranaProducts .product-card:hover .product-image {
                 transform: scale(1.045);
             }
+
             #ranaProducts .product-no-image {
                 color: #c92335;
                 font-size: 48px;
                 opacity: .65;
             }
+
             #ranaProducts .product-info {
                 padding: 22px;
                 display: flex;
                 flex-direction: column;
                 flex: 1;
             }
+
             #ranaProducts .product-brand {
                 color: #c92335;
                 font-size: 12px;
@@ -212,6 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 text-transform: uppercase;
                 margin-bottom: 9px;
             }
+
             #ranaProducts .product-info h3 {
                 color: #252525;
                 font-size: 20px;
@@ -219,6 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 margin: 0 0 10px;
                 font-weight: 750;
             }
+
             #ranaProducts .product-description {
                 color: #747474;
                 font-size: 14px;
@@ -229,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 -webkit-box-orient: vertical;
                 overflow: hidden;
             }
+
             #ranaProducts .product-category {
                 display: inline-block;
                 color: #555;
@@ -239,6 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 margin: auto 0 16px;
                 align-self: flex-start;
             }
+
             #ranaProducts .product-detail-link {
                 display: flex;
                 align-items: center;
@@ -252,14 +292,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 font-weight: 700;
                 transition: .2s ease;
             }
+
             #ranaProducts .product-detail-link:hover {
                 background: #c92335;
                 color: #fff;
             }
+
             #ranaProducts .products-bottom {
                 text-align: center;
                 margin-top: 38px;
             }
+
             #ranaProducts .all-products-link {
                 display: inline-flex;
                 align-items: center;
@@ -272,37 +315,67 @@ document.addEventListener('DOMContentLoaded', () => {
                 font-weight: 700;
                 transition: .2s ease;
             }
+
             #ranaProducts .all-products-link:hover {
                 background: #a91d2c;
                 transform: translateY(-2px);
             }
+
             #ranaProducts .products-message {
                 text-align: center;
                 padding: 35px 15px;
                 color: #777;
                 grid-column: 1 / -1;
             }
+
             @media (max-width: 900px) {
                 #ranaProducts .products-grid {
                     grid-template-columns: repeat(2, minmax(0, 1fr));
                     gap: 18px;
                 }
-                #ranaProducts .product-image-wrap { height: 210px; }
+
+                #ranaProducts .product-image-wrap {
+                    height: 210px;
+                }
             }
+
             @media (max-width: 560px) {
-                #ranaProducts { padding: 58px 16px; }
-                #ranaProducts .products-heading { margin-bottom: 28px; }
-                #ranaProducts .products-heading p { font-size: 14px; }
-                #ranaProducts .products-grid { grid-template-columns: 1fr; gap: 18px; }
-                #ranaProducts .product-image-wrap { height: 230px; }
-                #ranaProducts .product-info { padding: 18px; }
-                #ranaProducts .product-info h3 { font-size: 18px; }
+                #ranaProducts {
+                    padding: 58px 16px;
+                }
+
+                #ranaProducts .products-heading {
+                    margin-bottom: 28px;
+                }
+
+                #ranaProducts .products-heading p {
+                    font-size: 14px;
+                }
+
+                #ranaProducts .products-grid {
+                    grid-template-columns: 1fr;
+                    gap: 18px;
+                }
+
+                #ranaProducts .product-image-wrap {
+                    height: 230px;
+                }
+
+                #ranaProducts .product-info {
+                    padding: 18px;
+                }
+
+                #ranaProducts .product-info h3 {
+                    font-size: 18px;
+                }
+
                 #ranaProducts .all-products-link {
                     width: 100%;
                     box-sizing: border-box;
                 }
             }
         `;
+
         document.head.appendChild(style);
     }
 
@@ -317,8 +390,20 @@ document.addEventListener('DOMContentLoaded', () => {
         link.textContent = 'Ürünler';
 
         const servicesLink = nav.querySelector('a[href="#services"]');
-        if (servicesLink) nav.insertBefore(link, servicesLink);
-        else nav.appendChild(link);
+
+        if (servicesLink) {
+            const listItem = servicesLink.closest('li');
+
+            if (listItem) {
+                const newItem = document.createElement('li');
+                newItem.appendChild(link);
+                nav.insertBefore(newItem, listItem);
+            } else {
+                nav.insertBefore(link, servicesLink);
+            }
+        } else {
+            nav.appendChild(link);
+        }
     }
 
     function urunlerBolumunuOlustur() {
@@ -327,6 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!section) {
             section = document.createElement('section');
             section.id = 'ranaProducts';
+
             section.innerHTML = `
                 <div class="products-inner">
                     <div class="products-heading">
@@ -334,9 +420,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h2>Size Uygun İşitme <span>Çözümleri</span></h2>
                         <p>İhtiyaçlarınıza ve yaşam tarzınıza uygun işitme cihazı seçeneklerini keşfedin.</p>
                     </div>
+
                     <div class="products-grid" id="ranaProductsGrid">
                         <div class="products-message">Ürünler yükleniyor...</div>
                     </div>
+
                     <div class="products-bottom">
                         <a href="urunler.html" class="all-products-link">Tüm Ürünleri Gör</a>
                     </div>
@@ -359,7 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
         urunlerMenuLinkiEkle();
     }
 
-    function urunVerileriniDüzenle(result) {
+    function urunVerileriniDuzenle(result) {
         if (Array.isArray(result)) return result;
         if (Array.isArray(result?.veri)) return result.veri;
         if (Array.isArray(result?.urunler)) return result.urunler;
@@ -374,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const imageWrap = document.createElement('div');
         imageWrap.className = 'product-image-wrap';
 
-        const imageUrl = fotoğrafAdresiniDüzenle(urun.gorselUrl);
+        const imageUrl = fotografAdresiniDuzenle(urun.gorselUrl);
 
         if (imageUrl) {
             const image = document.createElement('img');
@@ -385,6 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             image.onerror = () => {
                 image.remove();
+
                 const fallback = document.createElement('div');
                 fallback.className = 'product-no-image';
                 fallback.textContent = '♫';
@@ -443,7 +532,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const result = await apiGet('urunler');
-            allProducts = urunVerileriniDüzenle(result);
+            allProducts = urunVerileriniDuzenle(result);
+
             grid.replaceChildren();
 
             if (!allProducts.length) {
@@ -465,6 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
             message.className = 'products-message';
             message.textContent =
                 'Ürünler şu anda yüklenemiyor. Lütfen daha sonra tekrar deneyin.';
+
             grid.appendChild(message);
         }
     }
@@ -481,32 +572,38 @@ document.addEventListener('DOMContentLoaded', () => {
             if (ayarlar.logo) {
                 document.querySelectorAll('.logo, .footer-logo').forEach(el => {
                     const img = document.createElement('img');
-                    img.src = ayarlar.logo;
+                    img.src = fotografAdresiniDuzenle(ayarlar.logo);
                     img.alt = 'Rana İşitme Merkezi';
                     img.style.height = el.classList.contains('logo') ? '55px' : '40px';
                     img.style.width = 'auto';
                     img.style.maxWidth = '180px';
                     img.style.objectFit = 'contain';
                     img.onerror = () => img.remove();
+
                     el.replaceChildren(img);
                 });
             }
 
             if (ayarlar.favicon) {
                 let favicon = document.querySelector("link[rel~='icon']");
+
                 if (!favicon) {
                     favicon = document.createElement('link');
                     favicon.rel = 'icon';
                     document.head.appendChild(favicon);
                 }
-                favicon.href = ayarlar.favicon;
+
+                favicon.href = fotografAdresiniDuzenle(ayarlar.favicon);
             }
 
             if (ayarlar.heroGorsel) {
                 const hero = document.querySelector('.hero, .home-hero');
+
                 if (hero) {
+                    const heroImage = fotografAdresiniDuzenle(ayarlar.heroGorsel);
+
                     hero.style.backgroundImage =
-                        `linear-gradient(rgba(255,255,255,.80), rgba(255,255,255,.80)), url("${ayarlar.heroGorsel}")`;
+                        `linear-gradient(rgba(255,255,255,.80), rgba(255,255,255,.80)), url("${heroImage}")`;
                     hero.style.backgroundPosition = 'center';
                     hero.style.backgroundSize = 'cover';
                 }
@@ -528,11 +625,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (aboutTitle && ayarlar.hakkimizda) {
                 aboutTitle.textContent = ayarlar.hakkimizda.baslik || '';
             }
+
             if (aboutContent && ayarlar.hakkimizda) {
                 aboutContent.textContent = ayarlar.hakkimizda.icerik || '';
             }
+
             if (aboutImage && ayarlar.hakkimizda?.gorsel) {
-                aboutImage.src = ayarlar.hakkimizda.gorsel;
+                aboutImage.src = fotografAdresiniDuzenle(ayarlar.hakkimizda.gorsel);
             }
 
             const iletisim = ayarlar.iletisim || {};
@@ -591,11 +690,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (googleMapFrame && ayarlar.haritaEmbed) {
                 let embedUrl = String(ayarlar.haritaEmbed).trim();
                 const match = embedUrl.match(/src=["']([^"']+)["']/i);
+
                 if (match) embedUrl = match[1];
+
                 googleMapFrame.src = embedUrl;
             }
 
             const footerIletisim = get('footerIletisim');
+
             if (footerIletisim) {
                 footerIletisim.replaceChildren();
 
@@ -611,6 +713,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const footerSaatler = get('footerSaatler');
+
             if (footerSaatler && ayarlar.calismaSaatleri) {
                 footerSaatler.replaceChildren();
 
@@ -652,6 +755,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const i = document.createElement('i');
                     i.className = `fab fa-${icon}`;
+
                     a.appendChild(i);
                     element.appendChild(a);
                 });
@@ -661,6 +765,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector('.social-links'),
                 ayarlar.sosyalMedya
             );
+
             sosyalMedyaYukle(get('headerSocials'), ayarlar.sosyalMedya);
 
             const servicesContainer = get('servicesContainer');
@@ -723,14 +828,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function attachServiceClickEvents() {
         document.querySelectorAll('.service-card').forEach(card => {
             if (card.dataset.listenerAdded === 'true') return;
+
             card.dataset.listenerAdded = 'true';
 
             card.addEventListener('click', () => {
                 const data = dynamicServiceDetails[card.dataset.key];
+
                 if (!serviceModal || !data) return;
 
                 if (modalTitle) modalTitle.textContent = data.title;
                 if (modalBody) modalBody.textContent = data.content;
+
                 serviceModal.style.display = 'flex';
             });
         });
@@ -739,6 +847,7 @@ document.addEventListener('DOMContentLoaded', () => {
     attachServiceClickEvents();
 
     const closeServiceModal = document.querySelector('.close-service-modal');
+
     if (closeServiceModal && serviceModal) {
         closeServiceModal.addEventListener('click', () => {
             serviceModal.style.display = 'none';
@@ -765,7 +874,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const body = get('blogModalBody');
 
         if (image) {
-            image.src = blog.gorselUrl || '';
+            image.src = fotografAdresiniDuzenle(blog.gorselUrl);
             image.alt = blog.baslik || '';
         }
 
@@ -780,6 +889,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (body) body.textContent = blog.icerik || '';
+
         blogModal.style.display = 'flex';
     }
 
@@ -802,7 +912,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.className = 'blog-card';
 
                 const image = document.createElement('img');
-                image.src = fotoğrafAdresiniDüzenle(blog.gorselUrl);
+                image.src = fotografAdresiniDuzenle(blog.gorselUrl);
                 image.alt = blog.baslik || 'Blog görseli';
                 image.className = 'blog-img';
                 image.loading = 'lazy';
@@ -828,9 +938,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 body.append(title, excerpt, footer);
                 card.append(image, body);
 
-                card.addEventListener('click', () =>
-                    openBlogModal(blog._id || blog.id)
-                );
+                card.addEventListener('click', () => {
+                    openBlogModal(blog._id || blog.id);
+                });
 
                 blogContainer.appendChild(card);
             });
@@ -841,6 +951,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const closeBlogModal = get('closeBlogModal');
+
     if (closeBlogModal && blogModal) {
         closeBlogModal.addEventListener('click', () => {
             blogModal.style.display = 'none';
@@ -863,16 +974,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --------------------------------------------------
-    // MOBİL MENÜ - TEK EVENT SİSTEMİ
+    // MOBİL MENÜ
     // --------------------------------------------------
 
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
 
+    function mobilMenuAcikMi() {
+        return !!(
+            navLinks &&
+            (
+                navLinks.classList.contains('active') ||
+                navLinks.classList.contains('nav-active')
+            )
+        );
+    }
+
     function mobilMenuKapat() {
-        navLinks?.classList.remove('nav-active');
-        hamburger?.classList.remove('toggle');
-        hamburger?.setAttribute('aria-expanded', 'false');
+        if (!navLinks || !hamburger) return;
+
+        navLinks.classList.remove('active', 'nav-active');
+        hamburger.classList.remove('toggle');
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.setAttribute('aria-label', 'Menüyü aç');
+    }
+
+    function mobilMenuAc() {
+        if (!navLinks || !hamburger) return;
+
+        navLinks.classList.add('active', 'nav-active');
+        hamburger.classList.add('toggle');
+        hamburger.setAttribute('aria-expanded', 'true');
+        hamburger.setAttribute('aria-label', 'Menüyü kapat');
     }
 
     if (hamburger && navLinks) {
@@ -882,18 +1015,22 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             event.stopPropagation();
 
-            const isOpen = navLinks.classList.toggle('nav-active');
-            hamburger.classList.toggle('toggle', isOpen);
-            hamburger.setAttribute('aria-expanded', String(isOpen));
+            if (mobilMenuAcikMi()) {
+                mobilMenuKapat();
+            } else {
+                mobilMenuAc();
+            }
         });
 
         navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', mobilMenuKapat);
+            link.addEventListener('click', () => {
+                mobilMenuKapat();
+            });
         });
 
         document.addEventListener('click', event => {
             if (
-                navLinks.classList.contains('nav-active') &&
+                mobilMenuAcikMi() &&
                 !navLinks.contains(event.target) &&
                 !hamburger.contains(event.target)
             ) {
@@ -902,7 +1039,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         document.addEventListener('keydown', event => {
-            if (event.key === 'Escape') mobilMenuKapat();
+            if (event.key === 'Escape') {
+                mobilMenuKapat();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 760) {
+                mobilMenuKapat();
+            }
         });
     }
 
@@ -940,6 +1085,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const legalModal = get('yasalModal');
+
         if (legalModal && event.target === legalModal) {
             legalModal.style.display = 'none';
         }
@@ -979,6 +1125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const closeLegalModal = get('closeYasalModal');
+
     if (closeLegalModal) {
         closeLegalModal.addEventListener('click', () => {
             const modal = get('yasalModal');
@@ -1013,6 +1160,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!href || href === '#' || href === '#randevu') return;
 
             let target;
+
             try {
                 target = document.querySelector(href);
             } catch {
@@ -1026,55 +1174,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const position =
                 target.getBoundingClientRect().top + window.scrollY - 85;
 
-            window.scrollTo({ top: position, behavior: 'smooth' });
-        });
-    });
-
-    // --------------------------------------------------
-    // SAYFA GEÇİŞ EFEKTİ
-    // --------------------------------------------------
-
-    document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', event => {
-            const href = link.getAttribute('href');
-            const target = link.getAttribute('target');
-
-            if (
-                !href ||
-                href.startsWith('#') ||
-                target === '_blank' ||
-                href.startsWith('mailto:') ||
-                href.startsWith('tel:') ||
-                href.startsWith('https://wa.me/')
-            ) {
-                return;
-            }
-
-            if (
-                event.defaultPrevented ||
-                event.ctrlKey ||
-                event.metaKey ||
-                event.shiftKey ||
-                event.altKey
-            ) return;
-
-            if (link.hasAttribute('download')) return;
-
-            let destination;
-            try {
-                destination = new URL(href, window.location.href);
-            } catch {
-                return;
-            }
-
-            if (destination.origin !== window.location.origin) return;
-
-            event.preventDefault();
-            document.body.classList.add('fade-out');
-
-            window.setTimeout(() => {
-                window.location.href = destination.href;
-            }, 250);
+            window.scrollTo({
+                top: position,
+                behavior: 'smooth'
+            });
         });
     });
 
@@ -1157,6 +1260,7 @@ function initKVKK() {
         } catch (error) {
             console.warn('Çerez tercihi kaydedilemedi:', error);
         }
+
         banner.remove();
     });
 
@@ -1169,6 +1273,8 @@ function initKVKK() {
     });
 
     modal.addEventListener('click', event => {
-        if (event.target === modal) modal.style.display = 'none';
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
     });
 }
