@@ -1,586 +1,444 @@
+/* Rana İşitme Merkezi - Ürünler Sayfası */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
+    "use strict";
 
-    const urunlerListesi = document.getElementById('urunler-listesi');
-    const categoryList = document.getElementById('categoryList');
-    const brandList = document.getElementById('brandList');
-    const tagList = document.getElementById('tagList');
+    const productList = document.getElementById("urunler-listesi");
+    const categoryList = document.getElementById("categoryList");
+    const brandList = document.getElementById("brandList");
+    const tagList = document.getElementById("tagList");
 
-    const productModal = document.getElementById('productModal');
-    const closeProductModal = document.getElementById('closeProductModal');
-    const clearFilters = document.getElementById('clearFilters');
-    const productCount = document.getElementById('productCount');
+    const productModal = document.getElementById("productModal");
+    const closeProductModal = document.getElementById("closeProductModal");
 
-    if (
-        !urunlerListesi ||
-        !categoryList ||
-        !brandList ||
-        !tagList ||
-        !productModal ||
-        !closeProductModal
-    ) {
-        console.error('Ürünler sayfasında gerekli HTML elemanları bulunamadı.');
-        return;
-    }
+    const modalImage = document.getElementById("productModalImage");
+    const modalName = document.getElementById("productModalName");
+    const modalCategory = document.getElementById("productModalCategory");
+    const modalStock = document.getElementById("productModalStock");
+    const modalDescription = document.getElementById("productModalDescription");
+
+    const productCount = document.getElementById("productCount");
+    const clearFiltersButton = document.getElementById("clearProductFilters");
 
     let allProducts = [];
 
-    let filters = {
-        kategori: null,
-        marka: null,
-        etiket: null
+    const filters = {
+        category: [],
+        brand: [],
+        tag: []
     };
 
-    const normalizeText = (value) => {
-        return String(value || '')
-            .trim()
-            .toLocaleLowerCase('tr-TR');
-    };
+    // Ürün adından tanınabilecek özellik etiketleri
+    const knownTags = [
+        "Bluetooth",
+        "Şarjlı",
+        "Şarj Edilebilir",
+        "Pilli",
+        "Kulak İçi",
+        "Kulak Arkası",
+        "RIC",
+        "BTE",
+        "CIC",
+        "IIC",
+        "ITE",
+        "ITC",
+        "Mini",
+        "Akıllı"
+    ];
 
-    const uniqueList = (items) => {
-        return [...new Set(items.filter(Boolean))];
-    };
+    function cleanValue(value) {
+        if (value === null || value === undefined) return "";
+        return String(value).trim();
+    }
 
-    const createElement = (tag, className, text) => {
-        const element = document.createElement(tag);
+    function getProductTags(product) {
+        const name = cleanValue(product.ad).toLocaleLowerCase("tr-TR");
+        const category = cleanValue(product.kategori).toLocaleLowerCase("tr-TR");
+        const description = cleanValue(product.aciklama).toLocaleLowerCase("tr-TR");
 
-        if (className) {
-            element.className = className;
+        const searchableText = `${name} ${category} ${description}`;
+
+        return knownTags.filter(tag =>
+            searchableText.includes(tag.toLocaleLowerCase("tr-TR"))
+        );
+    }
+
+    function getStockText(product) {
+        const stock = product.stokDurumu;
+
+        if (stock === false || stock === 0) {
+            return "Bilgi Alınız";
         }
 
-        if (text !== undefined && text !== null) {
-            element.textContent = String(text);
+        const value = cleanValue(stock).toLocaleLowerCase("tr-TR");
+
+        if (
+            value.includes("yok") ||
+            value.includes("tükendi") ||
+            value.includes("stokta değil") ||
+            value === "false" ||
+            value === "0"
+        ) {
+            return "Bilgi Alınız";
         }
 
-        return element;
-    };
-
-    const getImageUrl = (url) => {
-        if (!url || typeof url !== 'string') {
-            return 'logo.png';
+        if (
+            value.includes("var") ||
+            value.includes("mevcut") ||
+            value.includes("stokta") ||
+            value === "true" ||
+            value === "1"
+        ) {
+            return "Bilgi Alınız";
         }
 
-        return url.trim() || 'logo.png';
-    };
+        return value ? cleanValue(stock) : "Bilgi Alınız";
+    }
 
-    /* ETİKETLERİ OLUŞTUR */
+    function isAvailable(product) {
+        const stock = product.stokDurumu;
 
-    const buildTagList = () => {
+        if (stock === false || stock === 0) return false;
 
-        const tags = new Set();
+        const value = cleanValue(stock).toLocaleLowerCase("tr-TR");
 
-        allProducts.forEach(product => {
+        return !(
+            value.includes("yok") ||
+            value.includes("tükendi") ||
+            value.includes("stokta değil") ||
+            value === "false" ||
+            value === "0"
+        );
+    }
 
-            if (!product.ad) return;
+    function createFilterOption(container, value, type) {
+        const label = document.createElement("label");
+        label.className = "filter-option";
 
-            String(product.ad)
-                .split(/[^\p{L}0-9]+/u)
-                .forEach(word => {
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = value;
 
-                    const normalized = normalizeText(word);
+        const text = document.createElement("span");
+        text.textContent = value;
 
-                    if (normalized.length > 2) {
-                        tags.add(normalized);
-                    }
+        checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+                if (!filters[type].includes(value)) {
+                    filters[type].push(value);
+                }
+            } else {
+                filters[type] = filters[type].filter(item => item !== value);
+            }
 
-                });
-
+            renderProducts();
         });
 
-        return [...tags].sort((a, b) => a.localeCompare(b, 'tr'));
+        label.appendChild(checkbox);
+        label.appendChild(text);
+        container.appendChild(label);
+    }
 
-    };
+    function renderFilterList(container, values, type) {
+        if (!container) return;
 
-    /* FİLTRELERİ OLUŞTUR */
+        container.replaceChildren();
 
-    const renderFilterGroup = (container, type, title, values) => {
+        const uniqueValues = [...new Set(
+            values.map(cleanValue).filter(Boolean)
+        )].sort((a, b) => a.localeCompare(b, "tr"));
 
-        container.innerHTML = '';
+        if (uniqueValues.length === 0) {
+            const empty = document.createElement("span");
+            empty.className = "filter-empty";
+            empty.textContent = "Bu alanda seçenek bulunamadı.";
+            container.appendChild(empty);
+            return;
+        }
 
-        const allItem = document.createElement('li');
-        const allLink = document.createElement('a');
-
-        allLink.href = '#';
-        allLink.className = `filter-link ${filters[type] ? '' : 'active'}`;
-        allLink.dataset.type = type;
-        allLink.dataset.value = '';
-
-        allLink.textContent = title;
-
-        allItem.appendChild(allLink);
-        container.appendChild(allItem);
-
-        values.forEach(value => {
-
-            const item = document.createElement('li');
-            const link = document.createElement('a');
-
-            link.href = '#';
-
-            link.className =
-                `filter-link ${filters[type] === value ? 'active' : ''}`;
-
-            link.dataset.type = type;
-            link.dataset.value = value;
-            link.textContent = value;
-
-            item.appendChild(link);
-            container.appendChild(item);
-
+        uniqueValues.forEach(value => {
+            createFilterOption(container, value, type);
         });
+    }
 
-    };
-
-    const renderFilters = () => {
-
-        const categories = uniqueList(
-            allProducts.map(product => product.kategori || 'Diğer')
-        ).sort((a, b) => a.localeCompare(b, 'tr'));
-
-        const brands = uniqueList(
-            allProducts.map(product => product.marka || 'Diğer')
-        ).sort((a, b) => a.localeCompare(b, 'tr'));
-
-        const tags = buildTagList();
-
-        renderFilterGroup(
+    function renderFilters() {
+        renderFilterList(
             categoryList,
-            'kategori',
-            'Tüm Kategoriler',
-            categories
+            allProducts.map(product => product.kategori),
+            "category"
         );
 
-        renderFilterGroup(
+        renderFilterList(
             brandList,
-            'marka',
-            'Tüm Markalar',
-            brands
+            allProducts.map(product => product.marka),
+            "brand"
         );
 
-        tagList.innerHTML = '';
+        const allTags = allProducts.flatMap(product => getProductTags(product));
 
-        tags.forEach(tag => {
+        renderFilterList(tagList, allTags, "tag");
+    }
 
-            const link = document.createElement('a');
-
-            link.href = '#';
-            link.className =
-                `tag-item ${filters.etiket === tag ? 'active' : ''}`;
-
-            link.dataset.type = 'etiket';
-            link.dataset.value = tag;
-            link.textContent = tag;
-
-            tagList.appendChild(link);
-
-        });
-
-    };
-
-    /* ÜRÜNLERİ FİLTRELE */
-
-    const filterProducts = () => {
-
+    function getFilteredProducts() {
         return allProducts.filter(product => {
+            const categoryMatch =
+                filters.category.length === 0 ||
+                filters.category.includes(cleanValue(product.kategori));
 
-            if (
-                filters.kategori &&
-                (product.kategori || 'Diğer') !== filters.kategori
-            ) {
-                return false;
-            }
+            const brandMatch =
+                filters.brand.length === 0 ||
+                filters.brand.includes(cleanValue(product.marka));
 
-            if (
-                filters.marka &&
-                (product.marka || 'Diğer') !== filters.marka
-            ) {
-                return false;
-            }
+            const productTags = getProductTags(product);
 
-            if (
-                filters.etiket &&
-                !normalizeText(product.ad).includes(filters.etiket)
-            ) {
-                return false;
-            }
+            const tagMatch =
+                filters.tag.length === 0 ||
+                filters.tag.some(tag => productTags.includes(tag));
 
-            return true;
+            return categoryMatch && brandMatch && tagMatch;
+        });
+    }
 
+    function createProductCard(product, index) {
+        const card = document.createElement("article");
+        card.className = "product-card";
+
+        const imageArea = document.createElement("div");
+        imageArea.className = "product-card-image";
+
+        const image = document.createElement("img");
+        image.alt = cleanValue(product.ad) || "İşitme cihazı";
+        image.loading = "lazy";
+
+        const imageUrl = cleanValue(product.gorselUrl);
+
+        if (imageUrl) {
+            image.src = imageUrl;
+            image.addEventListener("error", () => {
+                imageArea.innerHTML = "";
+                const placeholder = document.createElement("div");
+                placeholder.style.color = "#c92335";
+                placeholder.style.fontSize = "42px";
+                placeholder.innerHTML = '<i class="fas fa-ear-listen"></i>';
+                imageArea.appendChild(placeholder);
+            }, { once: true });
+        } else {
+            const placeholder = document.createElement("div");
+            placeholder.style.color = "#c92335";
+            placeholder.style.fontSize = "42px";
+            placeholder.innerHTML = '<i class="fas fa-ear-listen"></i>';
+            imageArea.appendChild(placeholder);
+        }
+
+        if (imageUrl) imageArea.appendChild(image);
+
+        const content = document.createElement("div");
+        content.className = "product-card-content";
+
+        const category = document.createElement("span");
+        category.className = "product-card-category";
+        category.textContent = cleanValue(product.kategori) || "İşitme Cihazı";
+
+        const name = document.createElement("h3");
+        name.textContent = cleanValue(product.ad) || "İşitme Cihazı";
+
+        const description = document.createElement("p");
+        description.className = "product-card-description";
+        description.textContent =
+            cleanValue(product.aciklama) || "Ürün hakkında detaylı bilgi almak için bizimle iletişime geçebilirsiniz.";
+
+        const footer = document.createElement("div");
+        footer.className = "product-card-footer";
+
+        const brand = document.createElement("span");
+        brand.className = "product-brand";
+        brand.textContent = cleanValue(product.marka) || "Rana İşitme Merkezi";
+
+        const stock = document.createElement("span");
+        stock.className = "product-stock";
+
+        const available = isAvailable(product);
+
+        if (!available) {
+            stock.classList.add("unavailable");
+        }
+
+        const stockIcon = document.createElement("i");
+        stockIcon.className = available
+            ? "fas fa-check-circle"
+            : "fas fa-info-circle";
+
+        const stockText = document.createElement("span");
+        stockText.textContent = getStockText(product);
+
+        stock.appendChild(stockIcon);
+        stock.appendChild(stockText);
+
+        footer.appendChild(brand);
+        footer.appendChild(stock);
+
+        const detailButton = document.createElement("button");
+        detailButton.type = "button";
+        detailButton.className = "product-detail-button";
+        detailButton.innerHTML = '<i class="fas fa-eye"></i> Ürün Detaylarını İncele';
+
+        detailButton.addEventListener("click", () => {
+            openProductModal(product);
         });
 
-    };
-
-    /* STOK BİLGİSİ */
-
-    const createStockElement = (product) => {
-
-        const inStock = Boolean(product.stokDurumu);
-
-        return createElement(
-            'span',
-            `product-stock ${inStock ? 'in-stock' : 'out-of-stock'}`,
-            inStock ? 'Stokta Var' : 'Stokta Yok'
-        );
-
-    };
-
-    /* ÜRÜN KARTI */
-
-    const createProductCard = (product) => {
-
-        const card = createElement('article', 'product-card');
-
-        card.dataset.id = product.id;
-
-        const imageWrap = createElement('div', 'product-image-wrap');
-
-        const image = document.createElement('img');
-
-        image.src = getImageUrl(product.gorselUrl);
-        image.alt = product.ad || 'İşitme cihazı';
-        image.loading = 'lazy';
-
-        image.onerror = () => {
-            image.onerror = null;
-            image.src = 'logo.png';
-        };
-
-        imageWrap.appendChild(image);
-
-        const content = createElement('div', 'product-card-content');
-
-        const brand = createElement(
-            'div',
-            'product-card-brand',
-            product.marka || 'Rana İşitme Merkezi'
-        );
-
-        const name = createElement(
-            'h3',
-            '',
-            product.ad || 'İsimsiz Ürün'
-        );
-
-        const category = createElement(
-            'span',
-            'product-card-category',
-            product.kategori || 'Diğer'
-        );
-
-        const descriptionText = String(product.aciklama || '').trim();
-
-        const shortDescription = descriptionText.length > 85
-            ? descriptionText.substring(0, 85) + '...'
-            : descriptionText;
-
-        const description = createElement(
-            'p',
-            'product-card-description',
-            shortDescription || 'Ürün hakkında detaylı bilgi için inceleyin.'
-        );
-
-        const bottom = createElement('div', 'product-card-bottom');
-
-        bottom.appendChild(createStockElement(product));
-
-        const detailsButton = createElement(
-            'a',
-            'product-card-link',
-            'Ürünü İncele'
-        );
-
-        detailsButton.href = '#';
-        detailsButton.dataset.id = product.id;
-
-        const arrow = document.createElement('i');
-        arrow.className = 'fas fa-arrow-right';
-
-        detailsButton.appendChild(arrow);
-
-        content.appendChild(brand);
-        content.appendChild(name);
         content.appendChild(category);
+        content.appendChild(name);
         content.appendChild(description);
+        content.appendChild(footer);
+        content.appendChild(detailButton);
 
-        bottom.appendChild(detailsButton);
-        content.appendChild(bottom);
-
-        card.appendChild(imageWrap);
+        card.appendChild(imageArea);
         card.appendChild(content);
 
         return card;
+    }
 
-    };
+    function renderProducts() {
+        if (!productList) return;
 
-    /* ÜRÜNLERİ EKRANA BAS */
+        const filteredProducts = getFilteredProducts();
 
-    const renderProducts = (products) => {
-
-        urunlerListesi.innerHTML = '';
+        productList.replaceChildren();
 
         if (productCount) {
-            productCount.textContent = `${products.length} ürün gösteriliyor`;
+            productCount.textContent =
+                `${filteredProducts.length} ürün listeleniyor`;
         }
 
-        if (!products.length) {
+        if (filteredProducts.length === 0) {
+            const message = document.createElement("div");
+            message.className = "products-message";
 
-            const empty = createElement('div', 'product-empty');
+            const icon = document.createElement("i");
+            icon.className = "fas fa-search";
 
-            const icon = createElement('i', 'fas fa-search');
+            const text = document.createElement("p");
+            text.textContent = "Seçtiğiniz filtrelere uygun ürün bulunamadı. Filtreleri temizleyerek tekrar deneyebilirsiniz.";
 
-            const title = createElement(
-                'h3',
-                '',
-                'Aradığınız ürün bulunamadı'
-            );
-
-            const message = createElement(
-                'p',
-                '',
-                'Farklı bir kategori veya marka seçerek tekrar deneyebilirsiniz.'
-            );
-
-            empty.appendChild(icon);
-            empty.appendChild(title);
-            empty.appendChild(message);
-
-            urunlerListesi.appendChild(empty);
-
+            message.appendChild(icon);
+            message.appendChild(text);
+            productList.appendChild(message);
             return;
-
         }
 
-        const fragment = document.createDocumentFragment();
-
-        products.forEach(product => {
-
-            fragment.appendChild(createProductCard(product));
-
+        filteredProducts.forEach((product, index) => {
+            productList.appendChild(createProductCard(product, index));
         });
+    }
 
-        urunlerListesi.appendChild(fragment);
+    function openProductModal(product) {
+        if (!productModal) return;
 
-    };
+        modalName.textContent = cleanValue(product.ad) || "Ürün Detayı";
+        modalCategory.textContent = cleanValue(product.kategori) || "İşitme Cihazı";
+        modalStock.textContent = getStockText(product);
+        modalDescription.textContent =
+            cleanValue(product.aciklama) || "Bu ürün hakkında detaylı bilgi almak için bizimle iletişime geçebilirsiniz.";
 
-    /* FİLTRE UYGULA */
+        const imageUrl = cleanValue(product.gorselUrl);
 
-    const applyFilters = () => {
-
-        renderFilters();
-        renderProducts(filterProducts());
-
-    };
-
-    const setFilter = (type, value) => {
-
-        if (!Object.prototype.hasOwnProperty.call(filters, type)) {
-            return;
+        if (modalImage) {
+            modalImage.src = imageUrl;
+            modalImage.alt = cleanValue(product.ad) || "İşitme cihazı";
+            modalImage.style.display = imageUrl ? "block" : "none";
         }
 
-        filters[type] = value || null;
+        productModal.classList.add("active");
+        productModal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+    }
 
-        if (type !== 'etiket') {
-            filters.etiket = null;
+    function closeModal() {
+        if (!productModal) return;
+
+        productModal.classList.remove("active");
+        productModal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+    }
+
+    if (closeProductModal) {
+        closeProductModal.addEventListener("click", closeModal);
+    }
+
+    if (productModal) {
+        productModal.addEventListener("click", event => {
+            if (event.target === productModal) {
+                closeModal();
+            }
+        });
+    }
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+            closeModal();
         }
+    });
 
-        applyFilters();
+    if (clearFiltersButton) {
+        clearFiltersButton.addEventListener("click", () => {
+            filters.category = [];
+            filters.brand = [];
+            filters.tag = [];
 
-    };
+            document.querySelectorAll(
+                "#categoryList input, #brandList input, #tagList input"
+            ).forEach(input => {
+                input.checked = false;
+            });
 
-    const resetFilters = () => {
+            renderProducts();
+        });
+    }
 
-        filters = {
-            kategori: null,
-            marka: null,
-            etiket: null
-        };
-
-        applyFilters();
-
-    };
-
-    /* ÜRÜN DETAYI */
-
-    const openProductModal = (id) => {
-
-        const product = allProducts.find(
-            item => String(item.id) === String(id)
-        );
-
-        if (!product) return;
-
-        const image = document.getElementById('productModalImage');
-        const name = document.getElementById('productModalName');
-        const category = document.getElementById('productModalCategory');
-        const stock = document.getElementById('productModalStock');
-        const description = document.getElementById('productModalDescription');
-
-        image.onerror = () => {
-            image.onerror = null;
-            image.src = 'logo.png';
-        };
-
-        image.src = getImageUrl(product.gorselUrl);
-        image.alt = product.ad || 'İşitme cihazı';
-
-        name.textContent = product.ad || 'Ürün Detayı';
-
-        category.textContent = [
-            product.marka,
-            product.kategori
-        ].filter(Boolean).join(' • ');
-
-        stock.textContent = product.stokDurumu
-            ? 'Stokta Var'
-            : 'Stokta Yok';
-
-        stock.className = product.stokDurumu
-            ? 'product-stock in-stock'
-            : 'product-stock out-of-stock';
-
-        description.textContent =
-            product.aciklama || 'Bu ürün hakkında detaylı bilgi almak için bizimle iletişime geçebilirsiniz.';
-
-        productModal.classList.add('is-open');
-        productModal.setAttribute('aria-hidden', 'false');
-
-        document.body.style.overflow = 'hidden';
-
-        closeProductModal.focus();
-
-    };
-
-    const closeModal = () => {
-
-        productModal.classList.remove('is-open');
-        productModal.setAttribute('aria-hidden', 'true');
-
-        document.body.style.overflow = '';
-
-    };
-
-    /* ÜRÜNLERİ API'DEN GETİR */
-
-    const urunleriGoster = async () => {
+    async function loadProducts() {
+        if (!productList) return;
 
         try {
-
-            const response = await fetch('/api/urunler');
+            const response = await fetch("/api/urunler");
 
             if (!response.ok) {
-                throw new Error('Ürün listesi sunucudan alınamadı.');
+                throw new Error(`Ürün servisi yanıt vermedi: ${response.status}`);
             }
 
             const result = await response.json();
 
-            if (!Array.isArray(result.veri)) {
-                throw new Error('Ürün verileri beklenen formatta değil.');
+            if (!result || !Array.isArray(result.veri)) {
+                throw new Error("Ürün verileri beklenen formatta gelmedi.");
             }
 
             allProducts = result.veri;
 
             renderFilters();
-            renderProducts(filterProducts());
+            renderProducts();
 
         } catch (error) {
+            console.error("Ürünler yüklenirken hata oluştu:", error);
 
-            console.error('Ürün yükleme hatası:', error);
+            productList.replaceChildren();
 
-            urunlerListesi.innerHTML = '';
+            const message = document.createElement("div");
+            message.className = "products-message";
 
-            const errorBox = createElement(
-                'div',
-                'product-empty'
-            );
+            const icon = document.createElement("i");
+            icon.className = "fas fa-exclamation-circle";
 
-            const icon = createElement(
-                'i',
-                'fas fa-exclamation-circle'
-            );
+            const text = document.createElement("p");
+            text.textContent = "Ürünler şu anda yüklenemiyor. Lütfen sayfayı yenileyin veya bizimle iletişime geçin.";
 
-            const title = createElement(
-                'h3',
-                '',
-                'Ürünler şu anda yüklenemiyor'
-            );
-
-            const message = createElement(
-                'p',
-                '',
-                'Lütfen internet bağlantınızı kontrol edip sayfayı yeniden deneyin.'
-            );
-
-            errorBox.appendChild(icon);
-            errorBox.appendChild(title);
-            errorBox.appendChild(message);
-
-            urunlerListesi.appendChild(errorBox);
+            message.appendChild(icon);
+            message.appendChild(text);
+            productList.appendChild(message);
 
             if (productCount) {
-                productCount.textContent = 'Ürünler yüklenemedi';
+                productCount.textContent = "Ürünler yüklenemedi";
             }
-
         }
-
-    };
-
-    /* OLAYLAR */
-
-    urunlerListesi.addEventListener('click', (event) => {
-
-        const button = event.target.closest('.product-card-link');
-
-        if (!button) return;
-
-        event.preventDefault();
-
-        openProductModal(button.dataset.id);
-
-    });
-
-    [categoryList, brandList, tagList].forEach(container => {
-
-        container.addEventListener('click', (event) => {
-
-            const target = event.target.closest('[data-type]');
-
-            if (!target) return;
-
-            event.preventDefault();
-
-            setFilter(
-                target.dataset.type,
-                target.dataset.value || ''
-            );
-
-        });
-
-    });
-
-    closeProductModal.addEventListener('click', closeModal);
-
-    productModal.addEventListener('click', (event) => {
-
-        if (event.target === productModal) {
-            closeModal();
-        }
-
-    });
-
-    document.addEventListener('keydown', (event) => {
-
-        if (event.key === 'Escape') {
-            closeModal();
-        }
-
-    });
-
-    if (clearFilters) {
-        clearFilters.addEventListener('click', resetFilters);
     }
 
-    /* SAYFAYI BAŞLAT */
-
-    urunleriGoster();
-
+    loadProducts();
 });
