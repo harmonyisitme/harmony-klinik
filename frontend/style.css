@@ -3096,3 +3096,9 @@ a {
         grid-column: auto;
     }
 }
+/* Ana sayfada boş açılır pencereleri gizle */
+#serviceModal,
+#blogModal,
+#yasalModal {
+    display: none !important;
+}
