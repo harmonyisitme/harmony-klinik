@@ -1702,3 +1702,28 @@ a {
         transition-duration: .01ms !important;
     }
 }
+
+/* ÜST İLETİŞİM ŞERİDİ - KIRMIZI ARKA PLAN */
+.top-bar {
+    background: #c92335 !important;
+    color: #ffffff !important;
+}
+
+.top-bar .contact-info,
+.top-bar .contact-info span,
+.top-bar .contact-info a,
+.top-bar .social-icons-top,
+.top-bar .social-icons-top a {
+    color: #ffffff !important;
+}
+
+.top-bar .contact-info i,
+.top-bar .social-icons-top i {
+    color: #ffffff !important;
+}
+
+.top-bar a:hover,
+.top-bar .social-icons-top a:hover {
+    color: #ffffff !important;
+    opacity: 0.8;
+}
