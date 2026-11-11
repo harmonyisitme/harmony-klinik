@@ -1,7 +1,9 @@
 
-/* Rana İşitme Merkezi - Ana Sayfa
-   WhatsApp, site ayarları, ürünler, blog, mobil menü ve KVKK
-*/
+/* =====================================================
+   RANA İŞİTME MERKEZİ
+   Ana Sayfa - WhatsApp, site ayarları, ürünler,
+   blog, mobil menü ve KVKK
+===================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
     const isLocal =
@@ -26,34 +28,41 @@ document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------
 
     function whatsappRandevu(mesaj = WHATSAPP_MESAJ) {
-        const url = `https://wa.me/${WHATSAPP_NUMARA}?text=${encodeURIComponent(mesaj)}`;
+        const url =
+            `https://wa.me/${WHATSAPP_NUMARA}?text=${encodeURIComponent(mesaj)}`;
+
         window.open(url, '_blank', 'noopener,noreferrer');
     }
 
     window.randevuAdimGec = () => whatsappRandevu();
 
-    // Randevu bağlantılarını hazır mesajla WhatsApp'a yönlendir.
+    // TÜM WHATSAPP VE RANDEVU BAĞLANTILARI
+    // Hazır mesajı tıklama anında oluşturur.
     document.addEventListener('click', event => {
-        const link = event.target.closest('a[href="#randevu"]');
+        const link = event.target.closest(
+            'a[href*="wa.me"], a[href*="api.whatsapp.com"], a[href="#randevu"]'
+        );
+
         if (!link) return;
 
         event.preventDefault();
-        whatsappRandevu();
-    });
+        event.stopPropagation();
 
-    // Sayfadaki doğrudan WhatsApp bağlantılarını da standartlaştır.
-    document.querySelectorAll('a[href*="wa.me/"]').forEach(link => {
+        let mesaj = WHATSAPP_MESAJ;
+
         try {
-            const mevcutUrl = new URL(link.href);
-            const mesaj = mevcutUrl.searchParams.get('text') || WHATSAPP_MESAJ;
+            const mevcutUrl = new URL(link.href, window.location.href);
+            const mevcutMesaj = mevcutUrl.searchParams.get('text');
 
-            link.href = `https://wa.me/${WHATSAPP_NUMARA}?text=${encodeURIComponent(mesaj)}`;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
+            if (mevcutMesaj) {
+                mesaj = mevcutMesaj;
+            }
         } catch (error) {
-            console.warn('WhatsApp bağlantısı düzenlenemedi:', error);
+            console.warn('WhatsApp mesajı okunamadı:', error);
         }
-    });
+
+        whatsappRandevu(mesaj);
+    }, true);
 
     window.showToast = (message, type = 'info') => {
         let container = get('toast-container');
