@@ -1727,3 +1727,334 @@ a {
     color: #ffffff !important;
     opacity: 0.8;
 }
+
+/* =====================================
+   RANA - HAKKIMIZDA SAYFASI
+===================================== */
+
+:root {
+    --about-red: #c92335;
+    --about-red-dark: #a91d2c;
+    --about-text: #333333;
+    --about-muted: #737373;
+    --about-light: #fff7f7;
+    --about-border: #f0e5e5;
+}
+
+/* Genel sayfa */
+.about-page {
+    width: 100%;
+    overflow: hidden;
+    background: #ffffff;
+    color: var(--about-text);
+}
+
+/* Sayfa üst başlığı */
+.about-hero {
+    position: relative;
+    padding: 75px 24px 65px;
+    background: linear-gradient(120deg, #fff7f7 0%, #ffffff 75%);
+    border-bottom: 1px solid var(--about-border);
+}
+
+.about-hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-eyebrow,
+.about-section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--about-red);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.about-eyebrow span,
+.about-section-label span {
+    display: inline-block;
+    width: 25px;
+    height: 3px;
+    border-radius: 5px;
+    background: var(--about-red);
+}
+
+.about-hero h1 {
+    margin: 22px 0 15px;
+    color: #292929;
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(34px, 5vw, 54px);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -1.5px;
+}
+
+.about-hero h1 strong {
+    color: var(--about-red);
+    font-weight: 800;
+}
+
+.about-hero-inner > p {
+    max-width: 580px;
+    margin: 0;
+    color: var(--about-muted);
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.about-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+    color: #999999;
+    font-size: 13px;
+}
+
+.about-breadcrumb a {
+    color: var(--about-red);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.about-breadcrumb i {
+    font-size: 10px;
+}
+
+/* Ana hakkımızda alanı */
+.about-main-section {
+    padding: 90px 24px;
+    background: #ffffff;
+}
+
+.about-main-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 70px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Görsel */
+.about-image-wrap {
+    position: relative;
+    padding-bottom: 25px;
+}
+
+.about-image-frame {
+    position: relative;
+    overflow: hidden;
+    min-height: 350px;
+    border-radius: 18px;
+    background: #fff1f1;
+    box-shadow: 0 15px 40px rgba(80, 30, 30, 0.10);
+}
+
+.about-image-frame img {
+    display: block;
+    width: 100%;
+    height: 430px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.about-image-frame:hover img {
+    transform: scale(1.035);
+}
+
+.about-image-label {
+    position: absolute;
+    right: -15px;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 310px;
+    padding: 18px 22px;
+    border-radius: 12px;
+    background: var(--about-red);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 10px 25px rgba(201, 35, 53, 0.2);
+}
+
+.about-image-label i {
+    font-size: 20px;
+}
+
+/* Metin alanı */
+.about-content-wrap h2 {
+    margin: 16px 0 22px;
+    color: #292929;
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.about-dynamic-content {
+    color: #555555;
+    font-size: 16px;
+    line-height: 1.9;
+}
+
+.about-dynamic-content p {
+    margin: 0 0 18px;
+}
+
+.about-dynamic-content h2,
+.about-dynamic-content h3,
+.about-dynamic-content h4 {
+    margin: 22px 0 12px;
+    color: #292929;
+    font-family: 'Manrope', sans-serif;
+}
+
+.about-dynamic-content ul,
+.about-dynamic-content ol {
+    padding-left: 22px;
+    margin-bottom: 20px;
+}
+
+.about-dynamic-content li {
+    margin-bottom: 9px;
+}
+
+.about-dynamic-content strong {
+    color: var(--about-red-dark);
+}
+
+.about-contact-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+    padding: 15px 23px;
+    border-radius: 8px;
+    background: var(--about-red);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.25s ease;
+}
+
+.about-contact-button:hover {
+    background: var(--about-red-dark);
+    transform: translateY(-2px);
+}
+
+/* Alt güven alanı */
+.about-values-section {
+    padding: 75px 24px;
+    background: var(--about-light);
+    border-top: 1px solid var(--about-border);
+}
+
+.about-values-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.about-values-inner .about-section-label {
+    justify-content: center;
+}
+
+.about-values-inner h2 {
+    margin: 18px 0;
+    color: #292929;
+    font-family: 'Manrope', sans-serif;
+    font-size: 34px;
+    font-weight: 800;
+}
+
+.about-values-inner > p {
+    margin: 0 auto;
+    color: #666666;
+    font-size: 16px;
+    line-height: 1.9;
+}
+
+/* Menüde aktif sayfa */
+.nav-links a.active {
+    color: var(--about-red) !important;
+    font-weight: 700;
+}
+
+/* Mobil uyum */
+@media (max-width: 768px) {
+
+    .about-hero {
+        padding: 55px 20px 45px;
+    }
+
+    .about-hero h1 {
+        font-size: 36px;
+        letter-spacing: -1px;
+    }
+
+    .about-hero-inner > p {
+        font-size: 15px;
+    }
+
+    .about-main-section {
+        padding: 55px 20px;
+    }
+
+    .about-main-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .about-image-frame {
+        min-height: 250px;
+    }
+
+    .about-image-frame img {
+        height: 300px;
+    }
+
+    .about-image-label {
+        right: 8px;
+        max-width: 270px;
+        padding: 14px 16px;
+        font-size: 12px;
+    }
+
+    .about-content-wrap h2 {
+        font-size: 29px;
+    }
+
+    .about-dynamic-content {
+        font-size: 15px;
+    }
+
+    .about-values-section {
+        padding: 55px 20px;
+    }
+
+    .about-values-inner h2 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 380px) {
+    .about-hero h1 {
+        font-size: 31px;
+    }
+
+    .about-image-frame img {
+        height: 250px;
+    }
+
+    .about-image-label {
+        right: 0;
+        max-width: 240px;
+    }
+}
