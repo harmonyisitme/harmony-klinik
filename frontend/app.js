@@ -68,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!link) return;
 
         event.preventDefault();
-        event.stopPropagation();
 
         let mesaj = WHATSAPP_MESAJ;
 
