@@ -4,7 +4,29 @@
    Ana Sayfa - WhatsApp, site ayarları, ürünler,
    blog, mobil menü ve KVKK
 ===================================================== */
+/* =====================================================
+   GOOGLE TAG MANAGER - TÜM SİTE
+===================================================== */
+(function (w, d, s, l, i) {
+    w[l] = w[l] || [];
 
+    // GTM zaten yüklüyse ikinci kez yükleme
+    if (d.querySelector('script[src*="' + i + '"]')) return;
+
+    w[l].push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+    });
+
+    var f = d.getElementsByTagName(s)[0];
+    var j = d.createElement(s);
+    var dl = l !== 'dataLayer' ? '&l=' + l : '';
+
+    j.async = true;
+    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+
+    f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-NG5WXPCD');
 document.addEventListener('DOMContentLoaded', () => {
     const isLocal =
         window.location.hostname === 'localhost' ||
