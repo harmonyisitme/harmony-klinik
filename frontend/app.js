@@ -1,12 +1,13 @@
-
 /* =====================================================
    RANA İŞİTME MERKEZİ
    Ana Sayfa - WhatsApp, site ayarları, ürünler,
    blog, mobil menü ve KVKK
 ===================================================== */
+
 /* =====================================================
    GOOGLE TAG MANAGER - TÜM SİTE
 ===================================================== */
+
 (function (w, d, s, l, i) {
     w[l] = w[l] || [];
 
@@ -27,6 +28,8 @@
 
     f.parentNode.insertBefore(j, f);
 })(window, document, 'script', 'dataLayer', 'GTM-NG5WXPCD');
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const isLocal =
         window.location.hostname === 'localhost' ||
@@ -35,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const API_URL = isLocal ? 'http://localhost:5501/api' : '/api';
 
     const WHATSAPP_NUMARA = '905519849333';
+
     const WHATSAPP_MESAJ =
         'Merhaba, Rana İşitme Merkezi üzerinden randevu almak istiyorum. Randevu konusunda yardımcı olabilir misiniz?';
 
@@ -45,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const get = id => document.getElementById(id);
 
+
     // --------------------------------------------------
     // GENEL YARDIMCILAR
     // --------------------------------------------------
@@ -53,13 +58,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const url =
             `https://wa.me/${WHATSAPP_NUMARA}?text=${encodeURIComponent(mesaj)}`;
 
+        // GOOGLE ADS WHATSAPP DÖNÜŞÜM TAKİBİ
+        window.dataLayer = window.dataLayer || [];
+
+        window.dataLayer.push({
+            event: 'whatsapp_lead',
+            lead_type: 'whatsapp',
+            lead_source: 'website'
+        });
+
         window.open(url, '_blank', 'noopener,noreferrer');
     }
 
     window.randevuAdimGec = () => whatsappRandevu();
 
+
     // TÜM WHATSAPP VE RANDEVU BAĞLANTILARI
     // Hazır mesajı tıklama anında oluşturur.
+
     document.addEventListener('click', event => {
         const link = event.target.closest(
             'a[href*="wa.me"], a[href*="api.whatsapp.com"], a[href="#randevu"]'
@@ -68,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!link) return;
 
         event.preventDefault();
-        
+
         let mesaj = WHATSAPP_MESAJ;
 
         try {
@@ -84,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         whatsappRandevu(mesaj);
     }, true);
+
 
     window.showToast = (message, type = 'info') => {
         let container = get('toast-container');
@@ -103,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.setTimeout(() => toast.remove(), 3000);
     };
 
+
     function formatTelefon(value) {
         let digits = String(value || '').replace(/\D/g, '');
 
@@ -110,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         digits = digits.slice(0, 10);
 
         let result = '';
+
         if (digits.length > 0) result = `(${digits.slice(0, 3)}`;
         if (digits.length >= 4) result += `) ${digits.slice(3, 6)}`;
         if (digits.length >= 7) result += ` ${digits.slice(6, 8)}`;
@@ -117,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return result;
     }
+
 
     function bindInputFormat(inputId, formatter) {
         const input = get(inputId);
@@ -127,13 +147,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
     bindInputFormat('telefon', formatTelefon);
+
     bindInputFormat('sorguTc', value =>
         String(value || '').replace(/\D/g, '').slice(0, 11)
     );
+
     bindInputFormat('tcKimlik', value =>
         String(value || '').replace(/\D/g, '').slice(0, 11)
     );
+
 
     function fotografAdresiniDuzenle(url) {
         if (!url) return '';
@@ -146,6 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return `/${value}`;
     }
 
+
     async function apiGet(endpoint) {
         const response = await fetch(`${API_URL}/${endpoint}?_t=${Date.now()}`);
 
@@ -155,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return response.json();
     }
+
 
     // --------------------------------------------------
     // ÜRÜNLER
@@ -409,6 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.head.appendChild(style);
     }
 
+
     function urunlerMenuLinkiEkle() {
         const nav = document.querySelector('.nav-links');
         if (!nav) return;
@@ -435,6 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
             nav.appendChild(link);
         }
     }
+
 
     function urunlerBolumunuOlustur() {
         let section = get('ranaProducts');
@@ -477,13 +505,16 @@ document.addEventListener('DOMContentLoaded', () => {
         urunlerMenuLinkiEkle();
     }
 
+
     function urunVerileriniDuzenle(result) {
         if (Array.isArray(result)) return result;
         if (Array.isArray(result?.veri)) return result.veri;
         if (Array.isArray(result?.urunler)) return result.urunler;
         if (Array.isArray(result?.data)) return result.data;
+
         return [];
     }
+
 
     function urunKartiniOlustur(urun) {
         const card = document.createElement('article');
@@ -554,6 +585,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
+
     async function urunleriGetir() {
         urunlerBolumunuOlustur();
 
@@ -577,6 +609,7 @@ document.addEventListener('DOMContentLoaded', () => {
             allProducts.slice(0, 6).forEach(urun => {
                 grid.appendChild(urunKartiniOlustur(urun));
             });
+
         } catch (error) {
             console.error('Ürünler yüklenemedi:', error);
             grid.replaceChildren();
@@ -589,6 +622,7 @@ document.addEventListener('DOMContentLoaded', () => {
             grid.appendChild(message);
         }
     }
+
 
     // --------------------------------------------------
     // SİTE AYARLARI
@@ -762,6 +796,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
+
             function sosyalMedyaYukle(element, social) {
                 if (!element || !social) return;
 
@@ -791,12 +826,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
+
             sosyalMedyaYukle(
                 document.querySelector('.social-links'),
                 ayarlar.sosyalMedya
             );
 
             sosyalMedyaYukle(get('headerSocials'), ayarlar.sosyalMedya);
+
 
             const servicesContainer = get('servicesContainer');
 
@@ -842,10 +879,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 servicesContainer.classList.add('loaded');
                 attachServiceClickEvents();
             }
+
         } catch (error) {
             console.error('Site ayarları yüklenemedi:', error);
         }
     }
+
 
     // --------------------------------------------------
     // HİZMET DETAY PENCERESİ
@@ -854,6 +893,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const serviceModal = get('serviceModal');
     const modalTitle = get('modalTitle');
     const modalBody = get('modalBody');
+
 
     function attachServiceClickEvents() {
         document.querySelectorAll('.service-card').forEach(card => {
@@ -874,6 +914,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
     attachServiceClickEvents();
 
     const closeServiceModal = document.querySelector('.close-service-modal');
@@ -884,12 +925,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
     // --------------------------------------------------
     // BLOG
     // --------------------------------------------------
 
     const blogContainer = get('blogKapsayici');
     const blogModal = get('blogModal');
+
 
     function openBlogModal(id) {
         const blog = allBlogs.find(
@@ -922,6 +965,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         blogModal.style.display = 'flex';
     }
+
 
     async function bloglariGetir() {
         if (!blogContainer) return;
@@ -974,11 +1018,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 blogContainer.appendChild(card);
             });
+
         } catch (error) {
             console.error('Blog getirme hatası:', error);
             blogContainer.textContent = 'Bloglar şu anda yüklenemiyor.';
         }
     }
+
 
     const closeBlogModal = get('closeBlogModal');
 
@@ -987,6 +1033,7 @@ document.addEventListener('DOMContentLoaded', () => {
             blogModal.style.display = 'none';
         });
     }
+
 
     const previousBlogButton = get('prevBlogBtn');
     const nextBlogButton = get('nextBlogBtn');
@@ -1003,12 +1050,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
     // --------------------------------------------------
     // MOBİL MENÜ
     // --------------------------------------------------
 
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
+
 
     function mobilMenuAcikMi() {
         return !!(
@@ -1020,6 +1069,7 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     }
 
+
     function mobilMenuKapat() {
         if (!navLinks || !hamburger) return;
 
@@ -1029,6 +1079,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburger.setAttribute('aria-label', 'Menüyü aç');
     }
 
+
     function mobilMenuAc() {
         if (!navLinks || !hamburger) return;
 
@@ -1037,6 +1088,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburger.setAttribute('aria-expanded', 'true');
         hamburger.setAttribute('aria-label', 'Menüyü kapat');
     }
+
 
     if (hamburger && navLinks) {
         hamburger.setAttribute('aria-expanded', 'false');
@@ -1081,6 +1133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
     // --------------------------------------------------
     // SAYFA BAŞINA DÖN
     // --------------------------------------------------
@@ -1101,6 +1154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
     // --------------------------------------------------
     // MODALLAR
     // --------------------------------------------------
@@ -1120,6 +1174,7 @@ document.addEventListener('DOMContentLoaded', () => {
             legalModal.style.display = 'none';
         }
     });
+
 
     // --------------------------------------------------
     // YASAL METİNLER
@@ -1154,6 +1209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'flex';
     };
 
+
     const closeLegalModal = get('closeYasalModal');
 
     if (closeLegalModal) {
@@ -1162,6 +1218,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (modal) modal.style.display = 'none';
         });
     }
+
 
     // --------------------------------------------------
     // PRELOADER
@@ -1178,6 +1235,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('load', preloaderKapat);
     window.setTimeout(preloaderKapat, 2500);
+
 
     // --------------------------------------------------
     // SAYFA İÇİ KAYDIRMA
@@ -1211,6 +1269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+
     // --------------------------------------------------
     // BAŞLANGIÇ
     // --------------------------------------------------
@@ -1220,6 +1279,7 @@ document.addEventListener('DOMContentLoaded', () => {
     bloglariGetir();
     urunleriGetir();
 });
+
 
 // --------------------------------------------------
 // ÇEREZ VE KVKK BİLGİLENDİRMESİ
