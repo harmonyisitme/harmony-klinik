@@ -3,7 +3,6 @@
    RANA İŞİTME MERKEZİ
    KURUMSAL KIRMIZI-BEYAZ TASARIM
    MASAÜSTÜ + TABLET + MOBİL
-   ANA SAYFA HTML YAPISIYLA UYUMLU
 ===================================================== */
 
 :root {
@@ -132,48 +131,78 @@ a {
 ===================================================== */
 
 .top-bar {
+    position: relative;
+    z-index: 1001;
     display: flex;
-    min-height: 38px;
+    width: 100%;
+    min-height: 40px;
     align-items: center;
-    background: #f8f8f8;
-    border-bottom: 1px solid var(--rana-border);
-    color: #555;
-    font-size: 12px;
+    padding: 7px 0;
+    background: var(--rana-red);
+    border: 0;
+    color: #fff;
+    font-size: 13px;
+    line-height: 1.5;
 }
 
 .top-bar-inner,
+.top-bar > .container,
 .top-bar .container {
     display: flex;
+    min-width: 0;
     align-items: center;
     justify-content: space-between;
     gap: 15px;
+    background: transparent;
 }
 
-.contact-info {
+.top-bar .contact-info {
     display: flex;
+    min-width: 0;
     align-items: center;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: 8px 20px;
+    color: #fff;
+    font-size: 13px;
+}
+
+.top-bar .contact-info a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: color .2s ease;
 }
 
 .top-bar a {
+    color: #fff;
     transition: color .2s ease;
 }
 
 .top-bar a:hover {
-    color: var(--rana-red);
+    color: #ffe2e5;
 }
 
 .top-bar i {
-    margin-right: 5px;
-    color: var(--rana-red);
+    color: #fff;
+    font-size: 14px;
 }
 
 .top-bar .social-links,
-#headerSocials {
+.top-bar #headerSocials {
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     gap: 13px;
+    background: transparent;
+}
+
+.top-bar #headerSocials a {
+    color: #fff;
+    font-size: 14px;
 }
 
 /* =====================================================
@@ -186,6 +215,12 @@ header,
     background: rgba(255,255,255,.98);
     border-bottom: 1px solid rgba(0,0,0,.06);
     backdrop-filter: blur(12px);
+}
+
+header.navbar,
+.navbar {
+    background: #fff;
+    border-bottom: 1px solid #eee;
 }
 
 .main-header,
@@ -302,13 +337,9 @@ header.navbar,
     width: 100%;
 }
 
-/* Mobil randevu bağlantısı masaüstünde gizli */
-
 .mobile-nav-cta {
     display: none;
 }
-
-/* Masaüstü randevu butonu */
 
 .nav-appointment {
     display: inline-flex;
@@ -335,8 +366,6 @@ header.navbar,
 .nav-appointment::after {
     display: none !important;
 }
-
-/* Hamburger */
 
 .hamburger {
     display: none;
@@ -575,8 +604,6 @@ header.navbar,
 .hero-trust-points i {
     color: var(--rana-red);
 }
-
-/* Hero görseli */
 
 .hero-media-wrap {
     position: relative;
@@ -866,8 +893,6 @@ header.navbar,
     color: #fff;
 }
 
-/* Öne çıkan çözüm kartı */
-
 .solution-card-feature {
     padding: 0;
 }
@@ -943,8 +968,6 @@ header.navbar,
 .inline-link:hover {
     color: var(--rana-red-dark);
 }
-
-/* HTML'deki gerçek hizmet yerleşimi */
 
 .services-grid {
     display: grid;
@@ -1939,8 +1962,11 @@ body.fade-out {
     margin: auto;
 }
 
-.contact-info,
-.contact-form {
+/* Üst çubuktaki contact-info ile karışmaması için
+   yalnızca iletişim sayfasındaki doğrudan kart seçilir. */
+
+.contact-grid > .contact-info,
+.contact-grid > .contact-form {
     min-width: 0;
     padding: 30px;
     border: 1px solid var(--rana-border);
@@ -2201,8 +2227,6 @@ body.fade-out {
         position: static;
     }
 
-    /* Mobil açılır menü */
-
     .nav-links {
         position: fixed;
         top: 70px;
@@ -2277,14 +2301,9 @@ body.fade-out {
         display: none;
     }
 
-    /* Masaüstü randevu butonunu mobilde gizle.
-       Mobil randevu bağlantısı açılır menüde kalır. */
-
     .navbar > .nav-appointment {
         display: none !important;
     }
-
-    /* Hero */
 
     .home-hero,
     .hero {
@@ -2361,8 +2380,6 @@ body.fade-out {
         font-size: 10px;
     }
 
-    /* Marka şeridi */
-
     .brand-strip {
         justify-content: center;
         gap: 22px 30px;
@@ -2377,8 +2394,6 @@ body.fade-out {
     .brand-wordmark {
         font-size: 20px;
     }
-
-    /* Genel bölüm aralıkları */
 
     .solutions-section,
     .home-services,
@@ -2399,8 +2414,6 @@ body.fade-out {
     .section-heading-row > p {
         max-width: 100%;
     }
-
-    /* Çözümler */
 
     .solution-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2427,8 +2440,6 @@ body.fade-out {
     .solution-card p {
         font-size: 12px;
     }
-
-    /* Hizmetler */
 
     .home-services {
         display: grid;
@@ -2471,8 +2482,6 @@ body.fade-out {
         font-size: 14px;
     }
 
-    /* Neden Rana */
-
     .why-section {
         grid-template-columns: 1fr;
         gap: 30px;
@@ -2486,8 +2495,6 @@ body.fade-out {
         width: 100%;
     }
 
-    /* Süreç */
-
     .journey-steps {
         grid-template-columns: 1fr;
         gap: 14px;
@@ -2496,8 +2503,6 @@ body.fade-out {
     .journey-step {
         padding: 25px 20px;
     }
-
-    /* CTA */
 
     .home-cta {
         min-height: auto;
@@ -2510,8 +2515,6 @@ body.fade-out {
     .home-cta > a {
         align-self: flex-start;
     }
-
-    /* Blog */
 
     .blog-slider-wrapper {
         width: 100%;
@@ -2536,8 +2539,6 @@ body.fade-out {
         display: none;
     }
 
-    /* Footer */
-
     .footer-container {
         width: 90%;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2556,8 +2557,6 @@ body.fade-out {
         gap: 10px 16px;
     }
 
-    /* Diğer sayfalar */
-
     .about-section .container,
     .about-content {
         grid-template-columns: 1fr;
@@ -2572,8 +2571,6 @@ body.fade-out {
     .products-page-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-
-    /* Çerez */
 
     .cookie-banner {
         right: 12px;
@@ -2593,8 +2590,6 @@ body.fade-out {
     .cookie-btn-group button {
         flex: 1;
     }
-
-    /* Modal */
 
     .modal-content,
     .service-modal-content,
@@ -2751,8 +2746,8 @@ body.fade-out {
         height: 220px;
     }
 
-    .contact-info,
-    .contact-form {
+    .contact-grid > .contact-info,
+    .contact-grid > .contact-form {
         padding: 22px 17px;
     }
 
@@ -2829,165 +2824,4 @@ select:focus-visible {
         animation-duration: .01ms !important;
         transition-duration: .01ms !important;
     }
-}
-/* =====================================================
-   RANA İŞİTME MERKEZİ - ÜST ALAN RENK DÜZENLEMESİ
-   Mevcut yerleşim ve mobil ölçüler korunur.
-===================================================== */
-
-/* Üst iletişim çubuğu */
-.top-bar {
-    background: #c92335 !important;
-    border-bottom: 0 !important;
-    color: #ffffff !important;
-}
-
-.top-bar,
-.top-bar a,
-.top-bar .contact-info,
-.top-bar .contact-info a,
-.top-bar #headerSocials a {
-    color: #ffffff !important;
-}
-
-.top-bar i,
-.top-bar .contact-info i {
-    color: #ffffff !important;
-}
-
-.top-bar a:hover {
-    color: #ffe2e5 !important;
-}
-
-/* Ana menü */
-header.navbar,
-.navbar {
-    background: #ffffff !important;
-    border-bottom: 1px solid #eeeeee !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.045);
-}
-
-/* Logo */
-.logo,
-.logo-fallback {
-    color: #c92335 !important;
-}
-
-/* Menü bağlantıları */
-.nav-links a {
-    color: #303030 !important;
-}
-
-.nav-links a:hover,
-.nav-links a.active {
-    color: #c92335 !important;
-}
-
-.nav-links a::after {
-    background: #c92335 !important;
-}
-
-/* Randevu butonu */
-.nav-appointment {
-    background: #c92335 !important;
-    border-color: #c92335 !important;
-    color: #ffffff !important;
-}
-
-.nav-appointment:hover {
-    background: #a91d2c !important;
-    border-color: #a91d2c !important;
-}
-
-/* Hamburger */
-.hamburger {
-    background: #fff !important;
-}
-
-.hamburger span,
-.hamburger div,
-.hamburger .line1,
-.hamburger .line2,
-.hamburger .line3 {
-    background: #c92335 !important;
-}
-
-/* Mobil açılır menü */
-@media (max-width: 768px) {
-    .nav-links {
-        background: #ffffff !important;
-        border-top: 1px solid #eeeeee;
-    }
-
-    .nav-links a {
-        color: #303030 !important;
-    }
-
-    .mobile-nav-cta a {
-        background: #c92335 !important;
-        color: #ffffff !important;
-    }
-}
-/* ÜST İLETİŞİM ALANI */
-.top-bar {
-    background: #c92335 !important;
-    color: #ffffff !important;
-    border: none !important;
-    padding: 12px 0 !important;
-}
-
-.top-bar,
-.top-bar a,
-.top-bar .contact-info,
-.top-bar .contact-info a,
-.top-bar #headerSocials a {
-    color: #ffffff !important;
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    line-height: 1.6 !important;
-}
-
-.top-bar i,
-.top-bar .contact-info i {
-    color: #ffffff !important;
-    font-size: 17px !important;
-}
-
-.top-bar a:hover {
-    color: #ffe2e5 !important;
-}
-
-/* Mobilde de okunaklı kalsın */
-@media (max-width: 768px) {
-    .top-bar {
-        padding: 10px 12px !important;
-    }
-
-    .top-bar,
-    .top-bar a,
-    .top-bar .contact-info,
-    .top-bar .contact-info a {
-        font-size: 14px !important;
-    }
-}
-/* ÜST İLETİŞİM ALANINDAKİ BEYAZ ARKA PLANI KALDIR */
-.top-bar,
-.top-bar .container,
-.top-bar .contact-info,
-.top-bar .contact-info a,
-.top-bar #headerSocials,
-.top-bar #headerSocials a {
-    background: #c92335 !important;
-    background-color: #c92335 !important;
-    color: #ffffff !important;
-    border-color: transparent !important;
-}
-
-.top-bar {
-    width: 100% !important;
-}
-
-.top-bar a,
-.top-bar i {
-    color: #ffffff !important;
 }
