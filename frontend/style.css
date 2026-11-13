@@ -3173,3 +3173,34 @@ select:focus-visible {
   }
   .home-cta-actions > a { width: 100%; justify-content: center; }
 }
+
+
+/* Masaüstü üst menü WhatsApp iletişim butonu */
+.nav-whatsapp {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 17px;
+    border: 1px solid #209b55;
+    border-radius: 6px;
+    background: #209b55;
+    color: #fff !important;
+    font-size: 13px;
+    font-weight: 750;
+    white-space: nowrap;
+    transition: .25s ease;
+}
+.nav-whatsapp:hover {
+    transform: translateY(-2px);
+    border-color: #187a42;
+    background: #187a42;
+}
+.nav-whatsapp::after { display: none !important; }
+@media (max-width: 1100px) {
+    .nav-whatsapp { padding: 10px 12px; font-size: 12px; }
+}
+@media (max-width: 768px) {
+    .navbar > .nav-whatsapp { display: none !important; }
+}
