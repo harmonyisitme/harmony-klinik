@@ -1,7 +1,7 @@
 /* =====================================================
    RANA İŞİTME MERKEZİ
-   Tüm site - WhatsApp, Google Ads takibi, site ayarları,
-   ürünler, blog, mobil menü ve KVKK
+   Ana Sayfa - WhatsApp, site ayarları, ürünler,
+   blog, mobil menü ve KVKK
 ===================================================== */
 
 /* =====================================================
@@ -28,61 +28,6 @@
 
     f.parentNode.insertBefore(j, f);
 })(window, document, 'script', 'dataLayer', 'GTM-NG5WXPCD');
-
-
-/* =====================================================
-   GOOGLE ADS DÖNÜŞÜM TAKİBİ
-
-   KURULUM:
-   1) Google Ads > Hedefler > Dönüşümler > Yeni dönüşüm eylemi >
-      Web sitesi > "Dönüşüm eylemlerini manuel olarak ekle" ile
-      iki dönüşüm oluşturun: "WhatsApp Tıklaması" ve "Telefon Tıklaması".
-   2) Etiket kurulumunda "Etiketi kendiniz ekleyin" kısmındaki
-      Etkinlik snippet'inde şu satırı görürsünüz:
-          'send_to': 'AW-18547759547/AbCdEfGhIjK'
-      Eğik çizgiden SONRAKİ kısım etikettir. Aşağıya yapıştırın.
-   3) Aynı dönüşümleri GTM'de ayrıca KURMAYIN, aksi halde çift sayılır.
-
-   Etiketler girilmezse dönüşüm gönderilmez; yalnızca dataLayer
-   olayları (whatsapp_lead, phone_lead) oluşur.
-===================================================== */
-
-const ADS_ID = 'AW-18547759547';
-
-const ADS_ETIKETLERI = {
-    whatsapp: 'BURAYA_WHATSAPP_ETIKETI',
-    telefon: 'BURAYA_TELEFON_ETIKETI'
-};
-
-const adsSonGonderim = {};
-
-function adsDonusumuGonder(tur) {
-    // Aynı tıklamanın kısa sürede iki kez sayılmasını önler
-    const simdi = Date.now();
-
-    if (adsSonGonderim[tur] && simdi - adsSonGonderim[tur] < 2000) return;
-
-    adsSonGonderim[tur] = simdi;
-
-    window.dataLayer = window.dataLayer || [];
-
-    window.dataLayer.push({
-        event: tur === 'whatsapp' ? 'whatsapp_lead' : 'phone_lead',
-        lead_type: tur,
-        lead_source: 'website',
-        page_path: window.location.pathname
-    });
-
-    const etiket = ADS_ETIKETLERI[tur];
-
-    if (!etiket || etiket.indexOf('BURAYA_') === 0) return;
-    if (typeof window.gtag !== 'function') return;
-
-    window.gtag('event', 'conversion', {
-        send_to: `${ADS_ID}/${etiket}`,
-        transport_type: 'beacon'
-    });
-}
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -114,7 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
             `https://wa.me/${WHATSAPP_NUMARA}?text=${encodeURIComponent(mesaj)}`;
 
         // GOOGLE ADS WHATSAPP DÖNÜŞÜM TAKİBİ
-        adsDonusumuGonder('whatsapp');
+        window.dataLayer = window.dataLayer || [];
+
+        window.dataLayer.push({
+            event: 'whatsapp_lead',
+            lead_type: 'whatsapp',
+            lead_source: 'website'
+        });
 
         window.open(url, '_blank', 'noopener,noreferrer');
     }
@@ -148,17 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         whatsappRandevu(mesaj);
-    }, true);
-
-
-    // TELEFON TIKLAMALARI (tel: bağlantıları)
-
-    document.addEventListener('click', event => {
-        const link = event.target.closest('a[href^="tel:"]');
-
-        if (!link) return;
-
-        adsDonusumuGonder('telefon');
     }, true);
 
 
@@ -1119,21 +1059,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelector('.nav-links');
 
 
-    // Simge ile çalışan hamburger düğmesi (ürünler sayfası) için
-    // bars / xmark simgesini ve menu-open durumunu günceller.
-    function hamburgerIkonGuncelle(acik) {
-        if (!hamburger) return;
-
-        const icon = hamburger.querySelector('i');
-        if (!icon) return;
-
-        hamburger.classList.toggle('active', acik);
-        icon.classList.toggle('fa-bars', !acik);
-        icon.classList.toggle('fa-xmark', acik);
-        document.body.classList.toggle('menu-open', acik);
-    }
-
-
     function mobilMenuAcikMi() {
         return !!(
             navLinks &&
@@ -1152,7 +1077,6 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburger.classList.remove('toggle');
         hamburger.setAttribute('aria-expanded', 'false');
         hamburger.setAttribute('aria-label', 'Menüyü aç');
-        hamburgerIkonGuncelle(false);
     }
 
 
@@ -1163,7 +1087,6 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburger.classList.add('toggle');
         hamburger.setAttribute('aria-expanded', 'true');
         hamburger.setAttribute('aria-label', 'Menüyü kapat');
-        hamburgerIkonGuncelle(true);
     }
 
 
@@ -1354,12 +1277,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initKVKK();
     siteAyarlariniGetir();
     bloglariGetir();
-
-    // Ürün bölümü yalnızca ana sayfada (Hizmetler bölümü olan sayfada) eklenir.
-    // Diğer sayfalarda sayfanın en altına eklenmesini önler.
-    if (get('services')) {
-        urunleriGetir();
-    }
+    urunleriGetir();
 });
 
 
