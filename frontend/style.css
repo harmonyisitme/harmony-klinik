@@ -626,8 +626,10 @@ header.navbar,
 
 /* Ana sayfa: animasyonlu koklea illüstrasyonu */
 .hero-cochlea-main {
-    background: linear-gradient(145deg, #fff 0%, #fff7f7 52%, #fcebed 100%);
-    border: 1px solid rgba(201,35,53,.09);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(201,35,53,.08);
+    background: radial-gradient(ellipse at 42% 48%, #fff2f3 0%, #fff 64%);
 }
 .hero-cochlea-scene {
     position: relative;
@@ -637,50 +639,78 @@ header.navbar,
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    isolation: isolate;
 }
 .hero-cochlea-svg {
-    position: relative;
-    z-index: 1;
-    width: min(100%, 520px);
+    display: block;
+    width: 100%;
     height: 100%;
     overflow: visible;
 }
-.cochlea-ring {
-    fill: none;
-    stroke: rgba(201,35,53,.10);
-    stroke-width: 1;
-    transform-origin: 260px 194px;
-    animation: cochlea-ring-pulse 5s ease-in-out infinite;
+.cochlea-shell {
+    stroke-dasharray: 1500;
+    stroke-dashoffset: 1500;
+    animation: cochlea-shell-draw 3.8s cubic-bezier(.55,.05,.35,1) .25s forwards,
+               cochlea-shell-breathe 6s ease-in-out 4.1s infinite;
 }
-.ring-b { animation-delay: -2.5s; stroke-dasharray: 3 9; }
-.cochlea-outer, .cochlea-inner, .cochlea-nerve, .cochlea-soundwaves path {
-    fill: none;
-    stroke: url(#cochleaStroke);
-    stroke-linecap: round;
-    stroke-linejoin: round;
+.cochlea-core-line {
+    stroke-dasharray: 650;
+    stroke-dashoffset: 650;
+    animation: cochlea-core-draw 3.2s ease-out 1.1s forwards;
 }
-.cochlea-outer { stroke-width: 8; stroke-dasharray: 1; animation: cochlea-draw 4.8s ease-in-out infinite alternate; }
-.cochlea-inner { stroke: #d94b5d; stroke-width: 3.5; opacity: .8; stroke-dasharray: 7 5; animation: cochlea-flow 8s linear infinite; }
-.cochlea-nerve { stroke: #c92335; stroke-width: 4; opacity: .8; stroke-dasharray: 5 7; animation: cochlea-flow 5s linear infinite; }
-.cochlea-nerve.thin { stroke-width: 2; opacity: .45; animation-direction: reverse; }
-.cochlea-node { fill: #c92335; transform-origin: 286px 278px; animation: cochlea-node-pulse 2.2s ease-in-out infinite; }
-.cochlea-soundwaves path { stroke-width: 3; opacity: .42; stroke-dasharray: 5 9; animation: cochlea-wave 2.4s ease-in-out infinite; }
-.cochlea-soundwaves path:nth-child(even) { animation-delay: -1.2s; }
-.cochlea-particles { fill: #d94b5d; animation: cochlea-particle-glow 3s ease-in-out infinite alternate; }
-.cochlea-glow { position: absolute; z-index: 0; width: 210px; height: 210px; border-radius: 50%; background: rgba(201,35,53,.07); filter: blur(35px); }
-.cochlea-glow-one { top: 8%; left: 12%; animation: cochlea-drift 8s ease-in-out infinite alternate; }
-.cochlea-glow-two { right: 8%; bottom: 4%; width: 170px; height: 170px; animation: cochlea-drift 7s ease-in-out infinite alternate-reverse; }
-.cochlea-caption { position: absolute; bottom: 23px; left: 0; width: 100%; z-index: 2; color: #a72a3b; font-size: 10px; font-weight: 800; letter-spacing: 3px; text-align: center; }
-@keyframes cochlea-ring-pulse { 0%,100% { opacity: .45; transform: scale(.97); } 50% { opacity: 1; transform: scale(1.03); } }
-@keyframes cochlea-draw { 0% { stroke-dashoffset: 90; opacity: .65; } 100% { stroke-dashoffset: 0; opacity: 1; } }
-@keyframes cochlea-flow { to { stroke-dashoffset: -80; } }
-@keyframes cochlea-node-pulse { 0%,100% { transform: scale(.85); opacity: .7; } 50% { transform: scale(1.35); opacity: 1; } }
-@keyframes cochlea-wave { 0%,100% { opacity: .22; transform: translateX(0); } 50% { opacity: .75; transform: translateX(5px); } }
-@keyframes cochlea-particle-glow { from { opacity: .35; } to { opacity: 1; } }
-@keyframes cochlea-drift { from { transform: translate(0,0) scale(.9); } to { transform: translate(18px,-12px) scale(1.12); } }
+.cochlea-ribbon {
+    transform-origin: 350px 220px;
+    animation: cochlea-ribbon-flow 5.5s ease-in-out 1.8s infinite;
+}
+.cochlea-frequencies path {
+    stroke-dasharray: 9 12;
+    animation: cochlea-frequency 3.4s linear infinite;
+}
+.cochlea-frequencies path:nth-child(2) { animation-delay: -.8s; }
+.cochlea-frequencies path:nth-child(3) { animation-delay: -1.6s; }
+.cochlea-highlight {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: cochlea-highlight-pulse 2.8s ease-in-out infinite;
+}
+.cochlea-caption {
+    position: absolute;
+    bottom: 22px;
+    left: 0;
+    width: 100%;
+    color: #a72a3b;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-align: center;
+}
+@keyframes cochlea-shell-draw {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes cochlea-shell-breathe {
+    0%,100% { filter: drop-shadow(0 5px 9px rgba(201,35,53,.08)); }
+    50% { filter: drop-shadow(0 9px 17px rgba(201,35,53,.2)); }
+}
+@keyframes cochlea-core-draw { to { stroke-dashoffset: 0; } }
+@keyframes cochlea-ribbon-flow {
+    0%,100% { transform: translateX(0); opacity: .72; }
+    50% { transform: translateX(7px); opacity: 1; }
+}
+@keyframes cochlea-frequency {
+    to { stroke-dashoffset: -84; }
+}
+@keyframes cochlea-highlight-pulse {
+    0%,100% { opacity: .8; transform: scale(.9); }
+    50% { opacity: 1; transform: scale(1.18); }
+}
 @media (prefers-reduced-motion: reduce) {
-    .hero-cochlea-scene *, .hero-cochlea-scene *::before { animation: none !important; }
+    .hero-cochlea-scene *,
+    .hero-cochlea-scene *::before {
+        animation: none !important;
+    }
+    .cochlea-shell,
+    .cochlea-core-line {
+        stroke-dashoffset: 0;
+    }
 }
 
 .hero-main-image {
