@@ -172,45 +172,46 @@
       <div class="hero-media-wrap">
         <div class="hero-media-main hero-cochlea-main">
           <div class="hero-cochlea-scene">
-            <span class="cochlea-glow cochlea-glow-one"></span>
-            <span class="cochlea-glow cochlea-glow-two"></span>
-            <svg class="hero-cochlea-svg" viewBox="0 0 520 410" role="img" aria-label="Hareketli koklea, iç kulak salyangozu illüstrasyonu" xmlns="http://www.w3.org/2000/svg">
+            <svg class="hero-cochlea-svg" viewBox="0 0 620 440" role="img" aria-label="Koklea ve yayılan ses dalgalarını gösteren hareketli illüstrasyon" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="cochleaStroke" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#ef7180"/>
-                  <stop offset="52%" stop-color="#c92335"/>
-                  <stop offset="100%" stop-color="#8f1728"/>
+                <linearGradient id="cochleaBody" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#f7a0aa"/>
+                  <stop offset=".42" stop-color="#d83c50"/>
+                  <stop offset="1" stop-color="#9e172b"/>
                 </linearGradient>
-                <radialGradient id="cochleaCore">
-                  <stop offset="0%" stop-color="#f7a4ad" stop-opacity=".34"/>
-                  <stop offset="100%" stop-color="#f7a4ad" stop-opacity="0"/>
+                <linearGradient id="soundRibbon" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#c92335" stop-opacity=".8"/>
+                  <stop offset="1" stop-color="#e87582" stop-opacity=".08"/>
+                </linearGradient>
+                <radialGradient id="cochleaLight">
+                  <stop offset="0" stop-color="#f3a0aa" stop-opacity=".28"/>
+                  <stop offset="1" stop-color="#f3a0aa" stop-opacity="0"/>
                 </radialGradient>
               </defs>
-              <circle class="cochlea-halo" cx="260" cy="194" r="142" fill="url(#cochleaCore)"/>
-              <circle class="cochlea-ring ring-a" cx="260" cy="194" r="158"/>
-              <circle class="cochlea-ring ring-b" cx="260" cy="194" r="178"/>
-              <g class="cochlea-art">
-                <path class="cochlea-outer" d="M286 278 C222 306 151 263 145 197 C138 130 192 76 258 76 C325 76 374 129 370 191 C367 246 326 281 278 274 C232 268 205 233 211 192 C216 157 246 135 278 143 C309 151 324 181 313 207 C304 229 282 239 263 228 C246 218 242 198 253 183 C262 171 278 170 289 178"/>
-                <path class="cochlea-inner" d="M286 278 C250 286 218 266 199 239 C177 208 183 165 207 137 C235 104 285 102 317 127 C348 151 354 196 333 226 C313 255 274 264 246 244 C222 227 216 194 232 171 C248 149 279 145 299 162 C318 178 319 205 304 221"/>
-                <path class="cochlea-nerve" d="M286 278 C319 299 354 314 399 321 M286 278 C327 285 370 287 414 279 M286 278 C330 267 368 252 405 233 M286 278 C319 246 344 219 365 184"/>
-                <path class="cochlea-nerve thin" d="M286 278 C329 307 363 334 386 356 M286 278 C342 294 390 302 430 299 M286 278 C340 273 389 258 428 241"/>
-                <circle class="cochlea-node" cx="286" cy="278" r="7"/>
+              <ellipse cx="250" cy="218" rx="190" ry="180" fill="url(#cochleaLight)"/>
+              <g class="cochlea-ribbon">
+                <path d="M350 212 C425 166 470 165 590 190" fill="none" stroke="url(#soundRibbon)" stroke-width="25" stroke-linecap="round"/>
+                <path d="M350 222 C440 205 500 220 610 250" fill="none" stroke="#d94b5d" stroke-opacity=".22" stroke-width="2"/>
+                <path d="M350 198 C445 130 505 132 600 145" fill="none" stroke="#d94b5d" stroke-opacity=".3" stroke-width="2"/>
+                <path d="M365 236 C455 255 520 285 600 300" fill="none" stroke="#d94b5d" stroke-opacity=".2" stroke-width="2"/>
               </g>
-              <g class="cochlea-soundwaves">
-                <path d="M94 157 C72 178 72 211 94 232"/>
-                <path d="M72 137 C39 169 39 220 72 252"/>
-                <path d="M426 157 C448 178 448 211 426 232"/>
-                <path d="M448 137 C481 169 481 220 448 252"/>
+              <g class="cochlea-form">
+                <path class="cochlea-shell" d="M286 337 C204 360 123 304 116 222 C108 137 174 67 257 68 C341 69 402 132 395 213 C390 282 337 329 273 315 C216 303 184 258 195 207 C205 158 248 129 292 143 C334 156 351 196 335 231 C321 261 288 274 260 258 C235 244 229 214 246 192 C261 173 286 174 301 189" fill="none" stroke="url(#cochleaBody)" stroke-width="20" stroke-linecap="round"/>
+                <path d="M286 337 C204 360 123 304 116 222 C108 137 174 67 257 68 C341 69 402 132 395 213 C390 282 337 329 273 315" fill="none" stroke="#fff" stroke-opacity=".42" stroke-width="3" stroke-linecap="round"/>
+                <path class="cochlea-core-line" d="M286 337 C242 328 207 295 195 260 C177 210 201 156 246 132 C293 107 350 130 372 174" fill="none" stroke="#f9c4ca" stroke-width="5" stroke-linecap="round"/>
               </g>
-              <g class="cochlea-particles">
-                <circle cx="150" cy="104" r="4"/><circle cx="374" cy="100" r="3"/><circle cx="125" cy="286" r="3"/><circle cx="394" cy="300" r="4"/>
+              <g class="cochlea-frequencies" fill="none" stroke="#cf3b4e" stroke-linecap="round">
+                <path d="M430 157 C455 179 455 215 430 238" stroke-width="3" opacity=".45"/>
+                <path d="M454 137 C490 170 490 224 454 258" stroke-width="2" opacity=".28"/>
+                <path d="M480 120 C525 164 525 231 480 276" stroke-width="1.5" opacity=".18"/>
               </g>
+              <circle class="cochlea-highlight" cx="286" cy="337" r="8" fill="#fff" stroke="#c92335" stroke-width="4"/>
             </svg>
-            <span class="cochlea-caption">İÇ KULAK · KOKLEA</span>
+            <span class="cochlea-caption">İŞİTMENİN MERKEZİ · KOKLEA</span>
           </div>
         </div>
 
-        <div class="hero-floating-card">
+<div class="hero-floating-card">
           <span class="floating-icon">
             <i class="fa-solid fa-ear-listen"></i>
           </span>
