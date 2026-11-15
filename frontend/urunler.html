@@ -505,23 +505,37 @@
 </body>
 </html>
 
-  <script>
-    // Telefon bağlantısına tıklamayı mevcut Google Ads Telefon dönüşümü olarak ölç.
-    document.addEventListener('click', function (event) {
-      var link = event.target.closest('a[href^="tel:"]');
-      if (!link) return;
-      var phoneUrl = link.href;
-      if (typeof gtag !== 'function') {
-        window.location.href = phoneUrl;
-        return;
-      }
+  
+<script>
+  // GA4: Telefon ve WhatsApp iletişim tıklamalarını ayrı etkinlikler olarak ölç.
+  document.addEventListener('click', function (event) {
+    var target = event.target && event.target.nodeType === 1 ? event.target : event.target.parentElement;
+    var link = target && target.closest ? target.closest('a[href]') : null;
+    if (!link) return;
+
+    var href = link.getAttribute('href') || '';
+    var linkText = (link.innerText || link.getAttribute('aria-label') || '').trim().slice(0, 100);
+
+    if (href.toLowerCase().indexOf('tel:') === 0) {
       event.preventDefault();
+      var phoneUrl = link.href;
       var navigated = false;
       var goToPhone = function () {
         if (navigated) return;
         navigated = true;
         window.location.href = phoneUrl;
       };
+      if (typeof gtag !== 'function') {
+        goToPhone();
+        return;
+      }
+      gtag('event', 'phone_click', {
+        'send_to': 'G-RLVX9320T1',
+        'link_url': href,
+        'link_text': linkText,
+        'page_location': window.location.href,
+        'transport_type': 'beacon'
+      });
       gtag('event', 'conversion', {
         'send_to': 'AW-18547759547/1PwUCJDy1rUdELuzoYxF',
         'value': 1.0,
@@ -530,6 +544,20 @@
         'event_timeout': 1500
       });
       window.setTimeout(goToPhone, 1800);
-    });
-  </script>
+      return;
+    }
+
+    if (href.indexOf('wa.me/') !== -1 || href.indexOf('api.whatsapp.com/') !== -1 || href.indexOf('web.whatsapp.com/') !== -1) {
+      if (typeof gtag === 'function') {
+        gtag('event', 'whatsapp_click', {
+          'send_to': 'G-RLVX9320T1',
+          'link_url': href,
+          'link_text': linkText || 'WhatsApp',
+          'page_location': window.location.href,
+          'transport_type': 'beacon'
+        });
+      }
+    }
+  });
+</script>
 
