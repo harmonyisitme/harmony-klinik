@@ -42,9 +42,7 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'AW-18547759547');
-    gtag('config', 'AW-18547759547/YKLHCKTS_bgdELuzoYxF', {
-      'phone_conversion_number': '5519849333'
-    });
+    // Web sitesi arama yönlendirme numarası özelliği Türkiye'de desteklenmediğinden kullanılmıyor.
   </script>
   <!-- GOOGLE ADS ETİKETİ SON -->
 
@@ -673,3 +671,32 @@
   <script src="app.js"></script>
 </body>
 </html>
+
+  <script>
+    // Telefon bağlantısına tıklamayı mevcut Google Ads Telefon dönüşümü olarak ölç.
+    document.addEventListener('click', function (event) {
+      var link = event.target.closest('a[href^="tel:"]');
+      if (!link) return;
+      var phoneUrl = link.href;
+      if (typeof gtag !== 'function') {
+        window.location.href = phoneUrl;
+        return;
+      }
+      event.preventDefault();
+      var navigated = false;
+      var goToPhone = function () {
+        if (navigated) return;
+        navigated = true;
+        window.location.href = phoneUrl;
+      };
+      gtag('event', 'conversion', {
+        'send_to': 'AW-18547759547/1PwUCJDy1rUdELuzoYxF',
+        'value': 1.0,
+        'currency': 'TRY',
+        'event_callback': goToPhone,
+        'event_timeout': 1500
+      });
+      window.setTimeout(goToPhone, 1800);
+    });
+  </script>
+
