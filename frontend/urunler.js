@@ -55,6 +55,48 @@ document.addEventListener("DOMContentLoaded", () => {
         return String(value).trim();
     }
 
+
+    // Açıklamadaki **kalın**, # başlık gibi işaretleri temizler.
+    function plainText(value) {
+        return cleanValue(value)
+            .replace(/\*\*|__|`/g, "")
+            .replace(/^#+\s*/gm, "")
+            .replace(/^\s*[-*•]\s+/gm, "")
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
+    // Kart için kısa özet: ilk cümle (en fazla ~110 karakter).
+    function shortText(value, max = 110) {
+        const text = plainText(value);
+        if (!text) return "";
+        const firstSentence = (text.match(/^.+?[.!?](\s|$)/) || [text])[0].trim();
+        const candidate = firstSentence.length <= max ? firstSentence : text;
+        if (candidate.length <= max) return candidate;
+        const cut = candidate.slice(0, max);
+        return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:.\-–]+$/, "") + "…";
+    }
+
+    // Detay penceresi: paragraflar ve **kalın** yazılar düzgün görünsün (HTML eklemeden).
+    function renderRichText(container, value) {
+        container.replaceChildren();
+        const raw = cleanValue(value);
+        raw.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean).forEach(paragraph => {
+            const p = document.createElement("p");
+            paragraph.replace(/^#+\s*/gm, "").split(/(\*\*[^*]+\*\*)/g).forEach(part => {
+                if (!part) return;
+                if (/^\*\*[^*]+\*\*$/.test(part)) {
+                    const strong = document.createElement("strong");
+                    strong.textContent = part.slice(2, -2);
+                    p.appendChild(strong);
+                } else {
+                    p.appendChild(document.createTextNode(part.replace(/\*\*/g, "")));
+                }
+            });
+            container.appendChild(p);
+        });
+    }
+
     function whatsappUrl(message) {
         return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     }
@@ -244,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const description = document.createElement("p");
         description.className = "product-card-description";
         description.textContent =
-            cleanValue(product.aciklama) ||
+            shortText(product.aciklama) ||
             "Ürün hakkında detaylı bilgi almak için bizimle iletişime geçebilirsiniz.";
 
         const footer = document.createElement("div");
@@ -348,9 +390,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (modalDescription) {
-            modalDescription.textContent =
-                cleanValue(product.aciklama) ||
-                "Bu ürün hakkında detaylı bilgi almak için bizimle iletişime geçebilirsiniz.";
+            if (cleanValue(product.aciklama)) {
+                renderRichText(modalDescription, product.aciklama);
+            } else {
+                modalDescription.textContent =
+                    "Bu ürün hakkında detaylı bilgi almak için bizimle iletişime geçebilirsiniz.";
+            }
         }
 
         const imageUrl = cleanValue(product.gorselUrl);
