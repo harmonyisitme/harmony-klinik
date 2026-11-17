@@ -1239,3 +1239,28 @@ input {
         cursor: pointer;
     }
 }
+
+
+/* Ürün kartı açıklaması: kısa özet, en fazla 3 satır */
+.product-card-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Detay penceresi açıklaması: paragraflı, okunaklı */
+.modal-description {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0 0 18px;
+}
+
+.modal-description p {
+    margin: 0 0 10px;
+}
+
+.modal-description strong {
+    color: #292929;
+}
