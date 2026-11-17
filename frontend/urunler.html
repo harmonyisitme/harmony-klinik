@@ -172,8 +172,22 @@
 
                 <div class="product-layout">
 
+                    <!-- MOBİL: FİLTRE BUTONU -->
+                    <button type="button" class="mobile-filter-toggle" id="mobileFilterToggle" aria-controls="productFilters" aria-expanded="false">
+                        <span><i class="fas fa-sliders"></i> Filtrele</span>
+                        <span class="filter-badge" id="activeFilterCount" hidden>0</span>
+                    </button>
+                    <div class="filter-overlay" id="filterOverlay" hidden></div>
+
                     <!-- FİLTRELER -->
-                    <aside class="product-sidebar">
+                    <aside class="product-sidebar" id="productFilters" aria-label="Ürün filtreleri">
+
+                        <div class="filter-sheet-head">
+                            <strong>Filtreler</strong>
+                            <button type="button" class="filter-sheet-close" id="closeFilterSheet" aria-label="Filtreleri kapat">
+                                <i class="fas fa-xmark"></i>
+                            </button>
+                        </div>
 
                         <div class="sidebar-card">
                             <h3>
@@ -221,6 +235,12 @@
                             <i class="fas fa-rotate-left"></i>
                             Filtreleri Temizle
                         </button>
+
+                        <div class="filter-sheet-foot">
+                            <button type="button" class="filter-apply" id="applyFilterSheet">
+                                Ürünleri göster
+                            </button>
+                        </div>
 
                     </aside>
 
@@ -504,6 +524,60 @@
         });
     </script>
 
+
+<script>
+// Mobil filtre paneli: aç/kapat, seçili filtre sayısı ve sonuç sayısı
+(function () {
+    var body = document.body;
+    var toggle = document.getElementById('mobileFilterToggle');
+    var sheet = document.getElementById('productFilters');
+    var overlay = document.getElementById('filterOverlay');
+    var closeBtn = document.getElementById('closeFilterSheet');
+    var applyBtn = document.getElementById('applyFilterSheet');
+    var badge = document.getElementById('activeFilterCount');
+    var countEl = document.getElementById('productCount');
+    var results = document.querySelector('.product-results');
+    if (!toggle || !sheet) return;
+
+    function open() {
+        body.classList.add('filters-open');
+        overlay.hidden = false;
+        toggle.setAttribute('aria-expanded', 'true');
+    }
+    function close(scroll) {
+        body.classList.remove('filters-open');
+        overlay.hidden = true;
+        toggle.setAttribute('aria-expanded', 'false');
+        if (scroll && results) {
+            var y = results.getBoundingClientRect().top + window.scrollY - 90;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+    }
+    function refresh() {
+        var n = sheet.querySelectorAll('input:checked').length;
+        badge.textContent = n;
+        badge.hidden = n === 0;
+        var txt = countEl ? countEl.textContent.trim() : '';
+        var m = txt.match(/^(\d+)/);
+        applyBtn.textContent = m ? m[1] + ' ürünü göster' : 'Ürünleri göster';
+    }
+
+    toggle.addEventListener('click', open);
+    overlay.addEventListener('click', function () { close(false); });
+    closeBtn.addEventListener('click', function () { close(false); });
+    applyBtn.addEventListener('click', function () { close(true); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && body.classList.contains('filters-open')) close(false);
+    });
+    sheet.addEventListener('change', function () { setTimeout(refresh, 0); });
+    var clear = document.getElementById('clearProductFilters');
+    if (clear) clear.addEventListener('click', function () { setTimeout(refresh, 0); });
+    if (countEl && window.MutationObserver) {
+        new MutationObserver(refresh).observe(countEl, { childList: true, characterData: true, subtree: true });
+    }
+    refresh();
+})();
+</script>
 <script src="mobil-cta.js" defer></script>
 </body>
 </html>
