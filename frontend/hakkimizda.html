@@ -53,30 +53,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <!-- ANA MENÜ -->
     <header class="navbar">
-        <a href="index.html" class="logo" style="text-decoration:none;">
-            Rana<span>.</span>
-        </a>
-
-        <nav>
-            <ul class="nav-links">
-                <li><a href="index.html">Ana Sayfa</a></li>
-                <li><a href="hakkimizda.html" class="active">Hakkımızda</a></li>
-                <li><a href="urunler.html">Ürünlerimiz</a></li>
-                <li><a href="hizmetler.html">Hizmetler</a></li>
-                <li><a href="index.html#blog">Blog</a></li>
-                <li><a href="iletisim.html">İletişim</a></li>
-                <li><a href="index.html#randevu">Randevu Al</a></li>
-            </ul>
-        </nav>
-
-        <div class="hamburger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-        </div>
-
-        <a href="index.html#randevu" class="btn-primary">Randevu Al</a>
-    </header>
+    <a href="index.html" class="logo" aria-label="Rana İşitme Merkezi ana sayfa">
+      <img src="logo.png" alt="Rana İşitme Merkezi" onerror="this.style.display='none'">
+      <span class="logo-fallback">RANA <small>İŞİTME MERKEZİ</small></span>
+    </a>
+    <nav aria-label="Ana menü">
+      <ul class="nav-links">
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="urunler.html">Ürünler</a></li>
+        <li><a href="isitme-cihazi-fiyatlari.html">Fiyatlar</a></li>
+        <li><a href="hakkimizda.html" aria-current="page">Hakkımızda</a></li>
+        <li><a href="hizmetler.html">Hizmetler</a></li>
+        <li><a href="iletisim.html">İletişim</a></li>
+        <li class="mobile-nav-cta">
+          <a class="mobile-call-link" href="tel:+905519849333"><i class="fa-solid fa-phone" aria-hidden="true"></i> Hemen Ara</a>
+          <a class="mobile-whatsapp-link" href="https://wa.me/905519849333" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="hamburger" aria-label="Menüyü aç/kapat" role="button" tabindex="0" aria-expanded="false">
+      <div class="line1"></div><div class="line2"></div><div class="line3"></div>
+    </div>
+    <a href="tel:+905519849333" class="btn-primary nav-appointment" aria-label="Rana İşitme Merkezi'ni hemen ara"><i class="fa-solid fa-phone" aria-hidden="true"></i> Hemen Ara</a>
+  </header>
 
     <main class="about-page">
 
