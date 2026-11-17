@@ -49,6 +49,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const get = id => document.getElementById(id);
 
+    // Telefonu her biçimden (+5519849333, 05519849333, 905519849333...)
+    // aranabilir +90 formatına ve okunur 0XXX XXX XX XX biçimine çevirir.
+    // Admin panelde numara eksik/yanlış girilse bile tel: linki doğru çalışır.
+    function telefonNormalize(raw) {
+        let d = String(raw || '').replace(/\D/g, '');
+        if (d.startsWith('0090')) d = d.slice(2);
+        if (d.length === 11 && d.startsWith('0')) d = '90' + d.slice(1);
+        if (d.length === 10 && d.startsWith('5')) d = '90' + d;
+        if (d.length !== 12 || !d.startsWith('90')) {
+            return { href: `tel:${raw}`, text: String(raw || '') };
+        }
+        const n = d.slice(2);
+        return {
+            href: `tel:+${d}`,
+            text: `0${n.slice(0, 3)} ${n.slice(3, 6)} ${n.slice(6, 8)} ${n.slice(8)}`
+        };
+    }
+
 
     // --------------------------------------------------
     // GENEL YARDIMCILAR
@@ -706,8 +724,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (headerTelefon && iletisim.telefon) {
                 const a = document.createElement('a');
-                a.href = `tel:${iletisim.telefon}`;
-                a.textContent = iletisim.telefon;
+                const tel = telefonNormalize(iletisim.telefon);
+                a.href = tel.href;
+                a.textContent = tel.text;
                 headerTelefon.replaceChildren(a);
             }
 
@@ -732,8 +751,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (pageTelefon && iletisim.telefon) {
                 const a = document.createElement('a');
-                a.href = `tel:${iletisim.telefon}`;
-                a.textContent = iletisim.telefon;
+                const tel = telefonNormalize(iletisim.telefon);
+                a.href = tel.href;
+                a.textContent = tel.text;
                 pageTelefon.replaceChildren(a);
             }
 
@@ -767,13 +787,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 [
                     iletisim.adres ? `📍 ${iletisim.adres}` : '',
-                    iletisim.telefon ? `📞 ${iletisim.telefon}` : '',
                     iletisim.email ? `✉️ ${iletisim.email}` : ''
                 ].filter(Boolean).forEach(value => {
                     const li = document.createElement('li');
                     li.textContent = value;
                     footerIletisim.appendChild(li);
                 });
+
+                // Telefon tıklanabilir olsun (mobilde tek dokunuşla arama)
+                if (iletisim.telefon) {
+                    const tel = telefonNormalize(iletisim.telefon);
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = tel.href;
+                    a.textContent = `📞 ${tel.text}`;
+                    li.appendChild(a);
+                    footerIletisim.insertBefore(li, footerIletisim.children[1] || null);
+                }
             }
 
             const footerSaatler = get('footerSaatler');
