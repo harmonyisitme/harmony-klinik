@@ -3293,3 +3293,49 @@ select:focus-visible {
 @media (max-width: 768px) {
     .navbar > .nav-whatsapp { display: none !important; }
 }
+
+/* =====================================================
+   MOBİL ALT ÇUBUK (Hemen Ara + WhatsApp)
+===================================================== */
+.mobil-cta { display: none; }
+
+@media (max-width: 768px) {
+    .mobil-cta {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 950;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+        background: #fff;
+        box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .mobil-cta__btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 48px;
+        border-radius: 10px;
+        color: #fff;
+        font-weight: 700;
+        font-size: 16px;
+        text-decoration: none;
+    }
+
+    .mobil-cta__ara { background: #c92335; }
+    .mobil-cta__wa { background: #20bd5a; }
+    .mobil-cta__btn:hover,
+    .mobil-cta__btn:focus { color: #fff; }
+
+    body.has-mobil-cta { padding-bottom: 72px; }
+
+    /* Alt çubukla çakışan yuvarlak WhatsApp ve yukarı çık butonları */
+    body.has-mobil-cta .whatsapp-float,
+    body.has-mobil-cta .whatsapp-button { display: none; }
+    body.has-mobil-cta #scrollTopBtn { bottom: 84px; }
+}

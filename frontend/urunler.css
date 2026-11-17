@@ -61,10 +61,12 @@ input {
 
 /* ÜST BİLGİ */
 
+/* Diğer sayfalarla aynı kırmızı şerit: style.css'teki beyaz linkler
+   açık gri zeminde okunmuyordu (telefon/e-posta görünmüyordu). */
 .top-bar {
-    background: #f7f7f7;
-    border-bottom: 1px solid #ededed;
-    color: #555;
+    background: var(--rana-red, #c92335);
+    border-bottom: 0;
+    color: #fff;
     font-size: 13px;
 }
 
