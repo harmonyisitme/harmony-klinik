@@ -11,6 +11,17 @@ const cloudinary = require('cloudinary').v2;
 
 const app = express();
 
+// Eski alan adlarından yeni adrese kalıcı (301) yönlendirme
+const ANA_ALAN_ADI = 'ranaisitme.com.tr';
+const ESKI_ALAN_ADLARI = ['harmonyisitme.com.tr', 'www.harmonyisitme.com.tr', 'www.ranaisitme.com.tr'];
+app.use((req, res, next) => {
+    const host = (req.headers.host || '').toLowerCase().split(':')[0];
+    if (ESKI_ALAN_ADLARI.includes(host)) {
+        return res.redirect(301, `https://${ANA_ALAN_ADI}${req.originalUrl}`);
+    }
+    next();
+});
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'frontend')));
