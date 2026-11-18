@@ -72,7 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // GENEL YARDIMCILAR
     // --------------------------------------------------
 
+    // Siteden gelen mesajları WhatsApp'ta ayırt edebilmek için etiket
+    const WEB_ETIKETI = ' (Web)';
+
     function whatsappRandevu(mesaj = WHATSAPP_MESAJ) {
+        if (!String(mesaj).trim().endsWith(WEB_ETIKETI.trim())) {
+            mesaj = String(mesaj).trim() + WEB_ETIKETI;
+        }
         const url =
             `https://wa.me/${WHATSAPP_NUMARA}?text=${encodeURIComponent(mesaj)}`;
 
