@@ -106,6 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
         );
 
         if (!link) return;
+        // Diğer şubelerin WhatsApp numaraları olduğu gibi açılsın.
+        if (link.closest('[data-sube-disi]')) return;
 
         event.preventDefault();
 
