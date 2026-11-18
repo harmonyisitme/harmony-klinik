@@ -59,6 +59,7 @@
     .fp-sec h2 { font:800 clamp(26px,3.6vw,38px)/1.2 Manrope,sans-serif; margin:0 0 12px; }
     .fp-sec .intro { color:#626262; line-height:1.8; font-size:16px; max-width:760px; margin:0 0 30px; }
     .fp-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+    .fp-grid.fp-grid-4 { grid-template-columns:repeat(4,minmax(0,1fr)); }
     .fp-card { background:#fff; border:1px solid #eee; border-radius:14px; padding:24px; box-shadow:0 8px 28px rgba(30,30,30,.045); }
     .fp-card i { color:#c92335; font-size:22px; margin-bottom:12px; }
     .fp-card h3 { font:700 19px/1.3 Manrope,sans-serif; margin:0 0 8px; }
@@ -108,14 +109,14 @@
     @media(max-width:640px){ .fp-chips { grid-template-columns:1fr; } .fp-quick { padding:32px 18px 0; } }
     @media(max-width:900px) {
       .fp-hero .fp-wrap { grid-template-columns:1fr; }
-      .fp-grid, .fp-steps { grid-template-columns:1fr 1fr; }
+      .fp-grid, .fp-grid.fp-grid-4, .fp-steps { grid-template-columns:1fr 1fr; }
     }
     @media(max-width:640px) {
       .fp-hero { padding:44px 18px 44px; }
       .fp-hero p.lead { font-size:16px; }
       .fp-actions a { flex:1 1 100%; }
       .fp-sec { padding:48px 18px; }
-      .fp-grid, .fp-steps, .fp-visit { grid-template-columns:1fr; }
+      .fp-grid, .fp-grid.fp-grid-4, .fp-steps, .fp-visit { grid-template-columns:1fr; }
       .fp-steps { gap:26px; }
       .fp-sgk { grid-template-columns:1fr; }
       .fp-final .fp-wrap { display:block; }
@@ -261,7 +262,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="fp-kicker">FİYAT NEYE GÖRE DEĞİŞİR?</span>
         <h2>Size uygun cihazın fiyatını <em>4 şey</em> belirler</h2>
         <p class="intro">Aynı marka içinde bile fiyatlar geniş bir aralıkta değişir. Bu yüzden kesin fiyatı, ihtiyacınızı dinledikten sonra veriyoruz. Fiyatı belirleyen başlıca etkenler:</p>
-        <div class="fp-grid" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+        <div class="fp-grid fp-grid-4">
           <div class="fp-card"><i class="fas fa-microchip"></i><h3>Teknoloji seviyesi</h3><p>Gürültü filtreleme, konuşmayı öne çıkarma ve otomatik ayar özellikleri arttıkça fiyat yükselir.</p></div>
           <div class="fp-card"><i class="fas fa-ear-listen"></i><h3>Model tipi</h3><p>Kulak içi, kulak arkası ya da hoparlörü kulak içinde olan (RIC) modeller.</p></div>
           <div class="fp-card"><i class="fas fa-battery-full"></i><h3>Şarjlı / pilli</h3><p>Şarj edilebilir modeller pil değiştirme derdini ortadan kaldırır.</p></div>
