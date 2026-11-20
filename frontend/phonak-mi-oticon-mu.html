@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18547759547"></script>
+  <script>
+  // Bot / yurt dışı otomatik trafik: Analytics ve Ads etiketleri yüklenmez (site herkese açık kalır).
+  window.__botTrafik=(function(){try{var n=navigator,ua=n.userAgent||'';
+    if(n.webdriver)return true;
+    if(/bot|crawl|spider|slurp|headless|lighthouse|pagespeed|preview|facebookexternalhit|python|curl|wget/i.test(ua))return true;
+    var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(e){}
+    var dil=[n.language||''].concat(n.languages||[]).join(',');
+    if(tz!=='Europe/Istanbul'&&!/(^|,)tr/i.test(dil))return true;
+    return false;}catch(e){return false;}})();
+  </script>
+
+  <script>if(!window.__botTrafik){var __g=document.createElement('script');__g.async=true;__g.src='https://www.googletagmanager.com/gtag/js?id=AW-18547759547';document.head.appendChild(__g);}</script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -46,7 +57,7 @@
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Phonak mı Oticon mu?", "datePublished": "2026-11-18", "dateModified": "2026-11-18", "author": {"@type": "Organization", "name": "Rana İşitme Merkezi"}, "publisher": {"@type": "Organization", "name": "Rana İşitme Merkezi"}, "mainEntityOfPage": "https://ranaisitme.com.tr/phonak-mi-oticon-mu.html"}</script>
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Phonak mı daha iyi Oticon mu?", "acceptedAnswer": {"@type": "Answer", "text": "İkisi de üst düzey markalardır. Hangisinin daha uygun olduğu işitme kaybınıza, kullanım alışkanlıklarınıza ve kulağınıza göre değişir; en doğrusu ikisini de denemektir."}}, {"@type": "Question", "name": "Phonak ve Oticon'u deneyebilir miyim?", "acceptedAnswer": {"@type": "Answer", "text": "Evet. Rana İşitme Merkezi'nde ücretsiz işitme testinden sonra iki markanın modellerini deneyebilirsiniz."}}, {"@type": "Question", "name": "Phonak ve Oticon SGK kapsamında mı?", "acceptedAnswer": {"@type": "Answer", "text": "SGK raporunuz varsa SGK katkısı seçtiğiniz markadan bağımsız olarak uygulanır; kalan farkı ödersiniz."}}]}</script>
 <script>
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+if(!window.__botTrafik)(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);

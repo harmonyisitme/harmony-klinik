@@ -11,6 +11,9 @@
 (function (w, d, s, l, i) {
     w[l] = w[l] || [];
 
+    // Bot / yurt dışı otomatik trafikte etiketleri yükleme (sayfalardaki __botTrafik kontrolü)
+    if (w.__botTrafik) return;
+
     // GTM zaten yüklüyse ikinci kez yükleme
     if (d.querySelector('script[src*="' + i + '"]')) return;
 
