@@ -1,63 +1,110 @@
-/* Çerez Uyarı Bandı */
+/* Çerez Bildirimi - küçük kart
+   Masaüstünde sol alt köşede küçük bir kutu,
+   telefonda alttaki "Hemen Ara / WhatsApp" çubuğunun hemen üstünde ince bir kart.
+   Böylece iletişim butonlarının üstüne binmez. */
 .cookie-banner {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #1a1a2e;
-    color: #fff;
-    padding: 15px 20px;
+    left: 20px;
+    right: auto;
+    bottom: 20px;
+    z-index: 960;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    z-index: 9999;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
-    font-size: 14px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: auto;
+    max-width: 340px;
+    margin: 0;
+    padding: 14px 16px;
+    background: #fff;
+    color: #555;
+    border: 1px solid #eee;
+    border-left: 4px solid #c92335;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+    font-size: 13px;
+    line-height: 1.45;
 }
 
 .cookie-banner p {
     margin: 0;
-    max-width: 800px;
+    max-width: none;
+    color: #555;
+    font-size: 12.5px;
 }
 
 .cookie-btn-group {
     display: flex;
-    gap: 10px;
+    gap: 8px;
+    width: 100%;
+}
+
+.cookie-btn-group button {
+    flex: 1;
+    min-height: 36px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .btn-cookie-accept {
-    background-color: #e94560;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: all 0.3s;
+    background: #c92335;
+    color: #fff;
+    border: 1px solid #c92335;
 }
 
 .btn-cookie-accept:hover {
-    background-color: #c1354b;
-    transform: translateY(-2px);
+    background: #a81c2c;
 }
 
 .btn-kvkk-link {
-    background: transparent;
-    color: #ccc;
-    border: 1px solid #ccc;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
+    background: #fff;
+    color: #c92335;
+    border: 1px solid #c92335;
     text-decoration: none;
-    font-size: 13px;
-    transition: all 0.3s;
 }
 
 .btn-kvkk-link:hover {
-    color: white;
-    border-color: white;
-    transform: translateY(-2px);
+    background: #fff5f6;
+}
+
+@media (max-width: 768px) {
+    .cookie-banner {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        max-width: none;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+    }
+
+    /* Alt iletişim çubuğu olan sayfalarda onun üstünde dur */
+    body.has-mobil-cta .cookie-banner {
+        bottom: calc(74px + env(safe-area-inset-bottom));
+    }
+
+    .cookie-banner p {
+        flex: 1;
+        font-size: 12px;
+    }
+
+    .cookie-btn-group {
+        width: auto;
+        flex-shrink: 0;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .cookie-btn-group button {
+        width: 100%;
+        min-height: 32px;
+        padding: 6px 10px;
+        font-size: 12px;
+    }
 }
 
 /* KVKK Modal (Açılır Pencere) */
