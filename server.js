@@ -14,9 +14,13 @@ const app = express();
 // Eski alan adlarından yeni adrese kalıcı (301) yönlendirme
 const ANA_ALAN_ADI = 'ranaisitme.com.tr';
 const ESKI_ALAN_ADLARI = ['harmonyisitme.com.tr', 'www.harmonyisitme.com.tr', 'www.ranaisitme.com.tr'];
+// Google'ın tarayıcısı isteği farklı başlıkla getirebildiği için tüm host bilgilerine bakılır
 app.use((req, res, next) => {
-    const host = (req.headers.host || '').toLowerCase().split(':')[0];
-    if (ESKI_ALAN_ADLARI.includes(host)) {
+    const adaylar = [req.headers['x-forwarded-host'], req.headers.host, req.headers[':authority'], req.hostname]
+        .filter(Boolean)
+        .map(h => String(h).split(',')[0].trim().toLowerCase().split(':')[0]);
+    res.set('X-Gelen-Host', adaylar.join(' | ') || 'yok');
+    if (adaylar.some(h => ESKI_ALAN_ADLARI.includes(h))) {
         return res.redirect(301, `https://${ANA_ALAN_ADI}${req.originalUrl}`);
     }
     next();
