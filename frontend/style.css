@@ -28,6 +28,8 @@
 html {
     width: 100%;
     max-width: 100%;
+    /* Telefonda kapalı menü ekranın sağında bekliyor; sayfanın yana kaymasını engeller */
+    overflow-x: clip;
     scroll-behavior: smooth;
     scroll-padding-top: 95px;
 }
