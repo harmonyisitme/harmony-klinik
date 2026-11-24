@@ -29,9 +29,9 @@
   <meta name="theme-color" content="#c92335">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   <style>
     .fp { color:#292929; }
     .fp-wrap { max-width:1120px; margin:0 auto; }
@@ -46,6 +46,7 @@
     .fp-badges { display:flex; flex-wrap:wrap; gap:10px; margin:0 0 26px; padding:0; list-style:none; }
     .fp-badges li { display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid #f0d3d7; border-radius:999px; padding:8px 14px; font-weight:700; font-size:14px; color:#3a3a3a; }
     .fp-badges i { color:#c92335; }
+    @media (max-width:600px){ .fp-badges{ gap:8px; margin-bottom:20px; } .fp-badges li{ padding:6px 12px; font-size:13px; } .fp-badges li:nth-child(n+4){ display:none; } }
     .fp-actions { display:flex; flex-wrap:wrap; gap:12px; }
     .fp-actions a { display:inline-flex; align-items:center; justify-content:center; gap:9px; padding:15px 24px; border-radius:10px; text-decoration:none; font-weight:800; font-size:17px; }
     .fp-call { background:#c92335; color:#fff; }
@@ -173,7 +174,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   <header class="navbar">
     <a href="index.html" class="logo" aria-label="Rana İşitme Merkezi ana sayfa">
-      <img src="logo.png" alt="Rana İşitme Merkezi" onerror="this.style.display='none'">
+      <img src="logo.png" alt="Rana İşitme Merkezi" width="408" height="160" onerror="this.style.display='none'">
       <span class="logo-fallback">RANA <small>İŞİTME MERKEZİ</small></span>
     </a>
     <nav aria-label="Ana menü">

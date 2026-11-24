@@ -264,6 +264,7 @@ header.navbar,
 .logo img,
 .site-logo img {
     width: auto;
+    height: auto;
     max-width: 190px;
     max-height: 58px;
     object-fit: contain;
