@@ -10,6 +10,8 @@ const sequelize = require('./config/database');
 const cloudinary = require('cloudinary').v2;
 
 const app = express();
+// Barındırma platformu bir vekil sunucu arkasında çalıştığı için gerçek ziyaretçi IP'si (hız sınırı için) buradan alınır
+app.set('trust proxy', 1);
 
 // Eski alan adlarından yeni adrese kalıcı (301) yönlendirme
 const ANA_ALAN_ADI = 'ranaisitme.com.tr';
@@ -116,6 +118,7 @@ app.use('/api/blog', require('./routes/blogRoutes'));
 app.use('/api/site-ayarlari', require('./routes/siteRoutes'));
 app.use('/api/hastalar', require('./routes/hastaRoutes'));
 app.use('/api/iletisim', require('./routes/iletisimRoutes'));
+app.use('/api/geri-arama', require('./routes/geriAramaRoutes'));
 app.use('/api/urunler', require('./routes/urunRoutes'));
 app.use('/api/medya', require('./routes/medyaRoutes'));
 
