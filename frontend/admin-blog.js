@@ -165,6 +165,9 @@ function modulKartlariniEkle() {
             <a href="admin-urunler.html" class="module-card">
                 <div class="icon">📦</div><h3>Ürün Yönetimi</h3><p>Ürünleri ve stokları yönetin.</p>
             </a>
+            <a href="admin-mesajlar.html" class="module-card">
+                <div class="icon">📩</div><h3>Gelen Mesajlar</h3><p>"Sizi Arayalım" talepleri ve mesajlar.</p>
+            </a>
             <a href="admin-ayarlar.html" class="module-card">
                 <div class="icon">⚙️</div><h3>Site Ayarları</h3><p>İletişim ve hizmetleri güncelleyin.</p>
             </a>
