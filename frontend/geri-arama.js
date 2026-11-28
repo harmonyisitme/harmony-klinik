@@ -66,6 +66,12 @@
             form_name: 'sizi_arayalim',
             page_location: window.location.href
         });
+        // Google Ads 'Form - Sizi Arayalım' dönüşüm işlemi (birincil)
+        window.gtag('event', 'conversion', {
+            send_to: 'AW-18547759547/ZJdPCPGXnMEdELuzoYxF',
+            value: 1.0,
+            currency: 'TRY'
+        });
     }
 
     function kur(yer) {
